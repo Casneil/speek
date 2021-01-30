@@ -1,30 +1,31 @@
-import React from 'react';
-import {SafeAreaView, StatusBar} from 'react-native';
+import React from "react";
+import {SafeAreaView, StatusBar} from "react-native";
 
-import {ApolloClient, ApolloProvider, InMemoryCache} from '@apollo/client';
+import {ApolloClient, InMemoryCache, ApolloProvider} from "@apollo/client";
+// import {ApolloProvider} from "@apollo/react-hooks";
 // 3rd Party
-import {UtilityThemeProvider, Box, Text} from 'react-native-design-utility';
-import {theme} from './src/constants/theme';
+import {UtilityThemeProvider, Box, Text} from "react-native-design-utility";
+import {theme} from "./src/constants/theme";
+
+import Users from "./src/components/Users";
 
 const client = new ApolloClient({
-  uri: 'http://localhost:4000',
+  uri: "http://192.168.1.13:4000/graphql",
   cache: new InMemoryCache(),
 });
 
 const App = () => {
   return (
-    <ApolloProvider client={client}>
-      <UtilityThemeProvider theme={theme}>
+    <UtilityThemeProvider theme={theme}>
+      <ApolloProvider client={client}>
         <StatusBar barStyle="light-content" />
-        <Box bg="purpleLightest" f={1}>
+        <Box center bg="purpleLightest" f={1}>
           <SafeAreaView>
-            <Text size="xl" center>
-              Hello Casneil
-            </Text>
+            <Users />
           </SafeAreaView>
         </Box>
-      </UtilityThemeProvider>
-    </ApolloProvider>
+      </ApolloProvider>
+    </UtilityThemeProvider>
   );
 };
 
