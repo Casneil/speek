@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, StatusBar, View} from 'react-native';
+import {SafeAreaView, StatusBar} from 'react-native';
 
 // 3rd Party
 import {UtilityThemeProvider, Box, Text} from 'react-native-design-utility';
