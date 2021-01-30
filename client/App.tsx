@@ -2,9 +2,8 @@ import React from "react";
 import {SafeAreaView, StatusBar} from "react-native";
 
 import {ApolloClient, InMemoryCache, ApolloProvider} from "@apollo/client";
-// import {ApolloProvider} from "@apollo/react-hooks";
 // 3rd Party
-import {UtilityThemeProvider, Box, Text} from "react-native-design-utility";
+import {UtilityThemeProvider, Box} from "react-native-design-utility";
 import {theme} from "./src/constants/theme";
 
 import Users from "./src/components/Users";
