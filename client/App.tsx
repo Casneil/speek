@@ -9,7 +9,7 @@ import {
   HttpLink,
 } from "@apollo/client";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {UtilityThemeProvider, Box} from "react-native-design-utility";
+import {UtilityThemeProvider} from "react-native-design-utility";
 import {setContext} from "apollo-link-context";
 import {theme} from "./src/constants/theme";
 // Navigation

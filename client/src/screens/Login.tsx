@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 // Native imports
 import {
   TextInput,
@@ -22,7 +22,6 @@ import {Box, Text} from "react-native-design-utility";
 import {useAuthContext} from "../components/context/AuthContext";
 // Emuns and Interfaces
 import {ILoginInterface} from "../components/Interfaces";
-import {ImageHeightEnum, StorageKeyEnum} from "../components/enums";
 //Resource
 const icon = require("../rsc/icon.jpg");
 // Styles
@@ -97,7 +96,7 @@ const Login = () => {
               setSubmitting(false);
             }}>
             {({handleChange, handleBlur, handleSubmit, values, errors}) => (
-              <>
+              <Box>
                 <Box mx={60}>
                   <Box>
                     <Box dir="row" align="center">
@@ -194,7 +193,7 @@ const Login = () => {
                     </Text>
                   </TouchableOpacity>
                 </Box>
-              </>
+              </Box>
             )}
           </Formik>
         </TouchableWithoutFeedback>
