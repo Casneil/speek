@@ -18,7 +18,7 @@ const StackNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {authenticated ? (
+        {!authenticated ? (
           <>
             <Stack.Screen
               name="Home"
