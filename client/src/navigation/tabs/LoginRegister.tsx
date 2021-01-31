@@ -4,10 +4,11 @@ import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import FontAwesome from "react-native-vector-icons/FontAwesome5";
 // Screens
-import Login from "../../screens/Login";
-import Register from "../../screens/Register";
+
 // Styles
 import {globalColors} from "../../components/styles/globalStyles";
+import Login from "../../screens/Login";
+import Register from "../../screens/Register";
 // Tab Navigator
 const TabNavigator = createBottomTabNavigator();
 

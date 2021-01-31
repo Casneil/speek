@@ -82,7 +82,7 @@ const Login = () => {
             variables: values,
           });
           //@ts-ignore
-          setUserToken(response.data.signup.token);
+          setUserToken(response.data.login.token);
 
           setSubmitting(false);
         }}>
@@ -100,7 +100,6 @@ const Login = () => {
                     onBlur={handleBlur("email")}
                     keyboardType={"email-address"}
                     value={values.email}
-                    underlineColorAndroid="transparent"
                     style={{
                       borderBottomWidth: 1,
                       width: "100%",
@@ -126,7 +125,6 @@ const Login = () => {
                     placeholderTextColor="gray"
                     secureTextEntry={true}
                     value={values.password}
-                    underlineColorAndroid="transparent"
                     style={{
                       borderBottomWidth: 1,
                       width: "100%",
