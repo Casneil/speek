@@ -29,11 +29,9 @@ const Users = () => {
   return (
     <>
       {data.users.map((user: IUSER) => (
-        <Box center key={user.id}>
-          <Text color="white" size="xl">
-            {user.name}
-          </Text>
-        </Box>
+        <Text color="white" size="xl" key={user.id}>
+          {user.name}
+        </Text>
       ))}
     </>
   );
