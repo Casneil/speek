@@ -1,164 +1,193 @@
-import React, {useState} from "react";
+import React from "react";
 // Native imports
 import {
-  Text,
-  View,
   TextInput,
   ImageBackground,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import {useNavigation} from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // Third Party
+import {gql, useMutation} from "@apollo/client";
+import {ErrorMessage, Field, Form, Formik} from "formik";
+import * as Yup from "yup";
 import AntDesign from "react-native-vector-icons/AntDesign";
+import {Box, Text} from "react-native-design-utility";
 // Components
-// import {axiosInstance} from "../../components/axios/axios";
+// Context
+import {useAuthContext} from "../components/context/AuthContext";
 // Emuns and Interfaces
 import {ILoginInterface} from "../components/Interfaces";
 //Resource
-const bgImg = require("../rsc/0100.jpg");
+const icon = require("../rsc/icon.jpg");
 // Styles
-import {useAuthContext} from "../components/context/AuthContext";
 import {layout, globalColors} from "../components/styles/globalStyles";
-const Login: React.FC<ILoginInterface> = (props) => {
-  const navigation = useNavigation();
 
-  const [user, setUser] = useState<ILoginInterface>({
-    email: "",
-    password: "",
-  });
+// Mutation
+const LOGIN_MUTATION = gql`
+  mutation login($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      token
+    }
+  }
+`;
+
+const Login = () => {
+  const [login, {data}] = useMutation(LOGIN_MUTATION);
+  const navigation = useNavigation();
 
   const {setUserToken, getUserToken} = useAuthContext();
 
-  const handleLoginSubmit = async (): Promise<any> => {
-    // axiosInstance
-    //   .post("token/", {
-    //     email: user.email.trim(),
-    //     password: user.password.trim(),
-    //   })
-    //   .then(async (response: any) => {
-    //     try {
-    //       // @ts-ignore
-    //       setToken(response.data.access, response.data.refresh);
-    //       axiosInstance.defaults.headers["Authorization"] = "JWT " + getToken;
-    //     } catch (error) {
-    //       console.log(error);
-    //     }
-    //   })
-    //   .catch((error: any) => {
-    //     console.warn(error);
-    //   });
-    setUser({
-      email: "",
-      password: "",
-    });
+  const initialValues: ILoginInterface = {
+    email: "",
+    password: "",
   };
 
+  const validationSchema = Yup.object({
+    email: Yup.string()
+      .email("Invalid email address")
+      .required("Email required"),
+    password: Yup.string()
+      .max(20, "Must be 20 characters or less")
+      .required("Password required"),
+  });
+
   return (
-    <View
-      style={{
-        height: "100%",
-      }}>
-      <ImageBackground
-        source={bgImg}
-        style={layout.image}
-        imageStyle={layout.image}>
-        <View style={layout.container}>
-          <View style={layout.loginContainer}>
-            <View style={layout.inputContainer}>
-              <AntDesign name="user" size={25} style={layout.iconStyle} />
-              <TextInput
-                placeholder="username"
-                style={layout.textInput}
-                placeholderTextColor="gray"
-                onChangeText={(event) =>
-                  setUser({
-                    ...user,
-                    email: event,
-                  })
-                }
-                keyboardType={"email-address"}
-                value={user.email}
-                maxLength={25}
-              />
-            </View>
-            <View style={layout.inputContainer}>
-              <AntDesign name="lock" size={30} style={layout.iconStyle} />
-              <TextInput
-                placeholder="password"
-                style={layout.textInput}
-                placeholderTextColor="gray"
-                onChangeText={(event) =>
-                  setUser({
-                    ...user,
-                    password: event,
-                  })
-                }
-                secureTextEntry={true}
-                value={user.password}
-                maxLength={25}
-              />
-            </View>
-            {/*  Sign In*/}
-            <TouchableOpacity
-              style={{
-                alignSelf: "center",
-                marginTop: 20,
-                backgroundColor: globalColors.grayPrimary,
-                borderRadius: 25,
-                padding: 8,
-                width: "25%",
-              }}
-              onPress={handleLoginSubmit}>
-              <Text
-                style={{
-                  alignSelf: "center",
-                  fontSize: 18,
-                  fontWeight: "bold",
-                  color: "white",
-                }}>
-                sign In
-              </Text>
-            </TouchableOpacity>
+    <>
+      <Box my="sm">
+        <Text bold size="xl" center>
+          Login
+        </Text>
+      </Box>
+      <Box center my="sm">
+        <Box bg="white" style={{elevation: 20}} mb="lg" radius={100} w={110}>
+          <Image
+            source={icon}
+            style={{
+              overflow: "hidden",
+              height: 110,
+              width: 110,
+              borderRadius: 100,
+            }}
+          />
+        </Box>
+      </Box>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={async (values, {setSubmitting}) => {
+          setSubmitting(true);
+          const response = await login({
+            variables: values,
+          });
+          //@ts-ignore
+          setUserToken(response.data.signup.token);
+
+          setSubmitting(false);
+        }}>
+        {({handleChange, handleBlur, handleSubmit, values, errors}) => (
+          <>
+            <Box mx={60}>
+              <Box center>
+                <Box position="absolute" right={0}>
+                  <AntDesign name="mail" size={18} color="black" />
+                </Box>
+                <Box dir="row" align="center">
+                  <TextInput
+                    onChangeText={handleChange("email")}
+                    placeholder="Enter your email address"
+                    onBlur={handleBlur("email")}
+                    keyboardType={"email-address"}
+                    value={values.email}
+                    underlineColorAndroid="transparent"
+                    style={{
+                      borderBottomWidth: 1,
+                      width: "100%",
+                      borderBottomColor: "gray",
+                    }}
+                  />
+                </Box>
+                {errors.email && (
+                  <Text style={{fontSize: 10, color: "red"}}>
+                    {errors.email}
+                  </Text>
+                )}
+              </Box>
+              <Box>
+                <Box dir="row" align="center">
+                  <Box position="absolute" right={0}>
+                    <AntDesign name="lock" size={18} color="black" />
+                  </Box>
+                  <TextInput
+                    onChangeText={handleChange("password")}
+                    onBlur={handleBlur("password")}
+                    placeholder="Password"
+                    placeholderTextColor="gray"
+                    secureTextEntry={true}
+                    value={values.password}
+                    underlineColorAndroid="transparent"
+                    style={{
+                      borderBottomWidth: 1,
+                      width: "100%",
+                      borderBottomColor: "gray",
+                    }}
+                  />
+                </Box>
+                {errors.password && (
+                  <Text style={{fontSize: 10, color: "red"}}>
+                    {errors.password}
+                  </Text>
+                )}
+              </Box>
+            </Box>
+            <Box center my="sm">
+              <Box
+                bg="white"
+                w={100}
+                center
+                radius="lg"
+                style={{elevation: 10}}>
+                <TouchableOpacity onPress={handleSubmit}>
+                  <Text p={8} bold>
+                    Log in
+                  </Text>
+                </TouchableOpacity>
+              </Box>
+            </Box>
             {/*Register Links*/}
-            <View style={layout.loginLinks}>
-              <Text style={{fontSize: 14, color: "white", fontWeight: "bold"}}>
-                Don't have an account?
-              </Text>
+            <Box dir="row" justify="center" my={4}>
+              <Text size="sm">Don't have an account?</Text>
               <TouchableOpacity
                 style={{marginLeft: 10}}
                 onPress={() => navigation.navigate("Register")}>
                 <Text
+                  size="sm"
+                  bold
                   style={{
-                    fontSize: 14,
-                    color: "white",
                     textDecorationLine: "underline",
-                    fontWeight: "bold",
                   }}>
                   Register
                 </Text>
               </TouchableOpacity>
-            </View>
-            <View style={[layout.loginLinks, {marginTop: -20}]}>
-              <Text style={{fontSize: 14, color: "white", fontWeight: "bold"}}>
-                Forget your password?
-              </Text>
+            </Box>
+            <Box dir="row" justify="center">
+              <Text size="sm">Forget your password?</Text>
               <TouchableOpacity style={{marginLeft: 10}}>
                 <Text
+                  size="sm"
+                  bold
                   style={{
-                    fontSize: 14,
-                    color: "white",
-                    fontWeight: "bold",
                     textDecorationLine: "underline",
                   }}>
                   Reset
                 </Text>
               </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </ImageBackground>
-    </View>
+            </Box>
+          </>
+        )}
+      </Formik>
+    </>
   );
 };
 

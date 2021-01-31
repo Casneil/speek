@@ -42,7 +42,7 @@ const App = () => {
     <AuthContextProvider>
       <UtilityThemeProvider theme={theme}>
         <ApolloProvider client={client}>
-          <StatusBar barStyle="light-content" />
+          <StatusBar barStyle="dark-content" backgroundColor="white" />
           {/* <SafeAreaView> */}
           <StackNavigator />
           {/* </SafeAreaView> */}

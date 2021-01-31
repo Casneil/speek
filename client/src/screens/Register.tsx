@@ -1,7 +1,16 @@
 import React, {useState} from "react";
 // import axios from "axios";
 // Native imports
-import {View, TextInput, ImageBackground, TouchableOpacity} from "react-native";
+import {
+  View,
+  TextInput,
+  ImageBackground,
+  TouchableOpacity,
+  Image,
+  Keyboard,
+  Animated,
+  KeyboardAvoidingView,
+} from "react-native";
 import {useNavigation} from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // 3rd Party
@@ -17,12 +26,11 @@ import {useAuthContext} from "../components/context/AuthContext";
 import {StorageKeyEnum} from "../components/enums";
 import {IRegisterInterface} from "../components/Interfaces";
 //Resource
-const bgImg = require("../rsc/0100.jpg");
+const icon = require("../rsc/icon.jpg");
 // Styles
 import {globalColors, layout} from "../components/styles/globalStyles";
 
 // Mutation
-
 const SIGN_UP_MUTATION = gql`
   mutation signup($name: String, $email: String!, $password: String!) {
     signup(name: $name, email: $email, password: $password) {
@@ -35,6 +43,7 @@ const Register = () => {
   const [signup, {data}] = useMutation(SIGN_UP_MUTATION);
 
   const navigation = useNavigation();
+  const {setUserToken} = useAuthContext();
 
   const initialValues: IRegisterInterface = {
     name: "",
@@ -59,10 +68,26 @@ const Register = () => {
     ),
   });
 
-  const {setUserToken} = useAuthContext();
-
   return (
-    <Box>
+    <>
+      <Box my="sm">
+        <Text bold size="xl" center>
+          Register
+        </Text>
+      </Box>
+      <Box center my="sm">
+        <Box bg="white" style={{elevation: 20}} mb="lg" radius={100} w={110}>
+          <Image
+            source={icon}
+            style={{
+              overflow: "hidden",
+              height: 110,
+              width: 110,
+              borderRadius: 100,
+            }}
+          />
+        </Box>
+      </Box>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -78,16 +103,23 @@ const Register = () => {
         }}>
         {({handleChange, handleBlur, handleSubmit, values, errors}) => (
           <>
-            <Box mx={20}>
+            <Box mx={60}>
               <Box>
                 <Box dir="row" align="center">
-                  <AntDesign name="user" size={25} color="black" />
+                  <Box position="absolute" right={0} ml="sm">
+                    <AntDesign name="user" size={18} color="black" />
+                  </Box>
                   <TextInput
                     onChangeText={handleChange("name")}
                     onBlur={handleBlur("name")}
-                    placeholder="name"
+                    placeholder="Enter your username"
                     placeholderTextColor="gray"
                     value={values.name}
+                    style={{
+                      borderBottomWidth: 1,
+                      width: "100%",
+                      borderBottomColor: "gray",
+                    }}
                   />
                 </Box>
                 {errors.name && (
@@ -98,13 +130,20 @@ const Register = () => {
               </Box>
               <Box>
                 <Box dir="row" align="center">
-                  <AntDesign name="mail" size={25} color="black" />
+                  <Box position="absolute" right={0} ml="sm">
+                    <AntDesign name="mail" size={18} color="black" />
+                  </Box>
                   <TextInput
                     onChangeText={handleChange("email")}
-                    placeholder="email"
+                    placeholder="Enter your email address"
                     onBlur={handleBlur("email")}
                     keyboardType={"email-address"}
                     value={values.email}
+                    style={{
+                      borderBottomWidth: 1,
+                      width: "100%",
+                      borderBottomColor: "gray",
+                    }}
                   />
                 </Box>
                 {errors.email && (
@@ -115,7 +154,10 @@ const Register = () => {
               </Box>
               <Box>
                 <Box dir="row" align="center">
-                  <AntDesign name="lock" size={30} color="black" />
+                  <Box position="absolute" right={0} ml="sm">
+                    <AntDesign name="lock" size={18} color="black" />
+                  </Box>
+
                   <TextInput
                     onChangeText={handleChange("password")}
                     onBlur={handleBlur("password")}
@@ -123,6 +165,11 @@ const Register = () => {
                     placeholderTextColor="gray"
                     secureTextEntry={true}
                     value={values.password}
+                    style={{
+                      borderBottomWidth: 1,
+                      width: "100%",
+                      borderBottomColor: "gray",
+                    }}
                   />
                 </Box>
                 {errors.password && (
@@ -132,20 +179,22 @@ const Register = () => {
                 )}
               </Box>
               <Box>
-                <Box dir="row">
-                  <Feather
-                    color={
-                      values.confirmPassword !== "" && !errors.confirmPassword
-                        ? "green"
-                        : "red"
-                    }
-                    size={30}
-                    name={
-                      values.confirmPassword !== "" && !errors.confirmPassword
-                        ? "check-circle"
-                        : "x-circle"
-                    }
-                  />
+                <Box dir="row" align="center">
+                  <Box position="absolute" right={0} ml="sm">
+                    <Feather
+                      color={
+                        values.confirmPassword !== "" && !errors.confirmPassword
+                          ? "green"
+                          : "red"
+                      }
+                      size={18}
+                      name={
+                        values.confirmPassword !== "" && !errors.confirmPassword
+                          ? "check-circle"
+                          : "x-circle"
+                      }
+                    />
+                  </Box>
                   <TextInput
                     onChangeText={handleChange("confirmPassword")}
                     onBlur={handleBlur("confirmPassword")}
@@ -153,6 +202,11 @@ const Register = () => {
                     placeholderTextColor="gray"
                     secureTextEntry={true}
                     value={values.confirmPassword}
+                    style={{
+                      borderBottomWidth: 1,
+                      width: "100%",
+                      borderBottomColor: "gray",
+                    }}
                   />
                 </Box>
                 {errors.confirmPassword && (
@@ -162,13 +216,22 @@ const Register = () => {
                 )}
               </Box>
             </Box>
-            <Box center>
-              <TouchableOpacity onPress={handleSubmit}>
-                <Text>Register</Text>
-              </TouchableOpacity>
+            <Box center my="sm">
+              <Box
+                center
+                bg="white"
+                w={100}
+                radius="lg"
+                style={{elevation: 10}}>
+                <TouchableOpacity onPress={handleSubmit}>
+                  <Text p={8} bold>
+                    Register
+                  </Text>
+                </TouchableOpacity>
+              </Box>
             </Box>
             {/*Register Links*/}
-            <Box style={layout.loginLinks}>
+            <Box dir="row" justify="center" my={4}>
               <Text size="sm">already have an account?</Text>
               <TouchableOpacity
                 style={{marginLeft: 10}}
@@ -186,126 +249,7 @@ const Register = () => {
           </>
         )}
       </Formik>
-    </Box>
-    // <View style={{height: "100%"}}>
-    //   <ImageBackground
-    //     source={bgImg}
-    //     style={layout.image}
-    //     imageStyle={layout.image}>
-    //     <View style={layout.container}>
-    //       <View style={layout.loginContainer}>
-    //         <View style={layout.inputContainer}>
-    //           <AntDesign name="mail" size={25} style={layout.iconStyle} />
-    //           <TextInput
-    //             placeholder="email"
-    //             style={layout.textInput}
-    //             placeholderTextColor="gray"
-    //             onChangeText={(value: string) => {
-    //               setUser({...user, email: value});
-    //             }}
-    //             keyboardType={"email-address"}
-    //             value={user.email}
-    //             maxLength={30}
-    //           />
-    //         </View>
-    //         <View style={layout.inputContainer}>
-    //           <AntDesign name="user" size={25} style={layout.iconStyle} />
-    //           <TextInput
-    //             placeholder="username"
-    //             style={layout.textInput}
-    //             placeholderTextColor="gray"
-    //             onChangeText={(value: string) => {
-    //               setUser({...user, username: value});
-    //             }}
-    //             keyboardType={"email-address"}
-    //             value={user.username}
-    //             maxLength={25}
-    //           />
-    //         </View>
-    //         <View style={layout.inputContainer}>
-    //           <AntDesign name="lock" size={30} style={layout.iconStyle} />
-    //           <TextInput
-    //             placeholder="password"
-    //             style={layout.textInput}
-    //             placeholderTextColor="gray"
-    //             onChangeText={(value: string) => {
-    //               setUser({...user, password: value});
-    //             }}
-    //             secureTextEntry={true}
-    //             value={user.password}
-    //             maxLength={25}
-    //           />
-    //         </View>
-    //         <View style={layout.inputContainer}>
-    //           <TextInput
-    //             placeholder="confirm password"
-    //             style={[layout.textInput, {marginLeft: 45}]}
-    //             placeholderTextColor="gray"
-    //             onChangeText={(value: any) => {
-    //               setUser({...user, confirmPassword: value});
-    //             }}
-    //             secureTextEntry={true}
-    //             value={user.confirmPassword}
-    //             maxLength={25}
-    //           />
-    // <Feather
-    //   name={
-    //     user.confirmPassword !== "" &&
-    //     user.confirmPassword === user.password
-    //       ? "check-circle"
-    //       : "x-circle"
-    //   }
-    //             size={30}
-    //             style={[
-    //               layout.iconStyle,
-    //               {position: "absolute", right: 8, color: iconColor},
-    //             ]}
-    //           />
-    //         </View>
-    //         {/*  Register*/}
-    //         <TouchableOpacity
-    //           style={{
-    //             alignSelf: "center",
-    //             marginTop: 20,
-    //             backgroundColor: globalColors.grayPrimary,
-    //             borderRadius: 25,
-    //             padding: 8,
-    //             width: "25%",
-    //           }}
-    //           onPress={handleRegistrationSubmit}>
-    //           <Text
-    //             style={{
-    //               alignSelf: "center",
-    //               fontSize: 18,
-    //               fontWeight: "bold",
-    //               color: "white",
-    //             }}>
-    //             register
-    //           </Text>
-    //         </TouchableOpacity>
-    // {/*Register Links*/}
-    // <View style={layout.loginLinks}>
-    //   <Text style={{fontSize: 14, color: "white", fontWeight: "bold"}}>
-    //     already have an account?
-    //   </Text>
-    //   <TouchableOpacity
-    //     style={{marginLeft: 10}}
-    //     onPress={() => navigation.navigate("Login")}>
-    //     <Text
-    //       style={{
-    //         fontSize: 14,
-    //         color: "white",
-    //         textDecorationLine: "underline",
-    //         fontWeight: "bold",
-    //       }}>
-    //       login
-    //     </Text>
-    //   </TouchableOpacity>
-    // </View>
-    //       </View>
-    //     </View>
-    //   </ImageBackground>
-    // </View>
+    </>
   );
 };
 
