@@ -1,18 +1,8 @@
-import React, {useState} from "react";
-// import axios from "axios";
-// Native imports
-import {
-  View,
-  TextInput,
-  ImageBackground,
-  TouchableOpacity,
-  Image,
-  Keyboard,
-  Animated,
-  KeyboardAvoidingView,
-} from "react-native";
+import React from "react";
+import {TextInput, TouchableOpacity, Image} from "react-native";
+
 import {useNavigation} from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
 // 3rd Party
 import {gql, useMutation} from "@apollo/client";
 import {ErrorMessage, Field, Form, Formik} from "formik";
@@ -20,15 +10,14 @@ import * as Yup from "yup";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import Feather from "react-native-vector-icons/Feather";
 import {Box, Text} from "react-native-design-utility";
+
 //Context
 import {useAuthContext} from "../components/context/AuthContext";
+
 // Emuns and Interfaces
-import {StorageKeyEnum} from "../components/enums";
 import {IRegisterInterface} from "../components/Interfaces";
 //Resource
 const icon = require("../rsc/icon.jpg");
-// Styles
-import {globalColors, layout} from "../components/styles/globalStyles";
 
 // Mutation
 const SIGN_UP_MUTATION = gql`

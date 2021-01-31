@@ -1,20 +1,15 @@
 import React from "react";
 // Native imports
-import {
-  TextInput,
-  ImageBackground,
-  TouchableOpacity,
-  Image,
-} from "react-native";
+import {TextInput, TouchableOpacity, Image} from "react-native";
 import {useNavigation} from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
 // Third Party
 import {gql, useMutation} from "@apollo/client";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import {Box, Text} from "react-native-design-utility";
-// Components
+
 // Context
 import {useAuthContext} from "../components/context/AuthContext";
 // Emuns and Interfaces
@@ -22,7 +17,6 @@ import {ILoginInterface} from "../components/Interfaces";
 //Resource
 const icon = require("../rsc/icon.jpg");
 // Styles
-import {layout, globalColors} from "../components/styles/globalStyles";
 
 // Mutation
 const LOGIN_MUTATION = gql`
@@ -37,7 +31,7 @@ const Login = () => {
   const [login, {data}] = useMutation(LOGIN_MUTATION);
   const navigation = useNavigation();
 
-  const {setUserToken, getUserToken} = useAuthContext();
+  const {setUserToken} = useAuthContext();
 
   const initialValues: ILoginInterface = {
     email: "",
