@@ -28,7 +28,7 @@ const Login: React.FC<ILoginInterface> = (props) => {
     password: "",
   });
 
-  const {setToken, getToken} = useAuthContext();
+  const {setUserToken, getUserToken} = useAuthContext();
 
   const handleLoginSubmit = async (): Promise<any> => {
     // axiosInstance

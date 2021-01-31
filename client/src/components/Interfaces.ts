@@ -1,4 +1,7 @@
-
+export interface IUSER {
+  name: string;
+  id: number;
+}
 export interface ILoginInterface {
   email: string;
   password: string;
@@ -7,7 +10,7 @@ export interface ILoginInterface {
 
 export interface IRegisterInterface {
   email: string;
-  username: string;
+  name: string;
   password: string;
   confirmPassword: string;
   navigation?: any;
@@ -23,8 +26,8 @@ export interface IPostInterface {
 }
 export interface IAuthInterface {
   authenticated?: boolean;
-  getToken?: () => void;
+  getUserToken?: () => void;
   removeToken?: () => void;
   token?: string;
-  setToken?: (accessToken: string, refreshToken: string) => void;
+  setUserToken?: (token: string) => void;
 }

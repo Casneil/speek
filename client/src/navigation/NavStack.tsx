@@ -1,20 +1,19 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 // 3rd Party
 import {NavigationContainer} from "@react-navigation/native";
 import {createStackNavigator} from "@react-navigation/stack";
 
 // Context
-// import {useAuthContext} from "../components/context/AuthContext";
+import {useAuthContext} from "../components/context/AuthContext";
 // import {LoginRegisterTabs} from "./tabs/LoginRegisterTabs";
 // Main Tabs
 import {MainTabs} from "./tabs/MainTabs";
 import {LoginRegisterTabs} from "./tabs/LoginRegister";
 
-const authenticated = true;
 // Stack Navigator
 const Stack = createStackNavigator();
 const StackNavigator = () => {
-  // const {authenticated} = useAuthContext();
+  const {authenticated} = useAuthContext();
 
   return (
     <NavigationContainer>

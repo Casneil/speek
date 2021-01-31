@@ -3,6 +3,8 @@ import React from "react";
 import {useQuery, gql} from "@apollo/client";
 
 import {Box, Text} from "react-native-design-utility";
+//Interfaces
+import {IUSER} from "./Interfaces";
 
 // Query
 const USERS_QUERY = gql`
@@ -13,11 +15,6 @@ const USERS_QUERY = gql`
     }
   }
 `;
-
-interface IUSER {
-  name: string;
-  id: number;
-}
 
 const Users = () => {
   //States
