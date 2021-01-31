@@ -18,7 +18,7 @@ import {useAuthContext} from "../components/context/AuthContext";
 // Emuns and Interfaces
 import {IRegisterInterface} from "../components/Interfaces";
 //Resource
-const bgImg = require("../../rsc/0100.jpg");
+const bgImg = require("../rsc/0100.jpg");
 // Styles
 import {globalColors, layout} from "../components/styles/globalStyles";
 

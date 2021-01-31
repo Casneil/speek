@@ -4,7 +4,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 // Enums and Interfaces
 import {StorageKeyEnum} from "../enums";
 import {IAuthInterface} from "../Interfaces";
-import {axiosInstance} from "../axios/axios";
 
 //TODO: Finish auth flow for global auth context
 export const AuthContext = createContext<IAuthInterface>({
@@ -57,7 +56,7 @@ export const AuthContextProvider: React.FC = (props) => {
       setAccessToken("");
       setRefreshToken("");
       setIsAuthenticated(false);
-      axiosInstance.defaults.headers["Authorization"] = null;
+      // axiosInstance.defaults.headers["Authorization"] = null;
       // return Promise.resolve();
       return true;
     } catch (error) {

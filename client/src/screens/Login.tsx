@@ -15,9 +15,8 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 // import {axiosInstance} from "../../components/axios/axios";
 // Emuns and Interfaces
 import {ILoginInterface} from "../components/Interfaces";
-
 //Resource
-const bgImg = require("../../rsc/0100.jpg");
+const bgImg = require("../rsc/0100.jpg");
 // Styles
 import {useAuthContext} from "../components/context/AuthContext";
 import {layout, globalColors} from "../components/styles/globalStyles";

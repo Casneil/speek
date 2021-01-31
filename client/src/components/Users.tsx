@@ -29,7 +29,7 @@ const Users = () => {
   return (
     <>
       {data.users.map((user: IUSER) => (
-        <Text color="white" size="xl" key={user.id}>
+        <Text color="black" size="xl" key={user.id}>
           {user.name}
         </Text>
       ))}

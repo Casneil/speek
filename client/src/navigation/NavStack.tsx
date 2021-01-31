@@ -1,5 +1,4 @@
 import React from "react";
-
 // 3rd Party
 import {NavigationContainer} from "@react-navigation/native";
 import {createStackNavigator} from "@react-navigation/stack";
@@ -9,8 +8,9 @@ import {createStackNavigator} from "@react-navigation/stack";
 // import {LoginRegisterTabs} from "./tabs/LoginRegisterTabs";
 // Main Tabs
 import {MainTabs} from "./tabs/MainTabs";
+import {LoginRegisterTabs} from "./tabs/LoginRegister";
 
-const authenticated = false;
+const authenticated = true;
 // Stack Navigator
 const Stack = createStackNavigator();
 const StackNavigator = () => {

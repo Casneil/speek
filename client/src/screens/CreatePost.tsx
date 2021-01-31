@@ -3,24 +3,24 @@ import {Text} from "react-native";
 import {View} from "react-native";
 
 // Styles
-import {globalColors, layout} from "../../components/styles/globalStyles";
+
 import {TextInput} from "react-native-gesture-handler";
-import {APP_BASE_URL} from "../../constants";
+import {layout, globalColors} from "../components/styles/globalStyles";
+// import {APP_BASE_URL} from "../../constants";
 
 const CreatePost = () => {
-  const BASE_URL = APP_BASE_URL;
+  // const BASE_URL = APP_BASE_URL;
 
   const fetchData = async () => {
-    const getData = await fetch(BASE_URL, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    });
-    const response = await getData.json();
-
-    console.warn(response);
+    // const getData = await fetch(BASE_URL, {
+    //   method: "GET",
+    //   headers: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json",
+    //   },
+    // });
+    // const response = await getData.json();
+    // console.warn(response);
   };
 
   // useEffect(() => {
