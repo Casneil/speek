@@ -22,6 +22,7 @@ model User {
   password String  @default("")
   name     String?
   posts    Post[]
+  Profile Profile?
 }
 
 model Profile{
@@ -33,4 +34,12 @@ model Profile{
   avatar String?
   userId Int? @unique
   User User? @relation(fields: [userId], references: [id])
+}
+
+model Speek{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  content String
+  authorId Int?
+  author User? @relation(fields: [authorId], references:[id])
 }
