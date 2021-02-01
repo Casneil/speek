@@ -23,3 +23,14 @@ model User {
   name     String?
   posts    Post[]
 }
+
+model Profile{
+  id  Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  bio String?
+  location String?
+  website String?
+  avatar String?
+  userId Int? @unique
+  User User? @relation(fields: [userId], references: [id])
+}
