@@ -3,6 +3,7 @@ import {TextInput, TouchableOpacity, Dimensions} from "react-native";
 
 //3rd Party
 import Modal from "react-native-modal";
+import DocumentPicker from 'react-native-document-picker';
 import {gql, useMutation} from "@apollo/client";
 import {Formik} from "formik";
 import AntDesign from "react-native-vector-icons/AntDesign";
@@ -48,6 +49,27 @@ const CreateProfile: React.FC<ModalProps> = (props) => {
 
   const DEVICE_WIDTH = Dimensions.get("screen").width;
 
+  const chooseFiles = async () => {
+    // Pick a single file
+try {
+  const res = await DocumentPicker.pick({
+    type: [DocumentPicker.types.images],
+  });
+  console.log(
+    res.uri,
+    res.type, // mime type
+    res.name,
+    res.size
+  );
+} catch (err) {
+  if (DocumentPicker.isCancel(err)) {
+    // User cancelled the picker, exit any dialogs or menus and move on
+  } else {
+    throw err;
+  }
+}
+  }
+
   const [createProfile] = useMutation(CREATE_PROFILE_MUTATION, {
     // This needs to be in Profile after profile creating this refetch should be called.
     refetchQueries: [{query: ME_QUERY}],
@@ -89,24 +111,12 @@ const CreateProfile: React.FC<ModalProps> = (props) => {
                 <Box mx={60}>
                   <Box mb="sm">
                     <Box dir="row" align="center">
-                      <TextInput
-                        onChangeText={handleChange("avatar")}
-                        onBlur={handleBlur("avatar")}
-                        placeholder="avatar"
-                        placeholderTextColor="gray"
-                        maxLength={20}
-                        selectionColor={"#2196f3"}
-                        onFocus={() =>
-                          setBorderColor({...borderColor, bio: "#2196f3"})
-                        }
-                        value={values.avatar}
-                        style={{
-                          borderBottomWidth: 1,
-                          width: "100%",
-                          borderBottomColor: borderColor.bio,
-                          paddingVertical: 0,
-                        }}
-                      />
+                    <Box  dir="row" align="center">
+                    <Text size="sm" mr="xl" >Photo</Text>
+                    <TouchableOpacity onPress={() =>chooseFiles()} >
+                    <AntDesign name="picture" style={{fontSize:20}} />
+                    </TouchableOpacity>
+                    </Box>
                     </Box>
                   </Box>
                   <Box mb="sm">

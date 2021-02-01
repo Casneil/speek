@@ -12,6 +12,8 @@ target 'speek' do
 
   pod 'react-native-camera', :path => '../node_modules/react-native-camera'
 
+  pod 'react-native-document-picker', :path => '../node_modules/react-native-document-picker'
+
   target 'speekTests' do
     inherit! :complete
     # Pods for testing
