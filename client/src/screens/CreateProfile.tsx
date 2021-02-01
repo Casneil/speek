@@ -4,12 +4,11 @@ import {TextInput, TouchableOpacity, Image, Keyboard} from "react-native";
 import {TouchableWithoutFeedback} from "react-native-gesture-handler";
 
 //3rd Party
+import Modal from "react-native-modal";
 import {gql, useMutation} from "@apollo/client";
 import {Formik} from "formik";
 import * as Yup from "yup";
 import {Box, Text} from "react-native-design-utility";
-import AntDesign from "react-native-vector-icons/AntDesign";
-import Feather from "react-native-vector-icons/Feather";
 
 import {ME_QUERY} from "./Profile";
 
@@ -43,6 +42,23 @@ const CreateProfile = () => {
     website: "gray",
     avatar: "gray",
   });
+  /*
+TODO: Extract this to the profile screen if there isnt a profile there
+* should be a option to create on then this modal should be opened 
+* with the fields for profile information
+*/
+  // Modal for later use.
+  function WrapperComponent() {
+    return (
+      <Box>
+        <Modal isVisible={modalOpen}>
+          <Box style={{flex: 1}}>
+            <Text>I am the modal content!</Text>
+          </Box>
+        </Modal>
+      </Box>
+    );
+  }
 
   const [createProfile] = useMutation(CREATE_PROFILE_MUTATION, {
     refetchQueries: [{query: ME_QUERY}],
@@ -54,19 +70,6 @@ const CreateProfile = () => {
     website: "",
     avatar: "",
   };
-
-  const validationSchema = Yup.object({
-    bio: Yup.string()
-      .max(15, "Must be 20 characters or less")
-      .required("Name required"),
-    location: Yup.string()
-      .email("Invalid email address")
-      .required("Email required"),
-    website: Yup.string()
-      .max(20, "Must be 25 characters or less")
-      .required("Password required"),
-    avatar: Yup.string().oneOf([Yup.ref("password")], "Passwords must match"),
-  });
 
   const openModal = () => {
     setModalOpen(true);
@@ -81,7 +84,6 @@ const CreateProfile = () => {
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <Formik
             initialValues={initialValues}
-            validationSchema={validationSchema}
             onSubmit={async (values, {setSubmitting}) => {
               setSubmitting(true);
               await createProfile({
@@ -105,7 +107,7 @@ const CreateProfile = () => {
                         onFocus={() =>
                           setBorderColor({...borderColor, bio: "#2196f3"})
                         }
-                        value={values.bio}
+                        value={values.avatar}
                         style={{
                           borderBottomWidth: 1,
                           width: "100%",
@@ -114,11 +116,6 @@ const CreateProfile = () => {
                         }}
                       />
                     </Box>
-                    {errors.bio && (
-                      <Text style={{fontSize: 10, color: "red"}}>
-                        {errors.bio}
-                      </Text>
-                    )}
                   </Box>
                   <Box mb="sm">
                     <Box dir="row" align="center">
@@ -127,12 +124,11 @@ const CreateProfile = () => {
                         placeholder="bio"
                         onBlur={handleBlur("bio")}
                         keyboardType={"email-address"}
-                        maxLength={34}
                         selectionColor={"#2196f3"}
                         onFocus={() =>
                           setBorderColor({...borderColor, website: "#2196f3"})
                         }
-                        value={values.location}
+                        value={values.bio}
                         style={{
                           borderBottomWidth: 1,
                           width: "100%",
@@ -141,11 +137,6 @@ const CreateProfile = () => {
                         }}
                       />
                     </Box>
-                    {errors.location && (
-                      <Text style={{fontSize: 10, color: "red"}}>
-                        {errors.location}
-                      </Text>
-                    )}
                   </Box>
                   <Box mb="sm">
                     <Box dir="row" align="center">
@@ -160,7 +151,7 @@ const CreateProfile = () => {
                         onFocus={() =>
                           setBorderColor({...borderColor, location: "#2196f3"})
                         }
-                        value={values.website}
+                        value={values.location}
                         style={{
                           borderBottomWidth: 1,
                           width: "100%",
@@ -169,11 +160,6 @@ const CreateProfile = () => {
                         }}
                       />
                     </Box>
-                    {errors.website && (
-                      <Text style={{fontSize: 10, color: "red"}}>
-                        {errors.website}
-                      </Text>
-                    )}
                   </Box>
                   <Box mb="sm">
                     <Box dir="row" align="center">
@@ -192,7 +178,7 @@ const CreateProfile = () => {
                             confirmPassword: "#2196f3",
                           })
                         }
-                        value={values.avatar}
+                        value={values.website}
                         style={{
                           borderBottomWidth: 1,
                           width: "100%",
@@ -201,11 +187,6 @@ const CreateProfile = () => {
                         }}
                       />
                     </Box>
-                    {errors.avatar && (
-                      <Text style={{fontSize: 10, color: "red"}}>
-                        {errors.avatar}
-                      </Text>
-                    )}
                   </Box>
                 </Box>
                 <Box center my="sm">
