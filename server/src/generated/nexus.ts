@@ -38,13 +38,18 @@ export interface NexusGenObjects {
     user?: NexusGenRootTypes['User'] | null; // User
   }
   Mutation: {};
-  Post: { // root type
-    content?: string | null; // String
+  Profile: { // root type
+    avatar?: string | null; // String
+    bio?: string | null; // String
     id: number; // Int!
-    published: boolean; // Boolean!
-    title: string; // String!
+    location?: string | null; // String
+    website?: string | null; // String
   }
   Query: {};
+  Speek: { // root type
+    content?: string | null; // String
+    id: number; // Int!
+  }
   User: { // root type
     email: string; // String!
     id: number; // Int!
@@ -68,31 +73,31 @@ export interface NexusGenFieldTypes {
     user: NexusGenRootTypes['User'] | null; // User
   }
   Mutation: { // field return type
-    createDraft: NexusGenRootTypes['Post'] | null; // Post
-    deletePost: NexusGenRootTypes['Post'] | null; // Post
     login: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
-    publish: NexusGenRootTypes['Post'] | null; // Post
     signup: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
   }
-  Post: { // field return type
+  Profile: { // field return type
+    avatar: string | null; // String
+    bio: string | null; // String
+    id: number; // Int!
+    location: string | null; // String
+    website: string | null; // String
+  }
+  Query: { // field return type
+    me: NexusGenRootTypes['User'] | null; // User
+    users: Array<NexusGenRootTypes['User'] | null> | null; // [User]
+  }
+  Speek: { // field return type
     author: NexusGenRootTypes['User'] | null; // User
     content: string | null; // String
     id: number; // Int!
-    published: boolean; // Boolean!
-    title: string; // String!
-  }
-  Query: { // field return type
-    feed: Array<NexusGenRootTypes['Post'] | null> | null; // [Post]
-    filterPosts: Array<NexusGenRootTypes['Post'] | null> | null; // [Post]
-    me: NexusGenRootTypes['User'] | null; // User
-    post: NexusGenRootTypes['Post'] | null; // Post
-    users: Array<NexusGenRootTypes['User'] | null> | null; // [User]
   }
   User: { // field return type
+    Profile: NexusGenRootTypes['Profile'] | null; // Profile
     email: string; // String!
     id: number; // Int!
     name: string | null; // String
-    posts: NexusGenRootTypes['Post'][]; // [Post!]!
+    speeks: NexusGenRootTypes['Speek'][]; // [Speek!]!
   }
 }
 
@@ -102,62 +107,44 @@ export interface NexusGenFieldTypeNames {
     user: 'User'
   }
   Mutation: { // field return type name
-    createDraft: 'Post'
-    deletePost: 'Post'
     login: 'AuthPayload'
-    publish: 'Post'
     signup: 'AuthPayload'
   }
-  Post: { // field return type name
+  Profile: { // field return type name
+    avatar: 'String'
+    bio: 'String'
+    id: 'Int'
+    location: 'String'
+    website: 'String'
+  }
+  Query: { // field return type name
+    me: 'User'
+    users: 'User'
+  }
+  Speek: { // field return type name
     author: 'User'
     content: 'String'
     id: 'Int'
-    published: 'Boolean'
-    title: 'String'
-  }
-  Query: { // field return type name
-    feed: 'Post'
-    filterPosts: 'Post'
-    me: 'User'
-    post: 'Post'
-    users: 'User'
   }
   User: { // field return type name
+    Profile: 'Profile'
     email: 'String'
     id: 'Int'
     name: 'String'
-    posts: 'Post'
+    speeks: 'Speek'
   }
 }
 
 export interface NexusGenArgTypes {
   Mutation: {
-    createDraft: { // args
-      content?: string | null; // String
-      title: string; // String!
-    }
-    deletePost: { // args
-      id: number; // Int!
-    }
     login: { // args
       email: string; // String!
       password: string; // String!
-    }
-    publish: { // args
-      id: number; // Int!
     }
     signup: { // args
       email: string; // String!
       name?: string | null; // String
       password: string; // String!
-    }
-  }
-  Query: {
-    filterPosts: { // args
-      searchString?: string | null; // String
-    }
-    post: { // args
-      id?: number | null; // Int
     }
   }
 }
