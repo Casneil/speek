@@ -73,8 +73,10 @@ export interface NexusGenFieldTypes {
     user: NexusGenRootTypes['User'] | null; // User
   }
   Mutation: { // field return type
+    createProfile: NexusGenRootTypes['Profile'] | null; // Profile
     login: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
     signup: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
+    updateProfile: NexusGenRootTypes['Profile'] | null; // Profile
   }
   Profile: { // field return type
     avatar: string | null; // String
@@ -107,8 +109,10 @@ export interface NexusGenFieldTypeNames {
     user: 'User'
   }
   Mutation: { // field return type name
+    createProfile: 'Profile'
     login: 'AuthPayload'
     signup: 'AuthPayload'
+    updateProfile: 'Profile'
   }
   Profile: { // field return type name
     avatar: 'String'
@@ -137,6 +141,12 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    createProfile: { // args
+      avatar?: string | null; // String
+      bio?: string | null; // String
+      location?: string | null; // String
+      website?: string | null; // String
+    }
     login: { // args
       email: string; // String!
       password: string; // String!
@@ -145,6 +155,13 @@ export interface NexusGenArgTypes {
       email: string; // String!
       name?: string | null; // String
       password: string; // String!
+    }
+    updateProfile: { // args
+      avatar?: string | null; // String
+      bio?: string | null; // String
+      id?: number | null; // Int
+      location?: string | null; // String
+      website?: string | null; // String
     }
   }
 }

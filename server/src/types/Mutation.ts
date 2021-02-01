@@ -98,5 +98,44 @@ export const Mutation = mutationType({
     //         })
     //       },
     //     })
+
+    t.field('createProfile', {
+      type: 'Profile',
+      args: {
+        bio: stringArg(),
+        location: stringArg(),
+        website: stringArg(),
+        avatar: stringArg(),
+      },
+      resolve: (parent, args, ctx) => {
+        const userId = getUserId(ctx)
+        if (!userId) throw new Error('Could not authenticate user.')
+        return ctx.prisma.profile.create({
+          data: { ...args, User: { connect: { id: Number(userId) } } },
+        })
+      },
+    })
+
+    t.field('updateProfile', {
+      type: 'Profile',
+      args: {
+        id: intArg(),
+        bio: stringArg(),
+        location: stringArg(),
+        website: stringArg(),
+        avatar: stringArg(),
+      },
+      resolve: (parent, { id, ...args }, ctx) => {
+        const userId = getUserId(ctx)
+        if (!userId) throw new Error('Could not authenticate user.')
+
+        return ctx.prisma.profile.update({
+          data: { ...args },
+          where: {
+            id: Number(id),
+          },
+        })
+      },
+    })
   },
 })
