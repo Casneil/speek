@@ -31,3 +31,10 @@ export interface IAuthInterface {
   token?: string;
   setUserToken?: (token: string) => void;
 }
+
+export interface IColorProps {
+  email: string;
+  name?: string;
+  password: string;
+  confirmPassword?: string;
+}

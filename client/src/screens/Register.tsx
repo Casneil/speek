@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
   TextInput,
   TouchableOpacity,
@@ -22,7 +22,7 @@ import {Box, Text} from "react-native-design-utility";
 import {useAuthContext} from "../components/context/AuthContext";
 
 // Emuns and Interfaces
-import {IRegisterInterface} from "../components/Interfaces";
+import {IRegisterInterface, IColorProps} from "../components/Interfaces";
 //Resource
 const icon = require("../rsc/icon.jpg");
 
@@ -36,6 +36,12 @@ const SIGN_UP_MUTATION = gql`
 `;
 
 const Register = () => {
+  const [borderColor, setBorderColor] = useState<IColorProps>({
+    name: "gray",
+    email: "gray",
+    password: "gray",
+    confirmPassword: "gray",
+  });
   const [signup, {data}] = useMutation(SIGN_UP_MUTATION);
 
   const navigation = useNavigation();
@@ -107,7 +113,7 @@ const Register = () => {
             {({handleChange, handleBlur, handleSubmit, values, errors}) => (
               <>
                 <Box mx={60}>
-                  <Box>
+                  <Box mb="sm">
                     <Box dir="row" align="center">
                       <Box position="absolute" right={0} ml="sm">
                         <AntDesign name="user" size={18} color="black" />
@@ -117,11 +123,15 @@ const Register = () => {
                         onBlur={handleBlur("name")}
                         placeholder="Enter your username"
                         placeholderTextColor="gray"
+                        onFocus={() =>
+                          setBorderColor({...borderColor, name: "#2196f3"})
+                        }
                         value={values.name}
                         style={{
                           borderBottomWidth: 1,
                           width: "100%",
-                          borderBottomColor: "gray",
+                          borderBottomColor: borderColor.name,
+                          paddingVertical: 0,
                         }}
                       />
                     </Box>
@@ -131,7 +141,7 @@ const Register = () => {
                       </Text>
                     )}
                   </Box>
-                  <Box>
+                  <Box mb="sm">
                     <Box dir="row" align="center">
                       <Box position="absolute" right={0} ml="sm">
                         <AntDesign name="mail" size={18} color="black" />
@@ -141,11 +151,15 @@ const Register = () => {
                         placeholder="Enter your email address"
                         onBlur={handleBlur("email")}
                         keyboardType={"email-address"}
+                        onFocus={() =>
+                          setBorderColor({...borderColor, email: "#2196f3"})
+                        }
                         value={values.email}
                         style={{
                           borderBottomWidth: 1,
                           width: "100%",
-                          borderBottomColor: "gray",
+                          borderBottomColor: borderColor.email,
+                          paddingVertical: 0,
                         }}
                       />
                     </Box>
@@ -155,7 +169,7 @@ const Register = () => {
                       </Text>
                     )}
                   </Box>
-                  <Box>
+                  <Box mb="sm">
                     <Box dir="row" align="center">
                       <Box position="absolute" right={0} ml="sm">
                         <AntDesign name="lock" size={18} color="black" />
@@ -167,11 +181,15 @@ const Register = () => {
                         placeholder="password"
                         placeholderTextColor="gray"
                         secureTextEntry={true}
+                        onFocus={() =>
+                          setBorderColor({...borderColor, password: "#2196f3"})
+                        }
                         value={values.password}
                         style={{
                           borderBottomWidth: 1,
                           width: "100%",
-                          borderBottomColor: "gray",
+                          borderBottomColor: borderColor.password,
+                          paddingVertical: 0,
                         }}
                       />
                     </Box>
@@ -181,7 +199,7 @@ const Register = () => {
                       </Text>
                     )}
                   </Box>
-                  <Box>
+                  <Box mb="sm">
                     <Box dir="row" align="center">
                       <Box position="absolute" right={0} ml="sm">
                         <Feather
@@ -206,11 +224,18 @@ const Register = () => {
                         placeholder="confirm password"
                         placeholderTextColor="gray"
                         secureTextEntry={true}
+                        onFocus={() =>
+                          setBorderColor({
+                            ...borderColor,
+                            confirmPassword: "#2196f3",
+                          })
+                        }
                         value={values.confirmPassword}
                         style={{
                           borderBottomWidth: 1,
                           width: "100%",
-                          borderBottomColor: "gray",
+                          borderBottomColor: borderColor.confirmPassword,
+                          paddingVertical: 0,
                         }}
                       />
                     </Box>

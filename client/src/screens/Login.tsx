@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 // Native imports
 import {
   TextInput,
@@ -21,7 +21,7 @@ import {Box, Text} from "react-native-design-utility";
 // Context
 import {useAuthContext} from "../components/context/AuthContext";
 // Emuns and Interfaces
-import {ILoginInterface} from "../components/Interfaces";
+import {ILoginInterface, IColorProps} from "../components/Interfaces";
 //Resource
 const icon = require("../rsc/icon.jpg");
 // Styles
@@ -37,6 +37,10 @@ const LOGIN_MUTATION = gql`
 
 const Login = () => {
   const [login, {data}] = useMutation(LOGIN_MUTATION);
+  const [borderColor, setBorderColor] = useState<IColorProps>({
+    email: "gray",
+    password: "gray",
+  });
   const navigation = useNavigation();
 
   const {setUserToken} = useAuthContext();
@@ -98,7 +102,7 @@ const Login = () => {
             {({handleChange, handleBlur, handleSubmit, values, errors}) => (
               <Box>
                 <Box mx={60}>
-                  <Box>
+                  <Box mb="md">
                     <Box dir="row" align="center">
                       <Box position="absolute" right={0}>
                         <AntDesign name="mail" size={18} color="black" />
@@ -109,11 +113,16 @@ const Login = () => {
                           placeholder="Enter your email address"
                           onBlur={handleBlur("email")}
                           keyboardType={"email-address"}
+                          selectionColor={"#2196f3"}
+                          onFocus={() =>
+                            setBorderColor({...borderColor, email: "#2196f3"})
+                          }
                           value={values.email}
                           style={{
                             borderBottomWidth: 1,
                             width: "100%",
-                            borderBottomColor: "gray",
+                            borderBottomColor: borderColor.email,
+                            paddingVertical: 0,
                           }}
                         />
                       </Box>
@@ -124,7 +133,7 @@ const Login = () => {
                       </Text>
                     )}
                   </Box>
-                  <Box>
+                  <Box mb="md">
                     <Box dir="row" align="center">
                       <Box position="absolute" right={0}>
                         <AntDesign name="lock" size={18} color="black" />
@@ -135,11 +144,16 @@ const Login = () => {
                         placeholder="Password"
                         placeholderTextColor="gray"
                         secureTextEntry={true}
+                        selectionColor={"#2196f3"}
+                        onFocus={() =>
+                          setBorderColor({...borderColor, password: "#2196f3"})
+                        }
                         value={values.password}
                         style={{
                           borderBottomWidth: 1,
                           width: "100%",
-                          borderBottomColor: "gray",
+                          borderBottomColor: borderColor.password,
+                          paddingVertical: 0,
                         }}
                       />
                     </Box>
@@ -150,7 +164,7 @@ const Login = () => {
                     )}
                   </Box>
                 </Box>
-                <Box center my="sm">
+                <Box center mb="sm">
                   <Box
                     bg="white"
                     w={100}
