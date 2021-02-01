@@ -1,13 +1,11 @@
 import React, {useState} from "react";
-import {TextInput, TouchableOpacity, Image, Keyboard} from "react-native";
-
-import {TouchableWithoutFeedback} from "react-native-gesture-handler";
+import {TextInput, TouchableOpacity, Dimensions} from "react-native";
 
 //3rd Party
 import Modal from "react-native-modal";
 import {gql, useMutation} from "@apollo/client";
 import {Formik} from "formik";
-import * as Yup from "yup";
+import AntDesign from "react-native-vector-icons/AntDesign";
 import {Box, Text} from "react-native-design-utility";
 
 import {ME_QUERY} from "./Profile";
@@ -34,33 +32,24 @@ const CREATE_PROFILE_MUTATION = gql`
   }
 `;
 
-const CreateProfile = () => {
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
+type ModalProps = {
+  show: boolean;
+  closeModal: () => void;
+};
+
+const CreateProfile: React.FC<ModalProps> = (props) => {
+  const {show, closeModal} = props;
   const [borderColor, setBorderColor] = useState<IColorProps>({
     bio: "gray",
     location: "gray",
     website: "gray",
     avatar: "gray",
   });
-  /*
-TODO: Extract this to the profile screen if there isnt a profile there
-* should be a option to create on then this modal should be opened 
-* with the fields for profile information
-*/
-  // Modal for later use.
-  function WrapperComponent() {
-    return (
-      <Box>
-        <Modal isVisible={modalOpen}>
-          <Box style={{flex: 1}}>
-            <Text>I am the modal content!</Text>
-          </Box>
-        </Modal>
-      </Box>
-    );
-  }
+
+  const DEVICE_WIDTH = Dimensions.get("screen").width;
 
   const [createProfile] = useMutation(CREATE_PROFILE_MUTATION, {
+    // This needs to be in Profile after profile creating this refetch should be called.
     refetchQueries: [{query: ME_QUERY}],
   });
 
@@ -71,17 +60,20 @@ TODO: Extract this to the profile screen if there isnt a profile there
     avatar: "",
   };
 
-  const openModal = () => {
-    setModalOpen(true);
-  };
-  const closeModal = () => {
-    setModalOpen(false);
-  };
-
   return (
-    <Box my="lg">
-      <>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <Modal
+      isVisible={show}
+      backdropOpacity={1}
+      backdropColor="white"
+      animationIn="bounceInLeft"
+      animationOut="bounceOutLeft">
+      <Box my="lg">
+        <>
+          <Box p="absolute" bottom={100} left={DEVICE_WIDTH - 100}>
+            <TouchableOpacity onPress={closeModal}>
+              <AntDesign name="closecircle" style={{fontSize: 24}} />
+            </TouchableOpacity>
+          </Box>
           <Formik
             initialValues={initialValues}
             onSubmit={async (values, {setSubmitting}) => {
@@ -122,6 +114,7 @@ TODO: Extract this to the profile screen if there isnt a profile there
                       <TextInput
                         onChangeText={handleChange("bio")}
                         placeholder="bio"
+                        placeholderTextColor="gray"
                         onBlur={handleBlur("bio")}
                         keyboardType={"email-address"}
                         selectionColor={"#2196f3"}
@@ -149,7 +142,10 @@ TODO: Extract this to the profile screen if there isnt a profile there
                         maxLength={25}
                         selectionColor={"#2196f3"}
                         onFocus={() =>
-                          setBorderColor({...borderColor, location: "#2196f3"})
+                          setBorderColor({
+                            ...borderColor,
+                            location: "#2196f3",
+                          })
                         }
                         value={values.location}
                         style={{
@@ -206,9 +202,9 @@ TODO: Extract this to the profile screen if there isnt a profile there
               </>
             )}
           </Formik>
-        </TouchableWithoutFeedback>
-      </>
-    </Box>
+        </>
+      </Box>
+    </Modal>
   );
 };
 

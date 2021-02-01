@@ -1,4 +1,4 @@
-import React, {useRef, createRef, useEffect, useState} from "react";
+import React, {useRef, createRef, useState} from "react";
 import {Image, TouchableOpacity} from "react-native";
 
 //3rd Party
@@ -7,6 +7,9 @@ import {useCamera} from "react-native-camera-hooks";
 import {gql, useQuery} from "@apollo/client";
 import {Box, Text} from "react-native-design-utility";
 import AntDesign from "react-native-vector-icons/AntDesign";
+
+// Components
+import CreateProfile from "./CreateProfile";
 
 // Resource
 const anonymous_user = require("../rsc/anonymous_user.png");
@@ -28,7 +31,9 @@ export const ME_QUERY = gql`
 `;
 
 const Profile = () => {
+  // RNCamera state
   const [toggleOn, setToggleOn] = useState<boolean>(false);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
   // const [
   //   {cameraRef, type, ratio, autoFocus, autoFocusPoint, isRecording},
   //   {
@@ -46,10 +51,17 @@ const Profile = () => {
   if (loading) return <Text>loading...</Text>;
   if (error) return <Text>{error.message}</Text>;
 
-  useEffect(() => {}, []);
+  // Modal
+  const openModal = () => {
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
   return (
     <Box bg="white" f={1}>
+      {modalOpen && <CreateProfile show={modalOpen} closeModal={closeModal} />}
       <Box center my="lg">
         <Image
           source={anonymous_user}
@@ -84,6 +96,12 @@ const Profile = () => {
           <Text>{data.me.profile.website}</Text>
         </>
       )} */}
+      <Box>
+        <Text>dont have a profile? create one</Text>
+        <TouchableOpacity onPress={() => setModalOpen(true)}>
+          <Text> create one</Text>
+        </TouchableOpacity>
+      </Box>
     </Box>
   );
 };
