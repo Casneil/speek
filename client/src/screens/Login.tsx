@@ -13,7 +13,7 @@ import {useNavigation} from "@react-navigation/native";
 
 // Third Party
 import {gql, useMutation} from "@apollo/client";
-import {ErrorMessage, Field, Form, Formik} from "formik";
+import {Formik} from "formik";
 import * as Yup from "yup";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import {Box, Text} from "react-native-design-utility";
@@ -55,7 +55,7 @@ const Login = () => {
       .email("Invalid email address")
       .required("Email required"),
     password: Yup.string()
-      .max(20, "Must be 20 characters or less")
+      .max(20, "Must be 25 characters or less")
       .required("Password required"),
   });
 
@@ -113,6 +113,7 @@ const Login = () => {
                           placeholder="Enter your email address"
                           onBlur={handleBlur("email")}
                           keyboardType={"email-address"}
+                          maxLength={34}
                           selectionColor={"#2196f3"}
                           onFocus={() =>
                             setBorderColor({...borderColor, email: "#2196f3"})
@@ -136,7 +137,7 @@ const Login = () => {
                   <Box mb="md">
                     <Box dir="row" align="center">
                       <Box position="absolute" right={0}>
-                        <AntDesign name="lock" size={18} color="black" />
+                        <AntDesign name="lock" size={20} color="black" />
                       </Box>
                       <TextInput
                         onChangeText={handleChange("password")}
@@ -144,6 +145,7 @@ const Login = () => {
                         placeholder="Password"
                         placeholderTextColor="gray"
                         secureTextEntry={true}
+                        maxLength={25}
                         selectionColor={"#2196f3"}
                         onFocus={() =>
                           setBorderColor({...borderColor, password: "#2196f3"})
@@ -178,22 +180,7 @@ const Login = () => {
                     </TouchableOpacity>
                   </Box>
                 </Box>
-                {/*Register Links*/}
-                <Box dir="row" justify="center" my={4}>
-                  <Text size="sm">Don't have an account?</Text>
-                  <TouchableOpacity
-                    style={{marginLeft: 10}}
-                    onPress={() => navigation.navigate("Register")}>
-                    <Text
-                      size="sm"
-                      bold
-                      style={{
-                        textDecorationLine: "underline",
-                      }}>
-                      Register
-                    </Text>
-                  </TouchableOpacity>
-                </Box>
+                {/*Password Reset*/}
                 <Box dir="row" justify="center">
                   <Text size="sm">Forget your password?</Text>
                   <TouchableOpacity style={{marginLeft: 10}}>

@@ -12,7 +12,7 @@ import {useNavigation} from "@react-navigation/native";
 
 // 3rd Party
 import {gql, useMutation} from "@apollo/client";
-import {ErrorMessage, Field, Form, Formik} from "formik";
+import {Formik} from "formik";
 import * as Yup from "yup";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import Feather from "react-native-vector-icons/Feather";
@@ -56,13 +56,13 @@ const Register = () => {
 
   const validationSchema = Yup.object({
     name: Yup.string()
-      .max(15, "Must be 15 characters or less")
+      .max(15, "Must be 20 characters or less")
       .required("Name required"),
     email: Yup.string()
       .email("Invalid email address")
       .required("Email required"),
     password: Yup.string()
-      .max(20, "Must be 20 characters or less")
+      .max(20, "Must be 25 characters or less")
       .required("Password required"),
     confirmPassword: Yup.string().oneOf(
       [Yup.ref("password")],
@@ -123,6 +123,8 @@ const Register = () => {
                         onBlur={handleBlur("name")}
                         placeholder="Enter your username"
                         placeholderTextColor="gray"
+                        maxLength={20}
+                        selectionColor={"#2196f3"}
                         onFocus={() =>
                           setBorderColor({...borderColor, name: "#2196f3"})
                         }
@@ -151,6 +153,8 @@ const Register = () => {
                         placeholder="Enter your email address"
                         onBlur={handleBlur("email")}
                         keyboardType={"email-address"}
+                        maxLength={34}
+                        selectionColor={"#2196f3"}
                         onFocus={() =>
                           setBorderColor({...borderColor, email: "#2196f3"})
                         }
@@ -172,7 +176,7 @@ const Register = () => {
                   <Box mb="sm">
                     <Box dir="row" align="center">
                       <Box position="absolute" right={0} ml="sm">
-                        <AntDesign name="lock" size={18} color="black" />
+                        <AntDesign name="lock" size={20} color="black" />
                       </Box>
 
                       <TextInput
@@ -181,6 +185,8 @@ const Register = () => {
                         placeholder="password"
                         placeholderTextColor="gray"
                         secureTextEntry={true}
+                        maxLength={25}
+                        selectionColor={"#2196f3"}
                         onFocus={() =>
                           setBorderColor({...borderColor, password: "#2196f3"})
                         }
@@ -223,7 +229,9 @@ const Register = () => {
                         onBlur={handleBlur("confirmPassword")}
                         placeholder="confirm password"
                         placeholderTextColor="gray"
+                        maxLength={25}
                         secureTextEntry={true}
+                        selectionColor={"#2196f3"}
                         onFocus={() =>
                           setBorderColor({
                             ...borderColor,
@@ -259,22 +267,6 @@ const Register = () => {
                       </Text>
                     </TouchableOpacity>
                   </Box>
-                </Box>
-                {/*Register Links*/}
-                <Box dir="row" justify="center" my={4}>
-                  <Text size="sm">already have an account?</Text>
-                  <TouchableOpacity
-                    style={{marginLeft: 10}}
-                    onPress={() => navigation.navigate("Login")}>
-                    <Text
-                      size="sm"
-                      bold
-                      style={{
-                        textDecorationLine: "underline",
-                      }}>
-                      login
-                    </Text>
-                  </TouchableOpacity>
                 </Box>
               </>
             )}
