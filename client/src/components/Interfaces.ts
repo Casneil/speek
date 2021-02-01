@@ -33,8 +33,19 @@ export interface IAuthInterface {
 }
 
 export interface IColorProps {
-  email: string;
+  email?: string;
   name?: string;
-  password: string;
+  password?: string;
   confirmPassword?: string;
+  location?: string;
+  bio?: string;
+  avatar?: string;
+  website?: string;
+}
+
+export interface IUserProfile {
+  bio?: string;
+  location?: string;
+  website?: string;
+  avatar?: string;
 }

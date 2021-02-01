@@ -1,49 +1,38 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import {useQuery, gql} from "@apollo/client";
 
-// import {axiosInstance} from "../../components/axios/axios";
-// import axios from "axios";
-// Interfaces
-import {IPostInterface} from "../components/Interfaces";
-// Imports
-import Users from "../components/Users";
-// import {APP_BASE_URL} from "../../constants";
+import {Box, Text} from "react-native-design-utility";
 
-const HomeScreen = () => {
-  const [posts, setPost] = useState<IPostInterface[] | undefined>();
+//Interfaces
+import {IUSER} from "../components/Interfaces";
 
-  const fetchData = async () => {
-    const access = await AsyncStorage.getItem("access_token");
-    const refresh = await AsyncStorage.getItem("refresh_token");
-    // axios
-    //   .get(APP_BASE_URL, {
-    //     headers: {
-    //       Authorization: `JWT ${access}`,
-    //       "Content-Type": "application/json",
-    //     },
-    //   })
-    //   .then((response) => {
-    //     setPost(response.data);
-    //     console.log("Posts:", posts);
-    //   })
-    //   .catch((error) => {
-    //     console.warn(error);
-    //   });
-  };
+// Query
+const USERS_QUERY = gql`
+  query USER_QUERY {
+    users {
+      id
+      name
+    }
+  }
+`;
 
-  useEffect(() => {
-    fetchData().then((res) => {
-      console.log(res);
-    });
-  }, []);
+const Users = () => {
+  //States
+  const {loading, error, data} = useQuery(USERS_QUERY);
 
-  // return <>{posts && <Post posts={posts} />}</>;
+  if (loading) return <Text>Loading...</Text>;
+  if (error) <Text>{error.message}</Text>;
+
   return (
-    <>
-      <Users />
-    </>
+    <Box f={1} bg="white">
+      {data.users.map((user: IUSER) => (
+        <Text color="black" size="xl" key={user.id}>
+          {user.name}
+        </Text>
+      ))}
+    </Box>
   );
 };
 
-export default HomeScreen;
+export default Users;
