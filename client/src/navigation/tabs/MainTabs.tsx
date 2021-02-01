@@ -1,18 +1,30 @@
 import React from "react";
+
 // Third party
 import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
 import FontAwesome from "react-native-vector-icons/FontAwesome5";
 import Entypo from "react-native-vector-icons/Entypo";
-// Screens
+import {createDrawerNavigator} from "@react-navigation/drawer";
 
+// Screens
 import Home from "../../screens/Home";
-import CreatePost from "../../screens/CreatePost";
 import Users from "../../components/Users";
 import Logout from "../../screens/Logout";
+import Profile from "../../screens/Profile";
 
 // Styles
 import {globalColors} from "../../components/styles/globalStyles";
 
+// Drawer Navigator
+const Drawer = createDrawerNavigator();
+
+const myDrawer = () => {
+  return (
+    <Drawer.Navigator>
+      <Drawer.Screen name="Logout" component={Logout} />
+    </Drawer.Navigator>
+  );
+};
 // Tab Navigator
 const TabNavigator = createMaterialTopTabNavigator();
 export const MainTabs = () => {
@@ -60,9 +72,9 @@ export const MainTabs = () => {
           inactiveTintColor: "gray",
           tabStyle: {marginBottom: 4},
         }}>
-        <TabNavigator.Screen name="Home" component={Home} />
-        <TabNavigator.Screen name="Post" component={CreatePost} />
-        <TabNavigator.Screen name="Users" component={Users} />
+        <TabNavigator.Screen name="Explore" component={Home} />
+        <TabNavigator.Screen name="Feed" component={Users} />
+        <TabNavigator.Screen name="Profile" component={Profile} />
         <TabNavigator.Screen name="LogOut" component={Logout} />
       </TabNavigator.Navigator>
     </>
