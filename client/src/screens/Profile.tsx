@@ -45,7 +45,7 @@ const Profile = () => {
   //     setIsRecording,
   //   },
   // ] = useCamera(initialProps);
-  const {loading, error, data} = useQuery(ME_QUERY);
+  const {loading, error, data} = useQuery(ME_QUERY, {});
   console.log(data);
 
   if (loading) return <Text>loading...</Text>;
@@ -61,20 +61,23 @@ const Profile = () => {
 
   return (
     <Box bg="white" f={1}>
-      {modalOpen && <CreateProfile show={modalOpen} closeModal={closeModal} />}
-      <Box center my="lg">
-        <Image
-          source={anonymous_user}
-          style={{
-            height: 80,
-            width: 80,
-            borderRadius: 50,
-            marginBottom: 2,
-          }}
-        />
-        <Box o={0.7} p="relative">
-          <TouchableOpacity>
-            {/* <RNCamera
+      <Box mx={60}>
+        {modalOpen && (
+          <CreateProfile show={modalOpen} closeModal={closeModal} />
+        )}
+        <Box center my="lg">
+          <Image
+            source={anonymous_user}
+            style={{
+              height: 80,
+              width: 80,
+              borderRadius: 50,
+              marginBottom: 2,
+            }}
+          />
+          <Box o={0.7} p="relative">
+            <TouchableOpacity>
+              {/* <RNCamera
               ref={cameraRef}
               autoFocusPointOfInterest={autoFocusPoint.normalized}
               type={type}
@@ -84,23 +87,28 @@ const Profile = () => {
               onTextRecognized={textRecognized}
               onFacesDetected={facesDetected}
             /> */}
-            <AntDesign name="camera" style={{fontSize: 18}} />
+              <AntDesign name="camera" style={{fontSize: 18}} />
+            </TouchableOpacity>
+          </Box>
+        </Box>
+
+        <>
+          {data.me.Profile && (
+            <>
+              <Text>{data.me.Profile.bio}</Text>
+              <Text>{data.me.Profile.avatar}</Text>
+              <Text>{data.me.Profile.location}</Text>
+              <Text>{data.me.Profile.website}</Text>
+            </>
+          )}
+        </>
+
+        <Box>
+          {!data.me.Profile && <Text>No profile data found</Text>}
+          <TouchableOpacity onPress={() => setModalOpen(true)}>
+            {!data.me.Profile && <Text> create one</Text>}
           </TouchableOpacity>
         </Box>
-      </Box>
-      {/* {data.profile.me && (
-        <>
-          <Text>{data.me.profile.bio}</Text>
-          <Text>{data.me.profile.avatar}</Text>
-          <Text>{data.me.profile.location}</Text>
-          <Text>{data.me.profile.website}</Text>
-        </>
-      )} */}
-      <Box>
-        <Text>dont have a profile? create one</Text>
-        <TouchableOpacity onPress={() => setModalOpen(true)}>
-          <Text> create one</Text>
-        </TouchableOpacity>
       </Box>
     </Box>
   );
