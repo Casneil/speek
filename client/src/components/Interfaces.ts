@@ -24,7 +24,7 @@ export interface ISpeekInterface {
   excerpt?: string;
   status?: string;
   title?: string;
-  posts?: any;
+  speeks?: any;
 }
 export interface IAuthInterface {
   authenticated?: boolean;
@@ -43,6 +43,9 @@ export interface IColorProps {
   bio?: string;
   avatar?: string;
   website?: string;
+  title?: string;
+  excerpt?: string;
+  content?: string;
 }
 
 export interface IUserProfile {

@@ -151,6 +151,8 @@ export interface NexusGenArgTypes {
     }
     createSpeek: { // args
       content?: string | null; // String
+      excerpt?: string | null; // String
+      title?: string | null; // String
     }
     login: { // args
       email: string; // String!

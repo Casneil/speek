@@ -96,14 +96,18 @@ export const Mutation = mutationType({
     t.field('createSpeek', {
       type: 'Speek',
       args: {
+        title: stringArg(),
+        excerpt: stringArg(),
         content: stringArg(),
       },
-      resolve: (parent, { content }, ctx) => {
+      resolve: (parent, { content, title, excerpt }, ctx) => {
         const userId = getUserId(ctx)
         if (!userId) throw new Error('Could not authenticate user.')
         return ctx.prisma.speek.create({
           data: {
             content,
+            title,
+            excerpt,
             author: { connect: { id: Number(userId) } },
           },
         })
