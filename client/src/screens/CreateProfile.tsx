@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   Dimensions,
   PermissionsAndroid,
+  Image,
 } from "react-native";
 
 //3rd Party
@@ -18,7 +19,7 @@ import {ME_QUERY} from "./Profile";
 
 //Enums and Interfaces
 import {IColorProps, IUserProfile} from "../components/Interfaces";
-import {FileLocationEnum} from "../components/enums";
+import {FileLocationEnum, PhotoFileEnum} from "../components/enums";
 
 //Mutation
 const CREATE_PROFILE_MUTATION = gql`
@@ -46,6 +47,7 @@ type ModalProps = {
 
 const CreateProfile: React.FC<ModalProps> = (props) => {
   const {show, closeModal} = props;
+  const [imageUrl, setImageUrl] = useState<string>();
   const [borderColor, setBorderColor] = useState<IColorProps>({
     bio: "gray",
     location: "gray",
@@ -83,6 +85,7 @@ const CreateProfile: React.FC<ModalProps> = (props) => {
           // @ts-ignore
           ImagePicker.launchCamera(options, (response: any) => {
             console.log("Response = ", response);
+            setImageUrl(response.base64);
             if (response.didCancel) {
               console.log("User cancelled image picker");
             } else if (response.error) {
@@ -105,6 +108,7 @@ const CreateProfile: React.FC<ModalProps> = (props) => {
         // @ts-ignore
         ImagePicker.launchImageLibrary(options, (response: any) => {
           console.log("Response = ", response);
+          setImageUrl(response.base64);
           if (response.didCancel) {
             console.log("User cancelled image picker");
           } else if (response.error) {
@@ -139,6 +143,8 @@ const CreateProfile: React.FC<ModalProps> = (props) => {
     website: "",
     avatar: "",
   };
+  console.log("TES", imageUrl);
+
   return (
     <Modal
       isVisible={show}
@@ -158,7 +164,7 @@ const CreateProfile: React.FC<ModalProps> = (props) => {
             onSubmit={async (values, {setSubmitting}) => {
               await setSubmitting(true);
               await createProfile({
-                variables: values,
+                variables: {...values, avatar: imageUrl},
               });
               //@ts-ignore
               setSubmitting(false);
@@ -168,32 +174,48 @@ const CreateProfile: React.FC<ModalProps> = (props) => {
               <>
                 <Box mx={60}>
                   <Box mb="sm">
-                    <Box dir="row" align="center">
+                    {!imageUrl ? (
                       <Box dir="row" align="center">
-                        <Text size="sm" mr="xl">
-                          Photo
-                        </Text>
-                        <Box mr="sm">
-                          <TouchableOpacity
-                            onPress={() =>
-                              chooseLocation(FileLocationEnum.CAMERA)
-                            }>
-                            <AntDesign name="picture" style={{fontSize: 20}} />
-                          </TouchableOpacity>
-                        </Box>
-                        <Box>
-                          <TouchableOpacity
-                            onPress={() =>
-                              chooseLocation(FileLocationEnum.FILES)
-                            }>
-                            <AntDesign
-                              name="folderopen"
-                              style={{fontSize: 20}}
-                            />
-                          </TouchableOpacity>
+                        <Box dir="row" align="center">
+                          <Text size="sm" mr="xl">
+                            Photo
+                          </Text>
+                          <Box mr="sm">
+                            <TouchableOpacity
+                              onPress={() =>
+                                chooseLocation(FileLocationEnum.CAMERA)
+                              }>
+                              <AntDesign name="camera" style={{fontSize: 20}} />
+                            </TouchableOpacity>
+                          </Box>
+                          <Box>
+                            <TouchableOpacity
+                              onPress={() =>
+                                chooseLocation(FileLocationEnum.FILES)
+                              }>
+                              <AntDesign
+                                name="folderopen"
+                                style={{fontSize: 20}}
+                              />
+                            </TouchableOpacity>
+                          </Box>
                         </Box>
                       </Box>
-                    </Box>
+                    ) : (
+                      <Box align="center" justify="center">
+                        <Image
+                          source={{
+                            uri: `data:image/jpeg;base64,${imageUrl}`,
+                          }}
+                          style={{
+                            height: PhotoFileEnum.HEIGHT,
+                            width: PhotoFileEnum.WIDTH,
+                            borderRadius: PhotoFileEnum.BORDER_RADIUS,
+                            marginBottom: PhotoFileEnum.MARGIN_BOTTOM,
+                          }}
+                        />
+                      </Box>
+                    )}
                   </Box>
                   <Box mb="sm">
                     <Box dir="row" align="center">
