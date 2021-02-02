@@ -1,5 +1,5 @@
 import React from "react";
-import {SafeAreaView, FlatList} from "react-native";
+import {SafeAreaView, FlatList, TouchableOpacity} from "react-native";
 
 //3rd party
 import {Box, Text} from "react-native-design-utility";
@@ -23,35 +23,65 @@ const Speek: React.FC<SpeekTypes> = (props: SpeekTypes) => {
   const {speek, id} = props;
 
   const Item = ({title, content, excerpt, author}: ISpeekInterface) => (
-    <Box mx={50} mb="sm">
-      {author?.Profile.avatar ? (
-        <MyImageComponent
-          width={40}
-          height={40}
-          where={ImageLocationEnum.INTERNET}
-          source={author.Profile.avatar}
-          type={"jpeg"}
-        />
-      ) : (
-        <MyImageComponent width={40} height={40} />
-      )}
-      <Box>
-        <Text mb={4} size="sm" lineH="tight" color="blue">
-          {title}
-        </Text>
-      </Box>
-      <Box>
-        <Text mb={2} size="sm" lineH="tight" color="blueLightest">
-          {excerpt}
-        </Text>
-      </Box>
-      <Box>
-        <Text color="black" size="sm" lineH="tight">
-          {content}
-        </Text>
-      </Box>
-      <Box>
-        <Text>{author.name}</Text>
+    <Box bg="white" mb={6}>
+      <Box mx={6} bg="white" style={{elevation: 5}}>
+        <Box mx={30}>
+          <Box my="sm">
+            {author?.Profile.avatar ? (
+              <MyImageComponent
+                width={40}
+                height={40}
+                where={ImageLocationEnum.INTERNET}
+                source={author.Profile.avatar}
+                type={"jpeg"}
+              />
+            ) : (
+              <MyImageComponent width={40} height={40} />
+            )}
+          </Box>
+          <TouchableOpacity>
+            <Box>
+              <Text mb={4} size="base" lineH="tight" color="blue">
+                {title}
+              </Text>
+            </Box>
+          </TouchableOpacity>
+          <Box>
+            <Text mb={2} size="sm" lineH="tight" color="gray">
+              {excerpt}
+            </Text>
+          </Box>
+          <Box mt="sm">
+            <Text color="black" size="sm" lineH="tight">
+              {content}
+            </Text>
+          </Box>
+          <Box dir="row" align="center" justify="between" my="sm">
+            <TouchableOpacity>
+              <Box>
+                <Text my={2} size={14} color="gray">
+                  {author.name}
+                </Text>
+              </Box>
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <AntDesign name="like1" style={{fontSize: 16}} />
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <AntDesign name="dislike1" style={{fontSize: 16}} />
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Text my={2} size={14} color="gray">
+                follow
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Text my={2} size={14} color="gray">
+                unfollow
+              </Text>
+            </TouchableOpacity>
+          </Box>
+        </Box>
       </Box>
     </Box>
   );

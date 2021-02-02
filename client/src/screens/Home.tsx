@@ -49,19 +49,19 @@ const Home = () => {
     <Box bg="white">
       <Box f={1}>
         {modalOpen && <CreateSpeek show={modalOpen} closeModal={closeModal} />}
-        <Box style={{bottom: DEVICE_HEIGHT / DEVICE_HEIGHT - 10}}>
-          <Box
-            dir="row"
-            self="end"
-            bg="white"
-            mx="lg"
-            w={0}
-            radius="sm"
-            style={{elevation: 20}}>
-            <TouchableOpacity onPress={() => setModalOpen(true)}>
-              <AntDesign name="form" style={{fontSize: 30}} />
-            </TouchableOpacity>
-          </Box>
+      </Box>
+      <Box style={{bottom: DEVICE_HEIGHT / DEVICE_HEIGHT - 10}}>
+        <Box
+          dir="row"
+          self="end"
+          bg="white"
+          mx="lg"
+          w={0}
+          radius="sm"
+          style={{elevation: 20}}>
+          <TouchableOpacity onPress={() => setModalOpen(true)}>
+            <AntDesign name="form" style={{fontSize: 30}} />
+          </TouchableOpacity>
         </Box>
       </Box>
       <Speek speek={data.speeks} />

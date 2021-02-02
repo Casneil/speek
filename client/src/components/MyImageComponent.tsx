@@ -28,7 +28,6 @@ type MyImageTypes = {
 //@ts-ignore
 const MyImageComponent: React.FC<MyImageTypes> = (props) => {
   const {type, source, height, width, where, marginBottom} = props;
-  console.log(typeof source);
 
   const base64 = `data:image/${type || "png"};base64,${source}`;
 

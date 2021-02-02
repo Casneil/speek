@@ -35,6 +35,7 @@ type ModalProps = {
 
 const CreateSpeek: React.FC<ModalProps> = (props) => {
   const {show, closeModal} = props;
+
   const [borderColor, setBorderColor] = useState<IColorProps>({
     title: "gray",
     excerpt: "gray",
