@@ -16,6 +16,16 @@ type MyImageTypes = {
   where?: ImageLocationEnum | undefined;
   marginBottom?: PhotoFileEnum | number;
 };
+/**
+ * This component reenders local images as well as images from the internet.
+ * If no source or where: "Photo Location" is passed it will default to the anonymous_user picture.
+ *
+ * @param props : height: number;  width: number; borderRadius: number;
+ * source: any -> defaults to anonymous_user picture;
+ * where: ImageLocationEnum | undefined
+ * marginBottom: PhotoFileEnum | number
+ */
+//@ts-ignore
 const MyImageComponent: React.FC<MyImageTypes> = (props) => {
   const {type, source, height, width, where, marginBottom} = props;
   console.log(typeof source);
