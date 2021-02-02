@@ -21,7 +21,7 @@ type MyImageTypes = {
  * If no source or where: "Photo Location" is passed it will default to the anonymous_user picture.
  *
  * @param props : height: number;  width: number; borderRadius: number;
- * source: any -> defaults to anonymous_user picture;
+ * source: any -> defaults to anonymous_user picture; type: jpeg or png;
  * where: ImageLocationEnum | undefined
  * marginBottom: PhotoFileEnum | number
  */

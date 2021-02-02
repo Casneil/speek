@@ -1,5 +1,3 @@
-import {FileLocationEnum} from "./enums";
-
 export interface IUSER {
   name: string;
   id: number;
@@ -20,12 +18,14 @@ export interface IRegisterInterface {
 export interface ISpeekInterface {
   id?: number;
   author?: any;
-  content?: string;
+  content: string;
   excerpt?: string;
   status?: string;
   title?: string;
   speeks?: any;
+  avatar?: string;
 }
+
 export interface IAuthInterface {
   authenticated?: boolean;
   getUserToken?: () => void;

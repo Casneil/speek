@@ -1,4 +1,5 @@
 import React from "react";
+import {SafeAreaView, FlatList} from "react-native";
 
 //3rd party
 import {Box, Text} from "react-native-design-utility";
@@ -12,46 +13,63 @@ import {ISpeekInterface} from "./Interfaces";
 import {ImageLocationEnum} from "./enums";
 
 //Resources
-const anonymous_user = require("../rsc/anonymous_user.png");
 
 type SpeekTypes = {
-  speek: ISpeekInterface;
+  id?: any;
+  speek: Array<ISpeekInterface>;
 };
 
-const Speek: React.FC<SpeekTypes> = (props) => {
-  const {speek} = props;
-  console.log(speek.author.Profile.avatar);
+const Speek: React.FC<SpeekTypes> = (props: SpeekTypes) => {
+  const {speek, id} = props;
 
-  return (
-    <Box mx={60} key={speek.id}>
-      {speek?.author?.Profile.avatar ? (
+  const Item = ({title, content, excerpt, author}: ISpeekInterface) => (
+    <Box mx={50} mb="sm">
+      {author?.Profile.avatar ? (
         <MyImageComponent
           width={40}
           height={40}
           where={ImageLocationEnum.INTERNET}
-          source={speek.author.Profile.avatar}
+          source={author.Profile.avatar}
           type={"jpeg"}
         />
       ) : (
-        <MyImageComponent source={anonymous_user} width={40} height={40} />
+        <MyImageComponent width={40} height={40} />
       )}
-
       <Box>
         <Text mb={4} size="sm" lineH="tight" color="blue">
-          {speek.title}
+          {title}
         </Text>
       </Box>
       <Box>
         <Text mb={2} size="sm" lineH="tight" color="blueLightest">
-          {speek.excerpt}
+          {excerpt}
         </Text>
       </Box>
       <Box>
         <Text color="black" size="sm" lineH="tight">
-          {speek.content}
+          {content}
         </Text>
       </Box>
+      <Box>
+        <Text>{author.name}</Text>
+      </Box>
     </Box>
+  );
+
+  const renderItem = ({item}: ISpeekInterface | any) => (
+    <Item
+      title={item.title}
+      content={item.content}
+      author={item.author}
+      avatar={item.avatar}
+      excerpt={item.excerpt}
+    />
+  );
+
+  return (
+    <SafeAreaView>
+      <FlatList data={speek} renderItem={renderItem} keyExtractor={id} />
+    </SafeAreaView>
   );
 };
 
