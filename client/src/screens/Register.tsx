@@ -75,7 +75,7 @@ const Register = () => {
 
   return (
     <KeyboardAvoidingView style={{flex: 1}} behavior="position">
-      <>
+      <Box bg="white">
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <Box my="sm">
             <Text bold size="xl" center>
@@ -263,8 +263,9 @@ const Register = () => {
               </>
             )}
           </Formik>
+          <Box bg="white" h="100%"></Box>
         </TouchableWithoutFeedback>
-      </>
+      </Box>
     </KeyboardAvoidingView>
   );
 };

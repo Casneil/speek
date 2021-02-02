@@ -64,7 +64,7 @@ const Login = () => {
 
   return (
     <KeyboardAvoidingView style={{flex: 1}} behavior="position">
-      <>
+      <Box bg="white">
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <Box my="sm">
             <Text bold size="xl" center>
@@ -151,7 +151,10 @@ const Login = () => {
                         maxLength={25}
                         selectionColor={"#2196f3"}
                         onFocus={() =>
-                          setBorderColor({...borderColor, password: "#2196f3"})
+                          setBorderColor({
+                            ...borderColor,
+                            password: "#2196f3",
+                          })
                         }
                         value={values.password}
                         style={{
@@ -190,7 +193,8 @@ const Login = () => {
             )}
           </Formik>
         </TouchableWithoutFeedback>
-      </>
+        <Box bg="white" h="100%"></Box>
+      </Box>
     </KeyboardAvoidingView>
   );
 };
