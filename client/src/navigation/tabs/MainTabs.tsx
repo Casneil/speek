@@ -10,6 +10,7 @@ import {createDrawerNavigator} from "@react-navigation/drawer";
 import Home from "../../screens/Home";
 import Logout from "../../screens/Logout";
 import Profile from "../../screens/Profile";
+import Users from "../../screens/Users";
 
 // Styles
 import {globalColors} from "../../components/styles/globalStyles";
@@ -73,6 +74,7 @@ export const MainTabs = () => {
         }}>
         <TabNavigator.Screen name="Explore" component={Home} />
         <TabNavigator.Screen name="Profile" component={Profile} />
+        {/* <TabNavigator.Screen name="Users" component={Users} /> */}
         <TabNavigator.Screen name="LogOut" component={Logout} />
       </TabNavigator.Navigator>
     </>

@@ -17,7 +17,7 @@ export interface IRegisterInterface {
   confirmPassword: string;
   navigation?: any;
 }
-export interface IPostInterface {
+export interface ISpeekInterface {
   id?: number;
   author?: string;
   content?: string;

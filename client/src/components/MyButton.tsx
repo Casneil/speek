@@ -9,6 +9,7 @@ type MyButtonType = {
   functionHandeler: () => void;
   textWeight?: string;
 };
+
 const MyButton: React.FC<MyButtonType> = (props) => {
   const {name, functionHandeler} = props;
 

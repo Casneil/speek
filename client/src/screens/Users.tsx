@@ -31,17 +31,6 @@ const Users = () => {
   return (
     <Box f={1} bg="white">
       <Box my="lg">
-        <Box
-          dir="row"
-          self="end"
-          bg="white"
-          mx="lg"
-          w={30}
-          center
-          radius="sm"
-          style={{elevation: 20}}>
-          <AntDesign name="form" style={{fontSize: 30}} />
-        </Box>
         <Box my="lg">
           {data.users.map((user: IUSER) => (
             <Speek user={user} />

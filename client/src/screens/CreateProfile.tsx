@@ -87,17 +87,8 @@ const CreateProfile: React.FC<ModalProps> = (props) => {
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
           // @ts-ignore
           ImagePicker.launchCamera(options, (response: any) => {
-            console.log("Response = ", response);
+            // console.log("Response = ", response);
             setImageUrl(response.base64);
-            if (response.didCancel) {
-              console.log("User cancelled image picker");
-            } else if (response.error) {
-              console.log("ImagePicker Error: ", response.error);
-            } else if (response.customButton) {
-              console.log("User tapped custom button: ", response.customButton);
-            } else {
-              return;
-            }
           });
         }
       } catch (error) {
@@ -110,17 +101,8 @@ const CreateProfile: React.FC<ModalProps> = (props) => {
       try {
         // @ts-ignore
         ImagePicker.launchImageLibrary(options, (response: any) => {
-          console.log("Response = ", response);
+          // console.log("Response = ", response);
           setImageUrl(response.base64);
-          if (response.didCancel) {
-            console.log("User cancelled image picker");
-          } else if (response.error) {
-            console.log("ImagePicker Error: ", response.error);
-          } else if (response.customButton) {
-            console.log("User tapped custom button: ", response.customButton);
-          } else {
-            return;
-          }
         });
       } catch (error) {
         console.log(error);
@@ -135,10 +117,9 @@ const CreateProfile: React.FC<ModalProps> = (props) => {
     }
   };
 
-  // This needs to be in Profile after profile creating this refetch should be called.
-  // refetchQueries: [{query: ME_QUERY}],
-
-  const [createProfile] = useMutation(CREATE_PROFILE_MUTATION);
+  const [createProfile] = useMutation(CREATE_PROFILE_MUTATION, {
+    refetchQueries: [{query: ME_QUERY}],
+  });
 
   const initialValues: IUserProfile = {
     bio: "",
