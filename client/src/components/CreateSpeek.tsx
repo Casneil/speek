@@ -12,6 +12,8 @@ import {Box, Text} from "react-native-design-utility";
 // Components
 import MyButton from "./MyButton";
 
+// Queries
+import {SPEEKS_QUERY} from "../screens/Home";
 import {ME_QUERY} from "../screens/Profile";
 
 //Enums and Interfaces
@@ -57,7 +59,7 @@ const CreateSpeek: React.FC<ModalProps> = (props) => {
   if (error) return <Text>{error.message}</Text>;
 
   const [createSpeek] = useMutation(CREATE_SPEEK_MUTATION, {
-    refetchQueries: [{query: ME_QUERY}],
+    refetchQueries: [{query: SPEEKS_QUERY}],
   });
 
   const initialValues: ISpeekInterface = {

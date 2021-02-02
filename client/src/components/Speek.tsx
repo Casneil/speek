@@ -1,27 +1,56 @@
 import React from "react";
 
 //3rd party
-import {useQuery, gql} from "@apollo/client";
 import {Box, Text} from "react-native-design-utility";
 import AntDesign from "react-native-vector-icons/AntDesign";
 
-//Enums and Interfaces
-import {IUSER, ISpeekInterface} from "./Interfaces";
+// Components
+import MyImageComponent from "./MyImageComponent";
 
-//Mutation
+//Enums and Interfaces
+import {ISpeekInterface} from "./Interfaces";
+import {ImageLocationEnum} from "./enums";
+
+//Resources
+const anonymous_user = require("../rsc/anonymous_user.png");
 
 type SpeekTypes = {
-  user: IUSER;
+  speek: ISpeekInterface;
 };
 
 const Speek: React.FC<SpeekTypes> = (props) => {
-  const {user} = props;
+  const {speek} = props;
+  console.log(speek.author.Profile.avatar);
 
   return (
-    <Box mx={60} key={user.id}>
-      <Text color="black" size="xl">
-        {user.name}
-      </Text>
+    <Box mx={60} key={speek.id}>
+      {speek?.author?.Profile.avatar ? (
+        <MyImageComponent
+          width={40}
+          height={40}
+          where={ImageLocationEnum.INTERNET}
+          source={speek.author.Profile.avatar}
+          type={"jpeg"}
+        />
+      ) : (
+        <MyImageComponent source={anonymous_user} width={40} height={40} />
+      )}
+
+      <Box>
+        <Text mb={4} size="sm" lineH="tight" color="blue">
+          {speek.title}
+        </Text>
+      </Box>
+      <Box>
+        <Text mb={2} size="sm" lineH="tight" color="blueLightest">
+          {speek.excerpt}
+        </Text>
+      </Box>
+      <Box>
+        <Text color="black" size="sm" lineH="tight">
+          {speek.content}
+        </Text>
+      </Box>
     </Box>
   );
 };

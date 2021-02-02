@@ -4,7 +4,6 @@ import {
   TouchableOpacity,
   Dimensions,
   PermissionsAndroid,
-  Image,
 } from "react-native";
 
 //3rd Party
@@ -17,12 +16,13 @@ import {Box, Text} from "react-native-design-utility";
 
 // Components
 import MyButton from "./MyButton";
+import MyImageComponent from "../components/MyImageComponent";
 
 import {ME_QUERY} from "../screens/Profile";
 
 //Enums and Interfaces
 import {IColorProps, IUserProfile} from "./Interfaces";
-import {FileLocationEnum, PhotoFileEnum} from "./enums";
+import {FileLocationEnum, ImageLocationEnum, PhotoFileEnum} from "./enums";
 
 //Mutation
 const CREATE_PROFILE_MUTATION = gql`
@@ -187,16 +187,12 @@ const CreateProfile: React.FC<ModalProps> = (props) => {
                       </Box>
                     ) : (
                       <Box align="center" justify="center">
-                        <Image
-                          source={{
-                            uri: `data:image/jpeg;base64,${imageUrl}`,
-                          }}
-                          style={{
-                            height: PhotoFileEnum.HEIGHT,
-                            width: PhotoFileEnum.WIDTH,
-                            borderRadius: PhotoFileEnum.BORDER_RADIUS,
-                            marginBottom: PhotoFileEnum.MARGIN_BOTTOM,
-                          }}
+                        <MyImageComponent
+                          source={imageUrl}
+                          where={ImageLocationEnum.INTERNET}
+                          height={PhotoFileEnum.HEIGHT}
+                          width={PhotoFileEnum.WIDTH}
+                          marginBottom={PhotoFileEnum.MARGIN_BOTTOM}
                         />
                       </Box>
                     )}

@@ -11,14 +11,25 @@ import CreateSpeek from "../components/CreateSpeek";
 import Speek from "../components/Speek";
 
 //Interfaces
-import {IUSER} from "../components/Interfaces";
+import {ISpeekInterface} from "../components/Interfaces";
 
 // Query
-const USERS_QUERY = gql`
-  query USER_QUERY {
-    users {
+export const SPEEKS_QUERY = gql`
+  query SPEEKS_QUERY {
+    speeks {
       id
-      name
+      title
+      excerpt
+      content
+      createdAt
+      author {
+        id
+        name
+        Profile {
+          id
+          avatar
+        }
+      }
     }
   }
 `;
@@ -31,7 +42,7 @@ const Home = () => {
     setModalOpen(false);
   };
 
-  const {loading, error, data} = useQuery(USERS_QUERY);
+  const {loading, error, data} = useQuery(SPEEKS_QUERY);
 
   if (loading) return <Text>Loading...</Text>;
   if (error) <Text>{error.message}</Text>;
@@ -54,8 +65,8 @@ const Home = () => {
           </TouchableOpacity>
         </Box>
         <Box my="lg">
-          {data.users.map((user: IUSER) => (
-            <Speek user={user} key={user.id} />
+          {data.speeks.map((speek: ISpeekInterface) => (
+            <Speek speek={speek} key={speek.id} />
           ))}
         </Box>
       </Box>

@@ -7,6 +7,8 @@ type AuthPayload {
   user: User
 }
 
+scalar DateTime
+
 type Mutation {
   createProfile(avatar: String, bio: String, location: String, website: String): Profile
   createSpeek(content: String, excerpt: String, title: String): Speek
@@ -25,13 +27,17 @@ type Profile {
 
 type Query {
   me: User
+  speeks: [Speek]
   users: [User]
 }
 
 type Speek {
   author: User
   content: String
+  createdAt: DateTime!
+  excerpt: String
   id: Int!
+  title: String
 }
 
 type User {

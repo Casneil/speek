@@ -19,7 +19,7 @@ export interface IRegisterInterface {
 }
 export interface ISpeekInterface {
   id?: number;
-  author?: string;
+  author?: any;
   content?: string;
   excerpt?: string;
   status?: string;

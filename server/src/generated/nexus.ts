@@ -30,6 +30,7 @@ export interface NexusGenScalars {
   Float: number
   Boolean: boolean
   ID: string
+  DateTime: any
 }
 
 export interface NexusGenObjects {
@@ -48,7 +49,10 @@ export interface NexusGenObjects {
   Query: {};
   Speek: { // root type
     content?: string | null; // String
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    excerpt?: string | null; // String
     id: number; // Int!
+    title?: string | null; // String
   }
   User: { // root type
     email: string; // String!
@@ -88,12 +92,16 @@ export interface NexusGenFieldTypes {
   }
   Query: { // field return type
     me: NexusGenRootTypes['User'] | null; // User
+    speeks: Array<NexusGenRootTypes['Speek'] | null> | null; // [Speek]
     users: Array<NexusGenRootTypes['User'] | null> | null; // [User]
   }
   Speek: { // field return type
     author: NexusGenRootTypes['User'] | null; // User
     content: string | null; // String
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    excerpt: string | null; // String
     id: number; // Int!
+    title: string | null; // String
   }
   User: { // field return type
     Profile: NexusGenRootTypes['Profile'] | null; // Profile
@@ -125,12 +133,16 @@ export interface NexusGenFieldTypeNames {
   }
   Query: { // field return type name
     me: 'User'
+    speeks: 'Speek'
     users: 'User'
   }
   Speek: { // field return type name
     author: 'User'
     content: 'String'
+    createdAt: 'DateTime'
+    excerpt: 'String'
     id: 'Int'
+    title: 'String'
   }
   User: { // field return type name
     Profile: 'Profile'

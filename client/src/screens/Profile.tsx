@@ -1,5 +1,5 @@
-import React, {useRef, createRef, useState} from "react";
-import {Image, TouchableOpacity} from "react-native";
+import React, {useState} from "react";
+import {TouchableOpacity} from "react-native";
 
 //3rd Party
 import {gql, useQuery} from "@apollo/client";
@@ -11,9 +11,10 @@ import Entypo from "react-native-vector-icons/Entypo";
 import CreateProfile from "../components/CreateProfile";
 import MyButton from "../components/MyButton";
 import UpdateProfile from "../components/UpdateProfile";
+import MyImageComponent from "../components/MyImageComponent";
 
 // Enums and Interfaces
-import {PhotoFileEnum} from "../components/enums";
+import {PhotoFileEnum, ImageLocationEnum} from "../components/enums";
 
 // Resource
 const anonymous_user = require("../rsc/anonymous_user.png");
@@ -38,7 +39,6 @@ const Profile = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [editModalOpen, setEditModalOpen] = useState<boolean>(false);
   const {loading, error, data} = useQuery(ME_QUERY);
-  console.log(data);
 
   if (loading) return <Text>loading...</Text>;
   if (error) return <Text>{error.message}</Text>;
@@ -79,16 +79,12 @@ const Profile = () => {
               <Box>
                 <Box center>
                   <Box>
-                    <Image
-                      source={{
-                        uri: `data:image/jpeg;base64,${data.me.Profile.avatar}`,
-                      }}
-                      style={{
-                        height: PhotoFileEnum.HEIGHT,
-                        width: PhotoFileEnum.WIDTH,
-                        borderRadius: PhotoFileEnum.BORDER_RADIUS,
-                        marginBottom: PhotoFileEnum.MARGIN_BOTTOM,
-                      }}
+                    <MyImageComponent
+                      source={data.me.Profile.avatar}
+                      where={ImageLocationEnum.INTERNET}
+                      height={PhotoFileEnum.HEIGHT}
+                      width={PhotoFileEnum.WIDTH}
+                      marginBottom={PhotoFileEnum.MARGIN_BOTTOM}
                     />
                   </Box>
                   <Box my="lg" center>
@@ -110,14 +106,10 @@ const Profile = () => {
           ) : (
             <Box my="lg" center>
               <Box>
-                <Image
-                  source={anonymous_user}
-                  style={{
-                    height: PhotoFileEnum.HEIGHT,
-                    width: PhotoFileEnum.WIDTH,
-                    borderRadius: PhotoFileEnum.BORDER_RADIUS,
-                    marginBottom: PhotoFileEnum.MARGIN_BOTTOM,
-                  }}
+                <MyImageComponent
+                  height={PhotoFileEnum.HEIGHT}
+                  width={PhotoFileEnum.WIDTH}
+                  marginBottom={PhotoFileEnum.MARGIN_BOTTOM}
                 />
               </Box>
               <Box my="sm" center>

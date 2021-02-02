@@ -3,7 +3,6 @@ import React, {useState} from "react";
 import {
   TextInput,
   TouchableOpacity,
-  Image,
   Keyboard,
   KeyboardAvoidingView,
 } from "react-native";
@@ -20,11 +19,13 @@ import {Box, Text} from "react-native-design-utility";
 
 // Components
 import MyButton from "../components/MyButton";
+import MyImageComponent from "../components/MyImageComponent";
 
 // Context
 import {useAuthContext} from "../components/context/AuthContext";
 // Emuns and Interfaces
 import {ILoginInterface, IColorProps} from "../components/Interfaces";
+import {ImageLocationEnum} from "../components/enums";
 //Resource
 const icon = require("../rsc/icon.jpg");
 // Styles
@@ -78,14 +79,12 @@ const Login = () => {
               mb="lg"
               radius={100}
               w={110}>
-              <Image
+              <MyImageComponent
+                height={110}
+                width={110}
                 source={icon}
-                style={{
-                  overflow: "hidden",
-                  height: 110,
-                  width: 110,
-                  borderRadius: 100,
-                }}
+                marginBottom={-1}
+                where={ImageLocationEnum.LOCAL}
               />
             </Box>
           </Box>
