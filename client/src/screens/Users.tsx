@@ -33,7 +33,7 @@ const Users = () => {
       <Box my="lg">
         <Box my="lg">
           {data.users.map((user: IUSER) => (
-            <Speek user={user} />
+            <Speek user={user} key={user.id} />
           ))}
         </Box>
       </Box>

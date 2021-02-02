@@ -16,13 +16,13 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import {Box, Text} from "react-native-design-utility";
 
 // Components
-import MyButton from "../components/MyButton";
+import MyButton from "./MyButton";
 
-import {ME_QUERY} from "./Profile";
+import {ME_QUERY} from "../screens/Profile";
 
 //Enums and Interfaces
-import {IColorProps, IUserProfile} from "../components/Interfaces";
-import {FileLocationEnum, PhotoFileEnum} from "../components/enums";
+import {IColorProps, IUserProfile} from "./Interfaces";
+import {FileLocationEnum, PhotoFileEnum} from "./enums";
 
 //Mutation
 const CREATE_PROFILE_MUTATION = gql`

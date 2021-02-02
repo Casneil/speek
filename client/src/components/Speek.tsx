@@ -8,6 +8,8 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 //Enums and Interfaces
 import {IUSER, ISpeekInterface} from "./Interfaces";
 
+//Mutation
+
 type SpeekTypes = {
   user: IUSER;
 };

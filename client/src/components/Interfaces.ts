@@ -46,6 +46,7 @@ export interface IColorProps {
 }
 
 export interface IUserProfile {
+  id?: number | undefined;
   bio?: string;
   location?: string;
   website?: string;
