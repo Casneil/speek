@@ -18,6 +18,9 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import Feather from "react-native-vector-icons/Feather";
 import {Box, Text} from "react-native-design-utility";
 
+// Components
+import MyButton from "../components/MyButton";
+
 //Context
 import {useAuthContext} from "../components/context/AuthContext";
 
@@ -255,18 +258,7 @@ const Register = () => {
                   </Box>
                 </Box>
                 <Box center my="sm">
-                  <Box
-                    center
-                    bg="white"
-                    w={100}
-                    radius="lg"
-                    style={{elevation: 10}}>
-                    <TouchableOpacity onPress={handleSubmit}>
-                      <Text p={8} bold>
-                        Register
-                      </Text>
-                    </TouchableOpacity>
-                  </Box>
+                  <MyButton name={"Register"} functionHandeler={handleSubmit} />
                 </Box>
               </>
             )}

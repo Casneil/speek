@@ -9,6 +9,7 @@ import Entypo from "react-native-vector-icons/Entypo";
 
 // Components
 import CreateProfile from "./CreateProfile";
+import MyButton from "../components/MyButton";
 
 // Enums and Interfaces
 import {PhotoFileEnum} from "../components/enums";
@@ -83,7 +84,7 @@ const Profile = () => {
               </Box>
             </Box>
           ) : (
-            <Box>
+            <Box my="lg" center>
               <Box>
                 <Image
                   source={anonymous_user}
@@ -95,11 +96,19 @@ const Profile = () => {
                   }}
                 />
               </Box>
-              <Box>
-                {!data.me.Profile && <Text>No profile data found</Text>}
-                <TouchableOpacity onPress={() => setModalOpen(true)}>
-                  {!data.me.Profile && <Text> create one</Text>}
-                </TouchableOpacity>
+              <Box my="sm" center>
+                {!data.me.Profile && (
+                  <Box dir="row" align="center">
+                    <Text mx={4}>No profile data found</Text>
+                    <Entypo name="emoji-sad" style={{fontSize: 14}} />
+                  </Box>
+                )}
+                <Box center mt="sm">
+                  <MyButton
+                    name={"Make one"}
+                    functionHandeler={() => setModalOpen(true)}
+                  />
+                </Box>
               </Box>
             </Box>
           )}
@@ -108,5 +117,4 @@ const Profile = () => {
     </Box>
   );
 };
-
 export default Profile;

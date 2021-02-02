@@ -18,6 +18,9 @@ import * as Yup from "yup";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import {Box, Text} from "react-native-design-utility";
 
+// Components
+import MyButton from "../components/MyButton";
+
 // Context
 import {useAuthContext} from "../components/context/AuthContext";
 // Emuns and Interfaces
@@ -167,18 +170,7 @@ const Login = () => {
                   </Box>
                 </Box>
                 <Box center mb="sm">
-                  <Box
-                    bg="white"
-                    w={100}
-                    center
-                    radius="lg"
-                    style={{elevation: 10}}>
-                    <TouchableOpacity onPress={handleSubmit}>
-                      <Text p={8} bold>
-                        Log in
-                      </Text>
-                    </TouchableOpacity>
-                  </Box>
+                  <MyButton name={"Log in"} functionHandeler={handleSubmit} />
                 </Box>
                 {/*Password Reset*/}
                 <Box dir="row" justify="center">

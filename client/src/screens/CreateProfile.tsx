@@ -15,6 +15,9 @@ import {Formik} from "formik";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import {Box, Text} from "react-native-design-utility";
 
+// Components
+import MyButton from "../components/MyButton";
+
 import {ME_QUERY} from "./Profile";
 
 //Enums and Interfaces
@@ -292,18 +295,7 @@ const CreateProfile: React.FC<ModalProps> = (props) => {
                   </Box>
                 </Box>
                 <Box center my="sm">
-                  <Box
-                    center
-                    bg="white"
-                    w={100}
-                    radius="lg"
-                    style={{elevation: 10}}>
-                    <TouchableOpacity onPress={handleSubmit}>
-                      <Text p={8} bold>
-                        Create
-                      </Text>
-                    </TouchableOpacity>
-                  </Box>
+                  <MyButton name={"Create"} functionHandeler={handleSubmit} />
                 </Box>
               </>
             )}
