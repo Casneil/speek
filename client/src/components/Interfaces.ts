@@ -1,3 +1,5 @@
+import {FileLocationEnum} from "./enums";
+
 export interface IUSER {
   name: string;
   id: number;

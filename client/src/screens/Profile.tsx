@@ -45,7 +45,7 @@ const Profile = () => {
   //     setIsRecording,
   //   },
   // ] = useCamera(initialProps);
-  const {loading, error, data} = useQuery(ME_QUERY, {});
+  const {loading, error, data} = useQuery(ME_QUERY);
   console.log(data);
 
   if (loading) return <Text>loading...</Text>;
@@ -106,7 +106,7 @@ const Profile = () => {
         <Box>
           {!data.me.Profile && <Text>No profile data found</Text>}
           <TouchableOpacity onPress={() => setModalOpen(true)}>
-            {!data.me.Profile && <Text> create one</Text>}
+            {data.me.Profile && <Text> create one</Text>}
           </TouchableOpacity>
         </Box>
       </Box>
