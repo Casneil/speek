@@ -34,7 +34,7 @@ const Speek: React.FC<SpeekTypes> = (props: SpeekTypes) => {
     createdAt,
   }: ISpeekInterface) => (
     <Box bg={theme.color.white} mb={6}>
-      <Box mx={5} bg="white" style={{elevation: 5}}>
+      <Box mx={5} bg={theme.color.white} style={{elevation: 5}}>
         <Box mx={35}>
           <Box my="sm">
             {author?.Profile.avatar ? (
@@ -56,7 +56,7 @@ const Speek: React.FC<SpeekTypes> = (props: SpeekTypes) => {
                       </Box>
                     </TouchableOpacity>
                   </Box>
-                  <Text size={11.5} color="gray">
+                  <Text size={11.5} color={theme.color.grey}>
                     {formatDistance(
                       subDays(new Date(createdAt), 0),
                       new Date(),

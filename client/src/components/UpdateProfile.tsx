@@ -17,12 +17,16 @@ import {Box, Text} from "react-native-design-utility";
 
 // Components
 import MyButton from "./MyButton";
+import MyActivityIndicator from "./MyActivityIndicator";
 
 import {ME_QUERY} from "../screens/Profile";
 
 //Enums and Interfaces
 import {IColorProps, IUserProfile} from "./Interfaces";
 import {FileLocationEnum, PhotoFileEnum} from "./enums";
+
+//Styles
+import {theme} from "../constants/theme";
 
 //Mutation
 const UPDATE_PROFILE_MUTATION = gql`
@@ -54,10 +58,10 @@ const UpdateProfile: React.FC<ModalProps> = (props) => {
   const {show, closeModal} = props;
   const [imageUrl, setImageUrl] = useState<string>();
   const [borderColor, setBorderColor] = useState<IColorProps>({
-    bio: "gray",
-    location: "gray",
-    website: "gray",
-    avatar: "gray",
+    bio: theme.color.grey,
+    location: theme.color.grey,
+    website: theme.color.grey,
+    avatar: theme.color.grey,
   });
 
   const DEVICE_WIDTH = Dimensions.get("screen").width;
@@ -122,7 +126,6 @@ const UpdateProfile: React.FC<ModalProps> = (props) => {
   // Mutations and Queries
 
   const {loading, error, data} = useQuery(ME_QUERY);
-  if (loading) return <Text>loading...</Text>;
   if (error) return <Text>{error.message}</Text>;
 
   const [updateProfile] = useMutation(UPDATE_PROFILE_MUTATION, {
@@ -138,160 +141,184 @@ const UpdateProfile: React.FC<ModalProps> = (props) => {
   };
 
   return (
-    <Modal
-      isVisible={show}
-      backdropOpacity={1}
-      backdropColor="white"
-      animationIn="bounceInLeft"
-      animationOut="bounceOutLeft">
-      <Box my="lg">
-        <>
-          <Box p="absolute" bottom={100} left={DEVICE_WIDTH - 100}>
-            <TouchableOpacity onPress={closeModal}>
-              <AntDesign name="closecircle" style={{fontSize: 24}} />
-            </TouchableOpacity>
-          </Box>
-          <Formik
-            initialValues={initialValues}
-            onSubmit={async (values, {setSubmitting}) => {
-              await setSubmitting(true);
-              await updateProfile({
-                variables: {...values, avatar: imageUrl},
-              });
-              //@ts-ignore
-              setSubmitting(false);
-              closeModal();
-            }}>
-            {({handleChange, handleBlur, handleSubmit, values, errors}) => (
-              <>
-                <Box mx={60}>
-                  <Box mb="sm">
-                    {!imageUrl ? (
-                      <Box dir="row" align="center">
-                        <Box dir="row" align="center">
-                          <Text size="sm" mr="xl">
-                            Photo
-                          </Text>
-                          <Box mr="sm">
-                            <TouchableOpacity
-                              onPress={() =>
-                                chooseLocation(FileLocationEnum.CAMERA)
-                              }>
-                              <AntDesign name="camera" style={{fontSize: 20}} />
-                            </TouchableOpacity>
-                          </Box>
-                          <Box>
-                            <TouchableOpacity
-                              onPress={() =>
-                                chooseLocation(FileLocationEnum.FILES)
-                              }>
-                              <AntDesign
-                                name="folderopen"
-                                style={{fontSize: 20}}
+    <>
+      <Modal
+        isVisible={show}
+        backdropOpacity={1}
+        backdropColor={theme.color.white}
+        animationIn="bounceInLeft"
+        animationOut="bounceOutLeft">
+        <Box my="lg">
+          <>
+            {!loading && (
+              <Box p="absolute" bottom={100} left={DEVICE_WIDTH - 100}>
+                <TouchableOpacity onPress={closeModal}>
+                  <AntDesign name="closecircle" style={{fontSize: 24}} />
+                </TouchableOpacity>
+              </Box>
+            )}
+            <Formik
+              initialValues={initialValues}
+              onSubmit={async (values, {setSubmitting}) => {
+                await setSubmitting(true);
+                await updateProfile({
+                  variables: {...values, avatar: imageUrl},
+                });
+                //@ts-ignore
+                setSubmitting(false);
+                closeModal();
+              }}>
+              {({handleChange, handleBlur, handleSubmit, values, errors}) => (
+                <>
+                  {loading ? (
+                    <Box>
+                      <MyActivityIndicator
+                        size="large"
+                        color={theme.color.blueLightest}
+                      />
+                    </Box>
+                  ) : (
+                    <>
+                      <Box mx={60}>
+                        <Box mb="sm">
+                          {!imageUrl ? (
+                            <Box dir="row" align="center">
+                              <Box dir="row" align="center">
+                                <Text size="sm" mr="xl">
+                                  Photo
+                                </Text>
+                                <Box mr="sm">
+                                  <TouchableOpacity
+                                    onPress={() =>
+                                      chooseLocation(FileLocationEnum.CAMERA)
+                                    }>
+                                    <AntDesign
+                                      name="camera"
+                                      style={{fontSize: 20}}
+                                    />
+                                  </TouchableOpacity>
+                                </Box>
+                                <Box>
+                                  <TouchableOpacity
+                                    onPress={() =>
+                                      chooseLocation(FileLocationEnum.FILES)
+                                    }>
+                                    <AntDesign
+                                      name="folderopen"
+                                      style={{fontSize: 20}}
+                                    />
+                                  </TouchableOpacity>
+                                </Box>
+                              </Box>
+                            </Box>
+                          ) : (
+                            <Box align="center" justify="center">
+                              <Image
+                                source={{
+                                  uri: `data:image/jpeg;base64,${imageUrl}`,
+                                }}
+                                style={{
+                                  height: PhotoFileEnum.HEIGHT,
+                                  width: PhotoFileEnum.WIDTH,
+                                  borderRadius: PhotoFileEnum.BORDER_RADIUS,
+                                  marginBottom: PhotoFileEnum.MARGIN_BOTTOM,
+                                }}
                               />
-                            </TouchableOpacity>
+                            </Box>
+                          )}
+                        </Box>
+                        <Box mb="sm">
+                          <Box dir="row" align="center">
+                            <TextInput
+                              onChangeText={handleChange("bio")}
+                              placeholder="bio"
+                              placeholderTextColor="gray"
+                              onBlur={handleBlur("bio")}
+                              keyboardType={"email-address"}
+                              selectionColor={theme.color.blueLightest}
+                              onFocus={() =>
+                                setBorderColor({
+                                  ...borderColor,
+                                  bio: theme.color.blueLightest,
+                                })
+                              }
+                              value={values.bio}
+                              style={{
+                                borderBottomWidth: 1,
+                                width: "100%",
+                                borderBottomColor: borderColor.bio,
+                                paddingVertical: 0,
+                              }}
+                            />
+                          </Box>
+                        </Box>
+                        <Box mb="sm">
+                          <Box dir="row" align="center">
+                            <TextInput
+                              onChangeText={handleChange("location")}
+                              onBlur={handleBlur("location")}
+                              placeholder="location"
+                              placeholderTextColor={theme.color.grey}
+                              maxLength={25}
+                              selectionColor={theme.color.blueLightest}
+                              onFocus={() =>
+                                setBorderColor({
+                                  ...borderColor,
+                                  location: theme.color.blueLightest,
+                                })
+                              }
+                              value={values.location}
+                              style={{
+                                borderBottomWidth: 1,
+                                width: "100%",
+                                borderBottomColor: borderColor.location,
+                                paddingVertical: 0,
+                              }}
+                            />
+                          </Box>
+                        </Box>
+                        <Box mb="sm">
+                          <Box dir="row" align="center">
+                            <TextInput
+                              onChangeText={handleChange("website")}
+                              keyboardType={"email-address"}
+                              onBlur={handleBlur("website")}
+                              placeholder="website"
+                              placeholderTextColor={theme.color.grey}
+                              secureTextEntry={true}
+                              selectionColor={theme.color.blueLightest}
+                              onFocus={() =>
+                                setBorderColor({
+                                  ...borderColor,
+                                  website: theme.color.blueLightest,
+                                })
+                              }
+                              value={values.website}
+                              style={{
+                                borderBottomWidth: 1,
+                                width: "100%",
+                                borderBottomColor: borderColor.website,
+                                paddingVertical: 0,
+                              }}
+                            />
                           </Box>
                         </Box>
                       </Box>
-                    ) : (
-                      <Box align="center" justify="center">
-                        <Image
-                          source={{
-                            uri: `data:image/jpeg;base64,${imageUrl}`,
-                          }}
-                          style={{
-                            height: PhotoFileEnum.HEIGHT,
-                            width: PhotoFileEnum.WIDTH,
-                            borderRadius: PhotoFileEnum.BORDER_RADIUS,
-                            marginBottom: PhotoFileEnum.MARGIN_BOTTOM,
-                          }}
+                      <Box center my="sm">
+                        <MyButton
+                          name={"Update"}
+                          functionHandeler={handleSubmit}
                         />
                       </Box>
-                    )}
-                  </Box>
-                  <Box mb="sm">
-                    <Box dir="row" align="center">
-                      <TextInput
-                        onChangeText={handleChange("bio")}
-                        placeholder="bio"
-                        placeholderTextColor="gray"
-                        onBlur={handleBlur("bio")}
-                        keyboardType={"email-address"}
-                        selectionColor={"#2196f3"}
-                        onFocus={() =>
-                          setBorderColor({...borderColor, website: "#2196f3"})
-                        }
-                        value={values.bio}
-                        style={{
-                          borderBottomWidth: 1,
-                          width: "100%",
-                          borderBottomColor: borderColor.website,
-                          paddingVertical: 0,
-                        }}
-                      />
-                    </Box>
-                  </Box>
-                  <Box mb="sm">
-                    <Box dir="row" align="center">
-                      <TextInput
-                        onChangeText={handleChange("location")}
-                        onBlur={handleBlur("location")}
-                        placeholder="location"
-                        placeholderTextColor="gray"
-                        maxLength={25}
-                        selectionColor={"#2196f3"}
-                        onFocus={() =>
-                          setBorderColor({
-                            ...borderColor,
-                            location: "#2196f3",
-                          })
-                        }
-                        value={values.location}
-                        style={{
-                          borderBottomWidth: 1,
-                          width: "100%",
-                          borderBottomColor: borderColor.location,
-                          paddingVertical: 0,
-                        }}
-                      />
-                    </Box>
-                  </Box>
-                  <Box mb="sm">
-                    <Box dir="row" align="center">
-                      <TextInput
-                        onChangeText={handleChange("website")}
-                        keyboardType={"email-address"}
-                        onBlur={handleBlur("website")}
-                        placeholder="website"
-                        placeholderTextColor="gray"
-                        secureTextEntry={true}
-                        selectionColor={"#2196f3"}
-                        onFocus={() =>
-                          setBorderColor({
-                            ...borderColor,
-                            confirmPassword: "#2196f3",
-                          })
-                        }
-                        value={values.website}
-                        style={{
-                          borderBottomWidth: 1,
-                          width: "100%",
-                          borderBottomColor: borderColor.confirmPassword,
-                          paddingVertical: 0,
-                        }}
-                      />
-                    </Box>
-                  </Box>
-                </Box>
-                <Box center my="sm">
-                  <MyButton name={"Update"} functionHandeler={handleSubmit} />
-                </Box>
-              </>
-            )}
-          </Formik>
-        </>
-      </Box>
-    </Modal>
+                    </>
+                  )}
+                </>
+              )}
+            </Formik>
+          </>
+        </Box>
+      </Modal>
+    </>
   );
 };
 

@@ -24,6 +24,9 @@ import {ME_QUERY} from "../screens/Profile";
 import {IColorProps, IUserProfile} from "./Interfaces";
 import {FileLocationEnum, ImageLocationEnum, PhotoFileEnum} from "./enums";
 
+// Styles
+import {theme} from "../constants/theme";
+
 //Mutation
 const CREATE_PROFILE_MUTATION = gql`
   mutation createProfile(
@@ -52,10 +55,10 @@ const CreateProfile: React.FC<ModalProps> = (props) => {
   const {show, closeModal} = props;
   const [imageUrl, setImageUrl] = useState<string>();
   const [borderColor, setBorderColor] = useState<IColorProps>({
-    bio: "gray",
-    location: "gray",
-    website: "gray",
-    avatar: "gray",
+    bio: theme.color.grey,
+    location: theme.color.grey,
+    website: theme.color.grey,
+    avatar: theme.color.grey,
   });
 
   const DEVICE_WIDTH = Dimensions.get("screen").width;
@@ -133,7 +136,7 @@ const CreateProfile: React.FC<ModalProps> = (props) => {
     <Modal
       isVisible={show}
       backdropOpacity={1}
-      backdropColor="white"
+      backdropColor={theme.color.white}
       animationIn="bounceInLeft"
       animationOut="bounceOutLeft">
       <Box my="lg">
@@ -202,12 +205,15 @@ const CreateProfile: React.FC<ModalProps> = (props) => {
                       <TextInput
                         onChangeText={handleChange("bio")}
                         placeholder="bio"
-                        placeholderTextColor="gray"
+                        placeholderTextColor={theme.color.grey}
                         onBlur={handleBlur("bio")}
                         keyboardType={"email-address"}
-                        selectionColor={"#2196f3"}
+                        selectionColor={theme.color.blueLightest}
                         onFocus={() =>
-                          setBorderColor({...borderColor, website: "#2196f3"})
+                          setBorderColor({
+                            ...borderColor,
+                            website: theme.color.blueLightest,
+                          })
                         }
                         value={values.bio}
                         style={{
@@ -225,13 +231,13 @@ const CreateProfile: React.FC<ModalProps> = (props) => {
                         onChangeText={handleChange("location")}
                         onBlur={handleBlur("location")}
                         placeholder="location"
-                        placeholderTextColor="gray"
+                        placeholderTextColor={theme.color.grey}
                         maxLength={25}
-                        selectionColor={"#2196f3"}
+                        selectionColor={theme.color.blueLightest}
                         onFocus={() =>
                           setBorderColor({
                             ...borderColor,
-                            location: "#2196f3",
+                            location: theme.color.blueLightest,
                           })
                         }
                         value={values.location}
@@ -251,13 +257,13 @@ const CreateProfile: React.FC<ModalProps> = (props) => {
                         keyboardType={"email-address"}
                         onBlur={handleBlur("website")}
                         placeholder="website"
-                        placeholderTextColor="gray"
+                        placeholderTextColor={theme.color.grey}
                         secureTextEntry={true}
-                        selectionColor={"#2196f3"}
+                        selectionColor={theme.color.blueLightest}
                         onFocus={() =>
                           setBorderColor({
                             ...borderColor,
-                            confirmPassword: "#2196f3",
+                            confirmPassword: theme.color.blueLightest,
                           })
                         }
                         value={values.website}
