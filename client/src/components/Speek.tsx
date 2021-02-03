@@ -9,6 +9,9 @@ import {formatDistance, subDays} from "date-fns";
 // Components
 import MyImageComponent from "./MyImageComponent";
 
+// Styles
+import {theme} from "../constants/theme";
+
 //Enums and Interfaces
 import {ISpeekInterface} from "./Interfaces";
 import {ImageLocationEnum} from "./enums";
@@ -30,7 +33,7 @@ const Speek: React.FC<SpeekTypes> = (props: SpeekTypes) => {
     author,
     createdAt,
   }: ISpeekInterface) => (
-    <Box bg="white" mb={6}>
+    <Box bg={theme.color.white} mb={6}>
       <Box mx={5} bg="white" style={{elevation: 5}}>
         <Box mx={35}>
           <Box my="sm">
@@ -47,7 +50,7 @@ const Speek: React.FC<SpeekTypes> = (props: SpeekTypes) => {
                   <Box mr="lg">
                     <TouchableOpacity>
                       <Box>
-                        <Text size={14} color="blueLightest" bold>
+                        <Text size={14} color={theme.color.blueLightest} bold>
                           {author.name}
                         </Text>
                       </Box>
@@ -68,35 +71,41 @@ const Speek: React.FC<SpeekTypes> = (props: SpeekTypes) => {
           </Box>
           <TouchableOpacity>
             <Box>
-              <Text mb={4} size="base" lineH="tight" color="blue">
+              <Text mb={4} size="base" lineH="tight" color={theme.color.blue}>
                 {title}
               </Text>
             </Box>
           </TouchableOpacity>
           <Box>
-            <Text mb={2} size="sm" lineH="tight" color="gray">
+            <Text mb={2} size="sm" lineH="tight" color={theme.color.grey}>
               {excerpt}
             </Text>
           </Box>
           <Box mt="sm">
-            <Text color="black" size="sm" lineH="tight">
+            <Text color={theme.color.black} size="sm" lineH="tight">
               {content}
             </Text>
           </Box>
           <Box dir="row" align="center" justify="between" my="sm">
             <TouchableOpacity>
-              <AntDesign name="like1" style={{fontSize: 16}} />
+              <AntDesign
+                name="like2"
+                style={{fontSize: 16, color: theme.color.blueLightest}}
+              />
             </TouchableOpacity>
             <TouchableOpacity>
-              <AntDesign name="dislike1" style={{fontSize: 16}} />
+              <AntDesign
+                name="dislike2"
+                style={{fontSize: 16, color: theme.color.blueLightest}}
+              />
             </TouchableOpacity>
             <TouchableOpacity>
-              <Text my={2} size={14} color="gray">
+              <Text my={2} size={14} color={theme.color.grey}>
                 follow
               </Text>
             </TouchableOpacity>
             <TouchableOpacity>
-              <Text my={2} size={14} color="gray">
+              <Text my={2} size={14} color={theme.color.grey}>
                 unfollow
               </Text>
             </TouchableOpacity>

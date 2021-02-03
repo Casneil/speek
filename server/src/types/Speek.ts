@@ -9,5 +9,6 @@ export const Speek = objectType({
     t.model.excerpt()
     t.model.author()
     t.model.createdAt()
+    t.model.likes()
   },
 })

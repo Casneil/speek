@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {TouchableOpacity, Dimensions} from "react-native";
+import {TouchableOpacity, Dimensions, ActivityIndicator} from "react-native";
 
 //3rd party
 import {useQuery, gql} from "@apollo/client";
@@ -9,6 +9,10 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 //Components
 import CreateSpeek from "../components/CreateSpeek";
 import Speek from "../components/Speek";
+import MyActivityIndicator from "../components/MyActivityIndicator";
+
+//Style
+import {theme} from "../constants/theme";
 
 // Query
 export const SPEEKS_QUERY = gql`
@@ -18,6 +22,9 @@ export const SPEEKS_QUERY = gql`
       title
       excerpt
       content
+      likes {
+        id
+      }
       createdAt
       author {
         id
@@ -41,31 +48,39 @@ const Home = () => {
   };
 
   const {loading, error, data} = useQuery(SPEEKS_QUERY);
-
-  if (loading) return <Text>Loading...</Text>;
   if (error) <Text>{error.message}</Text>;
 
   return (
-    <Box bg="white">
-      <Box f={1}>
-        {modalOpen && <CreateSpeek show={modalOpen} closeModal={closeModal} />}
-      </Box>
-      <Box style={{bottom: DEVICE_HEIGHT / DEVICE_HEIGHT - 10}}>
-        <Box
-          dir="row"
-          self="end"
-          bg="white"
-          mx="lg"
-          w={0}
-          radius="sm"
-          style={{elevation: 20}}>
-          <TouchableOpacity onPress={() => setModalOpen(true)}>
-            <AntDesign name="form" style={{fontSize: 30}} />
-          </TouchableOpacity>
+    <>
+      {loading ? (
+        <Box>
+          <MyActivityIndicator size="large" color={theme.color.blueLightest} />
         </Box>
-      </Box>
-      <Speek speek={data.speeks} />
-    </Box>
+      ) : (
+        <Box bg={theme.color.white}>
+          <Box f={1}>
+            {modalOpen && (
+              <CreateSpeek show={modalOpen} closeModal={closeModal} />
+            )}
+          </Box>
+          <Box style={{bottom: DEVICE_HEIGHT / DEVICE_HEIGHT - 10}}>
+            <Box
+              dir="row"
+              self="end"
+              bg={theme.color.white}
+              mx="lg"
+              w={0}
+              radius="sm"
+              style={{elevation: 20}}>
+              <TouchableOpacity onPress={() => setModalOpen(true)}>
+                <AntDesign name="form" style={{fontSize: 30}} />
+              </TouchableOpacity>
+            </Box>
+          </Box>
+          <Speek speek={data.speeks} />
+        </Box>
+      )}
+    </>
   );
 };
 

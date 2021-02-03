@@ -18,6 +18,9 @@ import {SPEEKS_QUERY} from "../screens/Home";
 //Enums and Interfaces
 import {IColorProps, ISpeekInterface} from "./Interfaces";
 
+//Styles
+import {theme} from "../constants/theme";
+
 //Mutation
 const CREATE_SPEEK_MUTATION = gql`
   mutation createSpeek($title: String, $excerpt: String, $content: String) {
@@ -36,9 +39,9 @@ const CreateSpeek: React.FC<ModalProps> = (props) => {
   const {show, closeModal} = props;
 
   const [borderColor, setBorderColor] = useState<IColorProps>({
-    title: "gray",
-    excerpt: "gray",
-    content: "gray",
+    title: theme.color.grey,
+    excerpt: theme.color.grey,
+    content: theme.color.grey,
   });
 
   const DEVICE_WIDTH = Dimensions.get("screen").width;
@@ -68,7 +71,7 @@ const CreateSpeek: React.FC<ModalProps> = (props) => {
     <Modal
       isVisible={show}
       backdropOpacity={1}
-      backdropColor="white"
+      backdropColor={theme.color.white}
       animationIn="flipInX"
       animationOut="bounceOutLeft">
       <Box my="lg">
@@ -99,12 +102,15 @@ const CreateSpeek: React.FC<ModalProps> = (props) => {
                       <TextInput
                         onChangeText={handleChange("title")}
                         placeholder="title"
-                        placeholderTextColor="gray"
+                        placeholderTextColor={theme.color.grey}
                         onBlur={handleBlur("title")}
                         maxLength={50}
-                        selectionColor={"#2196f3"}
+                        selectionColor={theme.color.blueLightest}
                         onFocus={() =>
-                          setBorderColor({...borderColor, website: "#2196f3"})
+                          setBorderColor({
+                            ...borderColor,
+                            website: theme.color.blueLightest,
+                          })
                         }
                         value={values.title}
                         style={{
@@ -123,13 +129,13 @@ const CreateSpeek: React.FC<ModalProps> = (props) => {
                         onBlur={handleBlur("excerpt")}
                         placeholder="excerpt"
                         multiline={true}
-                        placeholderTextColor="gray"
+                        placeholderTextColor={theme.color.grey}
                         maxLength={100}
-                        selectionColor={"#2196f3"}
+                        selectionColor={theme.color.blueLightest}
                         onFocus={() =>
                           setBorderColor({
                             ...borderColor,
-                            location: "#2196f3",
+                            location: theme.color.blueLightest,
                           })
                         }
                         value={values.excerpt}
@@ -150,13 +156,13 @@ const CreateSpeek: React.FC<ModalProps> = (props) => {
                         placeholder="content"
                         multiline={true}
                         maxLength={256}
-                        placeholderTextColor="gray"
+                        placeholderTextColor={theme.color.grey}
                         secureTextEntry={true}
-                        selectionColor={"#2196f3"}
+                        selectionColor={theme.color.blueLightest}
                         onFocus={() =>
                           setBorderColor({
                             ...borderColor,
-                            confirmPassword: "#2196f3",
+                            confirmPassword: theme.color.blueLightest,
                           })
                         }
                         value={values.content}
@@ -169,7 +175,7 @@ const CreateSpeek: React.FC<ModalProps> = (props) => {
                       />
                     </Box>
                     {errors.content && (
-                      <Text style={{fontSize: 10, color: "red"}}>
+                      <Text style={{fontSize: 10, color: theme.color.red}}>
                         {errors.content}
                       </Text>
                     )}

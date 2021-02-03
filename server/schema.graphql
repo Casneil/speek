@@ -9,9 +9,20 @@ type AuthPayload {
 
 scalar DateTime
 
+type LikedSpeek {
+  id: Int!
+  likedAt: DateTime!
+  speek: Speek!
+}
+
+input LikedSpeekWhereUniqueInput {
+  id: Int
+}
+
 type Mutation {
   createProfile(avatar: String, bio: String, location: String, website: String): Profile
   createSpeek(content: String, excerpt: String, title: String): Speek
+  likedSpeek(id: Int): LikedSpeek
   login(email: String!, password: String!): AuthPayload
   signup(email: String!, name: String, password: String!): AuthPayload
   updateProfile(avatar: String, bio: String, id: Int, location: String, website: String): Profile
@@ -37,6 +48,7 @@ type Speek {
   createdAt: DateTime!
   excerpt: String
   id: Int!
+  likes(after: LikedSpeekWhereUniqueInput, before: LikedSpeekWhereUniqueInput, first: Int, last: Int): [LikedSpeek!]!
   title: String
 }
 
@@ -44,6 +56,7 @@ type User {
   Profile: Profile
   email: String!
   id: Int!
+  likedSpeek(after: LikedSpeekWhereUniqueInput, before: LikedSpeekWhereUniqueInput, first: Int, last: Int): [LikedSpeek!]!
   name: String
   speeks: [Speek!]!
 }

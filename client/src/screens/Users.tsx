@@ -7,9 +7,13 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 
 //Components
 import Speek from "../components/Speek";
+import MyActivityIndicator from "../components/MyActivityIndicator";
 
 //Interfaces
 import {IUSER} from "../components/Interfaces";
+
+//Styles
+import {theme} from "../constants/theme";
 
 // Query
 const USERS_QUERY = gql`
@@ -25,19 +29,26 @@ const Users = () => {
   //States
   const {loading, error, data} = useQuery(USERS_QUERY);
 
-  if (loading) return <Text>Loading...</Text>;
   if (error) <Text>{error.message}</Text>;
 
   return (
-    <Box f={1} bg="white">
-      <Box my="lg">
+    <>
+      {loading ? (
+        <Box>
+          <MyActivityIndicator size="large" color={theme.color.blueLightest} />
+        </Box>
+      ) : (
+        <Box f={1} bg={theme.color.white}>
+          {/* <Box my="lg">
         <Box my="lg">
           {data.users.map((user: IUSER) => (
             <Speek user={user} key={user.id} />
           ))}
         </Box>
-      </Box>
-    </Box>
+      </Box> */}
+        </Box>
+      )}
+    </>
   );
 };
 
