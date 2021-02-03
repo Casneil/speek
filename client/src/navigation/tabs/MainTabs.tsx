@@ -13,7 +13,7 @@ import Profile from "../../screens/Profile";
 import Users from "../../screens/Users";
 
 // Styles
-import {globalColors} from "../../components/styles/globalStyles";
+import {theme} from "../../constants/theme";
 
 // Drawer Navigator
 const Drawer = createDrawerNavigator();
@@ -68,13 +68,13 @@ export const MainTabs = () => {
           },
         })}
         tabBarOptions={{
-          activeTintColor: globalColors.backgroundColorTomato,
+          activeTintColor: theme.color.blue,
           inactiveTintColor: "gray",
           tabStyle: {marginBottom: 4},
         }}>
         <TabNavigator.Screen name="Explore" component={Home} />
+        <TabNavigator.Screen name="Trending" component={Users} />
         <TabNavigator.Screen name="Profile" component={Profile} />
-        {/* <TabNavigator.Screen name="Users" component={Users} /> */}
         <TabNavigator.Screen name="LogOut" component={Logout} />
       </TabNavigator.Navigator>
     </>

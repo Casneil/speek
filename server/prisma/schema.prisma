@@ -8,12 +8,20 @@ datasource db {
 }
 
 model User {
-  id       Int     @default(autoincrement()) @id
+  id       Int    @id  @default(autoincrement())
   email    String  @unique
   password String  @default("")
   name     String?
   speeks    Speek[]
   Profile Profile?
+}
+
+model LikedSpeek {
+  id       Int    @id  @default(autoincrement()) 
+  speek    Speek
+  likedAt DateTime @default(now())
+  userId   Int? @unique
+  User     User? @relation(fields: [userId], references:[id])
 }
 
 model Profile{

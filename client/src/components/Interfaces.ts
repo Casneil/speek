@@ -22,8 +22,9 @@ export interface ISpeekInterface {
   excerpt?: string;
   status?: string;
   title?: string;
-  speeks?: any;
+  speek?: any;
   avatar?: string;
+  createdAt?: string;
 }
 
 export interface IAuthInterface {

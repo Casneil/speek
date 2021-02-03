@@ -142,11 +142,12 @@ const Register = () => {
                   <Box mb="sm">
                     <Box dir="row" align="center">
                       <Box position="absolute" right={0} ml="sm">
-                        <AntDesign name="mail" size={18} color="black" />
+                        <AntDesign name="mail" size={17} color="black" />
                       </Box>
                       <TextInput
                         onChangeText={handleChange("email")}
                         placeholder="Enter your email address"
+                        placeholderTextColor="gray"
                         onBlur={handleBlur("email")}
                         keyboardType={"email-address"}
                         maxLength={34}
@@ -178,7 +179,7 @@ const Register = () => {
                       <TextInput
                         onChangeText={handleChange("password")}
                         onBlur={handleBlur("password")}
-                        placeholder="password"
+                        placeholder="Password"
                         placeholderTextColor="gray"
                         secureTextEntry={true}
                         maxLength={25}
@@ -223,7 +224,7 @@ const Register = () => {
                       <TextInput
                         onChangeText={handleChange("confirmPassword")}
                         onBlur={handleBlur("confirmPassword")}
-                        placeholder="confirm password"
+                        placeholder="Confirm password"
                         placeholderTextColor="gray"
                         maxLength={25}
                         secureTextEntry={true}

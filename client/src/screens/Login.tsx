@@ -107,12 +107,13 @@ const Login = () => {
                   <Box mb="md">
                     <Box dir="row" align="center">
                       <Box position="absolute" right={0}>
-                        <AntDesign name="mail" size={18} color="black" />
+                        <AntDesign name="mail" size={17} color="black" />
                       </Box>
                       <Box dir="row" align="center">
                         <TextInput
                           onChangeText={handleChange("email")}
                           placeholder="Enter your email address"
+                          placeholderTextColor="gray"
                           onBlur={handleBlur("email")}
                           keyboardType={"email-address"}
                           maxLength={34}

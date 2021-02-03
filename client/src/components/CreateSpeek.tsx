@@ -14,10 +14,9 @@ import MyButton from "./MyButton";
 
 // Queries
 import {SPEEKS_QUERY} from "../screens/Home";
-import {ME_QUERY} from "../screens/Profile";
 
 //Enums and Interfaces
-import {IColorProps, ISpeekInterface, IUserProfile} from "./Interfaces";
+import {IColorProps, ISpeekInterface} from "./Interfaces";
 
 //Mutation
 const CREATE_SPEEK_MUTATION = gql`
@@ -54,9 +53,6 @@ const CreateSpeek: React.FC<ModalProps> = (props) => {
   });
 
   // Mutations and Queries
-  const {loading, error, data} = useQuery(ME_QUERY);
-  if (loading) return <Text>loading...</Text>;
-  if (error) return <Text>{error.message}</Text>;
 
   const [createSpeek] = useMutation(CREATE_SPEEK_MUTATION, {
     refetchQueries: [{query: SPEEKS_QUERY}],
