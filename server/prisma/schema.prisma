@@ -8,39 +8,41 @@ datasource db {
 }
 
 model User {
-  id       Int    @id  @default(autoincrement())
-  email    String  @unique
-  password String  @default("")
-  name     String?
-  speeks    Speek[]
-  Profile Profile?
+  id         Int    @id  @default(autoincrement())
+  email      String  @unique
+  password   String  @default("")
+  name       String?
+  speeks     Speek[]
+  Profile    Profile?
+  likedSpeek LikedSpeek[]
+}
+
+model Profile{
+  id        Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  bio       String?
+  location  String?
+  website   String?
+  avatar    String?
+  userId    Int? @unique
+  User      User? @relation(fields: [userId], references: [id])
+}
+
+model Speek{
+  id        Int @id @default(autoincrement())
+  title     String?
+  excerpt   String?
+  createdAt DateTime @default(now())
+  content   String?
+  authorId  Int?
+  likes     LikedSpeek[]
+  author    User? @relation(fields: [authorId], references:[id])
 }
 
 model LikedSpeek {
   id       Int    @id  @default(autoincrement()) 
   speek    Speek
-  likedAt DateTime @default(now())
-  userId   Int? @unique
+  likedAt  DateTime @default(now())
+  userId   Int? 
   User     User? @relation(fields: [userId], references:[id])
-}
-
-model Profile{
-  id  Int @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  bio String?
-  location String?
-  website String?
-  avatar String?
-  userId Int? @unique
-  User User? @relation(fields: [userId], references: [id])
-}
-
-model Speek{
-  id Int @id @default(autoincrement())
-  title String?
-  excerpt String?
-  createdAt DateTime @default(now())
-  content String?
-  authorId Int?
-  author User? @relation(fields: [authorId], references:[id])
 }
