@@ -12,12 +12,16 @@ import CreateProfile from "../components/CreateProfile";
 import MyButton from "../components/MyButton";
 import UpdateProfile from "../components/UpdateProfile";
 import MyImageComponent from "../components/MyImageComponent";
+import MyActivityIndicator from "../components/MyActivityIndicator";
 
 // Enums and Interfaces
 import {PhotoFileEnum, ImageLocationEnum} from "../components/enums";
 
 // Resource
 const anonymous_user = require("../rsc/anonymous_user.png");
+
+// Styles
+import {theme} from "../constants/theme";
 
 //Query
 export const ME_QUERY = gql`
@@ -40,7 +44,7 @@ const Profile = () => {
   const [editModalOpen, setEditModalOpen] = useState<boolean>(false);
   const {loading, error, data} = useQuery(ME_QUERY);
 
-  if (loading) return <Text>loading...</Text>;
+  // if (loading) return <Text>loading...</Text>;
   if (error) return <Text>{error.message}</Text>;
 
   // Modal
@@ -52,7 +56,7 @@ const Profile = () => {
   };
 
   return (
-    <Box bg="white" f={1}>
+    <Box bg={theme.color.white} f={1}>
       <Box mx={60}>
         {modalOpen && (
           <CreateProfile show={modalOpen} closeModal={closeModal} />
@@ -60,75 +64,86 @@ const Profile = () => {
         {editModalOpen && (
           <UpdateProfile show={editModalOpen} closeModal={closeEdit} />
         )}
-        <Box my="xl">
-          {data.me.Profile ? (
-            <Box>
-              <Box
-                dir="col"
-                self="end"
-                bg="white"
-                mx="base"
-                w={30}
-                center
-                radius="sm"
-                style={{elevation: 20}}>
-                <TouchableOpacity onPress={() => setEditModalOpen(true)}>
-                  <AntDesign name="edit" style={{fontSize: 30}} />
-                </TouchableOpacity>
-              </Box>
-              <Box>
-                <Box center>
+        <>
+          {loading ? (
+            <MyActivityIndicator
+              size="large"
+              color={theme.color.blueLightest}
+            />
+          ) : (
+            <Box my="xl">
+              {data.me.Profile ? (
+                <Box>
+                  <Box
+                    dir="col"
+                    self="end"
+                    bg={theme.color.white}
+                    mx="base"
+                    w={30}
+                    center
+                    radius="sm"
+                    style={{elevation: 20}}>
+                    {!loading && (
+                      <TouchableOpacity onPress={() => setEditModalOpen(true)}>
+                        <AntDesign name="edit" style={{fontSize: 30}} />
+                      </TouchableOpacity>
+                    )}
+                  </Box>
+                  <Box>
+                    <Box center>
+                      <Box>
+                        <MyImageComponent
+                          source={data.me.Profile.avatar}
+                          where={ImageLocationEnum.INTERNET}
+                          height={PhotoFileEnum.HEIGHT}
+                          width={PhotoFileEnum.WIDTH}
+                          marginBottom={PhotoFileEnum.MARGIN_BOTTOM}
+                        />
+                      </Box>
+                      <Box my="lg" center>
+                        <Text>{data.me.Profile.bio}</Text>
+                        <Box dir="row" align="center">
+                          <Entypo name="location-pin" style={{fontSize: 12}} />
+                          <Text mx={4}>{data.me.Profile.location}</Text>
+                        </Box>
+                        <Box dir="row" align="center">
+                          <AntDesign name="link" style={{fontSize: 12}} />
+                          <Text mx={4} size={12}>
+                            {data.me.Profile.website}
+                          </Text>
+                        </Box>
+                      </Box>
+                    </Box>
+                  </Box>
+                </Box>
+              ) : (
+                <Box my="lg" center>
                   <Box>
                     <MyImageComponent
-                      source={data.me.Profile.avatar}
-                      where={ImageLocationEnum.INTERNET}
                       height={PhotoFileEnum.HEIGHT}
                       width={PhotoFileEnum.WIDTH}
                       marginBottom={PhotoFileEnum.MARGIN_BOTTOM}
                     />
                   </Box>
-                  <Box my="lg" center>
-                    <Text>{data.me.Profile.bio}</Text>
-                    <Box dir="row" align="center">
-                      <Entypo name="location-pin" style={{fontSize: 12}} />
-                      <Text mx={4}>{data.me.Profile.location}</Text>
-                    </Box>
-                    <Box dir="row" align="center">
-                      <AntDesign name="link" style={{fontSize: 12}} />
-                      <Text mx={4} size={12}>
-                        {data.me.Profile.website}
-                      </Text>
+                  <Box my="sm" center>
+                    {!data.me.Profile && (
+                      <Box dir="row" align="center">
+                        <Text mx={4}>No profile data found</Text>
+                        <Entypo name="emoji-sad" style={{fontSize: 14}} />
+                      </Box>
+                    )}
+                    <Box center mt="sm">
+                      <MyButton
+                        name={"Make one"}
+                        functionHandeler={() => setModalOpen(true)}
+                      />
                     </Box>
                   </Box>
                 </Box>
-              </Box>
-            </Box>
-          ) : (
-            <Box my="lg" center>
-              <Box>
-                <MyImageComponent
-                  height={PhotoFileEnum.HEIGHT}
-                  width={PhotoFileEnum.WIDTH}
-                  marginBottom={PhotoFileEnum.MARGIN_BOTTOM}
-                />
-              </Box>
-              <Box my="sm" center>
-                {!data.me.Profile && (
-                  <Box dir="row" align="center">
-                    <Text mx={4}>No profile data found</Text>
-                    <Entypo name="emoji-sad" style={{fontSize: 14}} />
-                  </Box>
-                )}
-                <Box center mt="sm">
-                  <MyButton
-                    name={"Make one"}
-                    functionHandeler={() => setModalOpen(true)}
-                  />
-                </Box>
-              </Box>
+              )}
             </Box>
           )}
-        </Box>
+        </>
       </Box>
     </Box>
   );

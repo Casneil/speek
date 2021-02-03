@@ -24,6 +24,9 @@ import {ImageLocationEnum} from "../components/enums";
 //Resource
 const icon = require("../rsc/icon.jpg");
 
+// Styles
+import {theme} from "../constants/theme";
+
 // Mutation
 const SIGN_UP_MUTATION = gql`
   mutation signup($name: String, $email: String!, $password: String!) {
@@ -35,10 +38,10 @@ const SIGN_UP_MUTATION = gql`
 
 const Register = () => {
   const [borderColor, setBorderColor] = useState<IColorProps>({
-    name: "gray",
-    email: "gray",
-    password: "gray",
-    confirmPassword: "gray",
+    name: theme.color.grey,
+    email: theme.color.grey,
+    password: theme.color.grey,
+    confirmPassword: theme.color.grey,
   });
   const [signup, {data}] = useMutation(SIGN_UP_MUTATION);
 
@@ -70,7 +73,7 @@ const Register = () => {
 
   return (
     <KeyboardAvoidingView style={{flex: 1}} behavior="position">
-      <Box bg="white">
+      <Box bg={theme.color.white}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <Box my="sm">
             <Text bold size="xl" center>
@@ -79,7 +82,7 @@ const Register = () => {
           </Box>
           <Box center my="sm">
             <Box
-              bg="white"
+              bg={theme.color.white}
               style={{elevation: 20}}
               mb="lg"
               radius={100}
@@ -112,17 +115,24 @@ const Register = () => {
                   <Box mb="sm">
                     <Box dir="row" align="center">
                       <Box position="absolute" right={0} ml="sm">
-                        <AntDesign name="user" size={18} color="black" />
+                        <AntDesign
+                          name="user"
+                          size={18}
+                          color={theme.color.black}
+                        />
                       </Box>
                       <TextInput
                         onChangeText={handleChange("name")}
                         onBlur={handleBlur("name")}
                         placeholder="Enter your username"
-                        placeholderTextColor="gray"
+                        placeholderTextColor={theme.color.grey}
                         maxLength={20}
-                        selectionColor={"#2196f3"}
+                        selectionColor={theme.color.blueLightest}
                         onFocus={() =>
-                          setBorderColor({...borderColor, name: "#2196f3"})
+                          setBorderColor({
+                            ...borderColor,
+                            name: theme.color.blueLightest,
+                          })
                         }
                         value={values.name}
                         style={{
@@ -134,7 +144,7 @@ const Register = () => {
                       />
                     </Box>
                     {errors.name && (
-                      <Text style={{fontSize: 10, color: "red"}}>
+                      <Text style={{fontSize: 10, color: theme.color.red}}>
                         {errors.name}
                       </Text>
                     )}
@@ -142,18 +152,25 @@ const Register = () => {
                   <Box mb="sm">
                     <Box dir="row" align="center">
                       <Box position="absolute" right={0} ml="sm">
-                        <AntDesign name="mail" size={17} color="black" />
+                        <AntDesign
+                          name="mail"
+                          size={17}
+                          color={theme.color.black}
+                        />
                       </Box>
                       <TextInput
                         onChangeText={handleChange("email")}
                         placeholder="Enter your email address"
-                        placeholderTextColor="gray"
+                        placeholderTextColor={theme.color.grey}
                         onBlur={handleBlur("email")}
                         keyboardType={"email-address"}
                         maxLength={34}
-                        selectionColor={"#2196f3"}
+                        selectionColor={theme.color.blueLightest}
                         onFocus={() =>
-                          setBorderColor({...borderColor, email: "#2196f3"})
+                          setBorderColor({
+                            ...borderColor,
+                            email: theme.color.blueLightest,
+                          })
                         }
                         value={values.email}
                         style={{
@@ -165,7 +182,7 @@ const Register = () => {
                       />
                     </Box>
                     {errors.email && (
-                      <Text style={{fontSize: 10, color: "red"}}>
+                      <Text style={{fontSize: 10, color: theme.color.red}}>
                         {errors.email}
                       </Text>
                     )}
@@ -173,19 +190,26 @@ const Register = () => {
                   <Box mb="sm">
                     <Box dir="row" align="center">
                       <Box position="absolute" right={0} ml="sm">
-                        <AntDesign name="lock" size={20} color="black" />
+                        <AntDesign
+                          name="lock"
+                          size={20}
+                          color={theme.color.black}
+                        />
                       </Box>
 
                       <TextInput
                         onChangeText={handleChange("password")}
                         onBlur={handleBlur("password")}
                         placeholder="Password"
-                        placeholderTextColor="gray"
+                        placeholderTextColor={theme.color.grey}
                         secureTextEntry={true}
                         maxLength={25}
-                        selectionColor={"#2196f3"}
+                        selectionColor={theme.color.blueLightest}
                         onFocus={() =>
-                          setBorderColor({...borderColor, password: "#2196f3"})
+                          setBorderColor({
+                            ...borderColor,
+                            password: theme.color.blueLightest,
+                          })
                         }
                         value={values.password}
                         style={{
@@ -197,7 +221,7 @@ const Register = () => {
                       />
                     </Box>
                     {errors.password && (
-                      <Text style={{fontSize: 10, color: "red"}}>
+                      <Text style={{fontSize: 10, color: theme.color.red}}>
                         {errors.password}
                       </Text>
                     )}
@@ -209,8 +233,8 @@ const Register = () => {
                           color={
                             values.confirmPassword !== "" &&
                             !errors.confirmPassword
-                              ? "green"
-                              : "red"
+                              ? theme.color.green
+                              : theme.color.red
                           }
                           size={18}
                           name={
@@ -225,14 +249,14 @@ const Register = () => {
                         onChangeText={handleChange("confirmPassword")}
                         onBlur={handleBlur("confirmPassword")}
                         placeholder="Confirm password"
-                        placeholderTextColor="gray"
+                        placeholderTextColor={theme.color.grey}
                         maxLength={25}
                         secureTextEntry={true}
-                        selectionColor={"#2196f3"}
+                        selectionColor={theme.color.blueLightest}
                         onFocus={() =>
                           setBorderColor({
                             ...borderColor,
-                            confirmPassword: "#2196f3",
+                            confirmPassword: theme.color.blueLightest,
                           })
                         }
                         value={values.confirmPassword}
@@ -245,7 +269,7 @@ const Register = () => {
                       />
                     </Box>
                     {errors.confirmPassword && (
-                      <Text style={{fontSize: 10, color: "red"}}>
+                      <Text style={{fontSize: 10, color: theme.color.red}}>
                         {errors.confirmPassword}
                       </Text>
                     )}
@@ -257,7 +281,7 @@ const Register = () => {
               </>
             )}
           </Formik>
-          <Box bg="white" h="100%"></Box>
+          <Box bg={theme.color.white} h="100%"></Box>
         </TouchableWithoutFeedback>
       </Box>
     </KeyboardAvoidingView>

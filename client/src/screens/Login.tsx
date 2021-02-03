@@ -8,7 +8,6 @@ import {
 } from "react-native";
 
 import {TouchableWithoutFeedback} from "react-native-gesture-handler";
-import {useNavigation} from "@react-navigation/native";
 
 // Third Party
 import {gql, useMutation} from "@apollo/client";
@@ -29,6 +28,7 @@ import {ImageLocationEnum} from "../components/enums";
 //Resource
 const icon = require("../rsc/icon.jpg");
 // Styles
+import {theme} from "../constants/theme";
 
 // Mutation
 const LOGIN_MUTATION = gql`
@@ -42,10 +42,9 @@ const LOGIN_MUTATION = gql`
 const Login = () => {
   const [login, {data}] = useMutation(LOGIN_MUTATION);
   const [borderColor, setBorderColor] = useState<IColorProps>({
-    email: "gray",
-    password: "gray",
+    email: theme.color.grey,
+    password: theme.color.grey,
   });
-  const navigation = useNavigation();
 
   const {setUserToken} = useAuthContext();
 
@@ -65,7 +64,7 @@ const Login = () => {
 
   return (
     <KeyboardAvoidingView style={{flex: 1}} behavior="position">
-      <Box bg="white">
+      <Box bg={theme.color.white}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <Box my="sm">
             <Text bold size="xl" center>
@@ -74,7 +73,7 @@ const Login = () => {
           </Box>
           <Box center my="sm">
             <Box
-              bg="white"
+              bg={theme.color.white}
               style={{elevation: 20}}
               mb="lg"
               radius={100}
@@ -107,7 +106,11 @@ const Login = () => {
                   <Box mb="md">
                     <Box dir="row" align="center">
                       <Box position="absolute" right={0}>
-                        <AntDesign name="mail" size={17} color="black" />
+                        <AntDesign
+                          name="mail"
+                          size={17}
+                          color={theme.color.black}
+                        />
                       </Box>
                       <Box dir="row" align="center">
                         <TextInput
@@ -117,9 +120,12 @@ const Login = () => {
                           onBlur={handleBlur("email")}
                           keyboardType={"email-address"}
                           maxLength={34}
-                          selectionColor={"#2196f3"}
+                          selectionColor={theme.color.blueLightest}
                           onFocus={() =>
-                            setBorderColor({...borderColor, email: "#2196f3"})
+                            setBorderColor({
+                              ...borderColor,
+                              email: theme.color.blueLightest,
+                            })
                           }
                           value={values.email}
                           style={{
@@ -132,7 +138,7 @@ const Login = () => {
                       </Box>
                     </Box>
                     {errors.email && (
-                      <Text style={{fontSize: 10, color: "red"}}>
+                      <Text style={{fontSize: 10, color: theme.color.red}}>
                         {errors.email}
                       </Text>
                     )}
@@ -140,7 +146,11 @@ const Login = () => {
                   <Box mb="md">
                     <Box dir="row" align="center">
                       <Box position="absolute" right={0}>
-                        <AntDesign name="lock" size={20} color="black" />
+                        <AntDesign
+                          name="lock"
+                          size={20}
+                          color={theme.color.black}
+                        />
                       </Box>
                       <TextInput
                         onChangeText={handleChange("password")}
@@ -149,11 +159,11 @@ const Login = () => {
                         placeholderTextColor="gray"
                         secureTextEntry={true}
                         maxLength={25}
-                        selectionColor={"#2196f3"}
+                        selectionColor={theme.color.blueLightest}
                         onFocus={() =>
                           setBorderColor({
                             ...borderColor,
-                            password: "#2196f3",
+                            password: theme.color.blueLightest,
                           })
                         }
                         value={values.password}
@@ -166,7 +176,7 @@ const Login = () => {
                       />
                     </Box>
                     {errors.password && (
-                      <Text style={{fontSize: 10, color: "red"}}>
+                      <Text style={{fontSize: 10, color: theme.color.red}}>
                         {errors.password}
                       </Text>
                     )}
@@ -193,7 +203,7 @@ const Login = () => {
             )}
           </Formik>
         </TouchableWithoutFeedback>
-        <Box bg="white" h="100%"></Box>
+        <Box bg={theme.color.white} h="100%"></Box>
       </Box>
     </KeyboardAvoidingView>
   );
