@@ -22,6 +22,7 @@ input LikedSpeekWhereUniqueInput {
 type Mutation {
   createProfile(avatar: String, bio: String, location: String, website: String): Profile
   createSpeek(content: String, excerpt: String, title: String): Speek
+  deleteLike(id: Int!): LikedSpeek
   likeSpeek(id: Int): LikedSpeek
   login(email: String!, password: String!): AuthPayload
   signup(email: String!, name: String, password: String!): AuthPayload

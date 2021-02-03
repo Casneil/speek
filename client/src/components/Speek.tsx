@@ -43,7 +43,7 @@ const Speek: React.FC<SpeekTypes> = (props: SpeekTypes) => {
     refetchQueries: [{query: SPEEKS_QUERY}],
   });
 
-  const handleCreateLike = async (id: number) => {
+  const handleCreateLike = async (id: any) => {
     try {
       await likeSpeek({variables: {id}});
     } catch (error) {
@@ -51,13 +51,9 @@ const Speek: React.FC<SpeekTypes> = (props: SpeekTypes) => {
     }
   };
 
-  const findSpeek = meData.me.likedSpeek.map(
+  const findLikedSpeek = meData.me.likedSpeek.map(
     (speekEl: ISpeekInterface) => speekEl.speek.id,
   );
-
-  console.log(findSpeek.length);
-
-  // console.log(speek);
 
   const AllSpeeks = ({
     id,
@@ -69,8 +65,6 @@ const Speek: React.FC<SpeekTypes> = (props: SpeekTypes) => {
     createdAt,
   }: ISpeekInterface) => (
     <Box bg={theme.color.white} mb={6}>
-      {console.log(findSpeek.includes(id))}
-      {console.log(id)}
       <Box
         mx={5}
         bg={theme.color.white}
@@ -79,7 +73,6 @@ const Speek: React.FC<SpeekTypes> = (props: SpeekTypes) => {
           borderBottomRightRadius: 12,
           borderBottomLeftRadius: 12,
         }}>
-        <Text>{likes.length}</Text>
         <Box mx={35}>
           <Box my="sm">
             {author?.Profile.avatar ? (
@@ -105,6 +98,7 @@ const Speek: React.FC<SpeekTypes> = (props: SpeekTypes) => {
                   </Box>
                   <Text size={11.5} color={theme.color.grey}>
                     {formatDistance(
+                      // @ts-ignore
                       subDays(new Date(createdAt), 0),
                       new Date(),
                     )}{" "}
@@ -135,25 +129,35 @@ const Speek: React.FC<SpeekTypes> = (props: SpeekTypes) => {
           </Box>
           {/* "Likes container" */}
           <Box dir="row" align="center" justify="between" my="sm">
-            {meData.me.likedSpeek.map((t: any) => t.speek.id).includes(id) ? (
-              <Box bg="white" radius="sm" style={{elevation: 10}}>
-                <TouchableOpacity>
-                  <AntDesign
-                    name="like1"
-                    style={{fontSize: 18, color: theme.color.blueLightest}}
-                  />
-                </TouchableOpacity>
-                {/* <Text>{speek?.likes.length}</Text> */}
+            {findLikedSpeek.includes(id) ? (
+              <Box>
+                {/* likes count box */}
+                <Box bg={theme.color.white} radius="sm" style={{elevation: 10}}>
+                  <Box self="end" mb={-10}>
+                    <Text
+                      color={theme.color.blueLightest}
+                      size={12}
+                      bold
+                      pl={2}>
+                      {likes.length}
+                    </Text>
+                  </Box>
+                  <TouchableOpacity>
+                    <AntDesign
+                      name="like1"
+                      style={{fontSize: 18, color: theme.color.blueLightest}}
+                    />
+                  </TouchableOpacity>
+                </Box>
               </Box>
             ) : (
               <Box bg="white" radius="sm" style={{elevation: 10}}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => handleCreateLike(id)}>
                   <AntDesign
                     name="like2"
                     style={{fontSize: 18, color: theme.color.blueLightest}}
                   />
                 </TouchableOpacity>
-                {/* <Text>{speek?.likes.length}</Text> */}
               </Box>
             )}
             <Box bg="white" radius="sm" style={{elevation: 10}}>
@@ -173,7 +177,7 @@ const Speek: React.FC<SpeekTypes> = (props: SpeekTypes) => {
             </Box>
             <Box bg="white" radius="sm" p={2} style={{elevation: 10}}>
               <TouchableOpacity>
-                <Text my={2} size={14} color={theme.color.grey}>
+                <Text my={2} size={12} color={theme.color.grey}>
                   unfollow
                 </Text>
               </TouchableOpacity>
@@ -181,15 +185,7 @@ const Speek: React.FC<SpeekTypes> = (props: SpeekTypes) => {
           </Box>
         </Box>
       </Box>
-      <Box bg="white" radius="sm" style={{elevation: 10}}>
-        <TouchableOpacity onPress={() => handleCreateLike(6)}>
-          <AntDesign
-            name="like1"
-            style={{fontSize: 18, color: theme.color.blueLightest}}
-          />
-        </TouchableOpacity>
-        {/* <Text>{speek?.likes.length}</Text> */}
-      </Box>
+      <Box bg="white" radius="sm" style={{elevation: 10}}></Box>
     </Box>
   );
 
