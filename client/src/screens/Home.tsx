@@ -11,6 +11,9 @@ import CreateSpeek from "../components/CreateSpeek";
 import Speek from "../components/Speek";
 import MyActivityIndicator from "../components/MyActivityIndicator";
 
+// Queries and Mutations
+import {ME_QUERY} from "../screens/Profile";
+
 //Style
 import {theme} from "../constants/theme";
 
@@ -48,11 +51,12 @@ const Home = () => {
   };
 
   const {loading, error, data} = useQuery(SPEEKS_QUERY);
+  const {loading: meLoading, error: meError, data: meData} = useQuery(ME_QUERY);
   if (error) <Text>{error.message}</Text>;
 
   return (
     <>
-      {loading ? (
+      {loading || meLoading ? (
         <Box>
           <MyActivityIndicator size="large" color={theme.color.blueLightest} />
         </Box>
@@ -73,11 +77,15 @@ const Home = () => {
               radius="sm"
               style={{elevation: 20}}>
               <TouchableOpacity onPress={() => setModalOpen(true)}>
-                <AntDesign name="form" style={{fontSize: 30}} />
+                <AntDesign
+                  name="form"
+                  style={{fontSize: 30}}
+                  color={theme.color.black}
+                />
               </TouchableOpacity>
             </Box>
           </Box>
-          <Speek speek={data.speeks} />
+          <Speek speek={data.speeks} meData={meData} />
         </Box>
       )}
     </>

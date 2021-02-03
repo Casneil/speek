@@ -1,0 +1,62 @@
+-- CreateTable
+CREATE TABLE "User" (
+    "id" SERIAL NOT NULL,
+    "email" TEXT NOT NULL,
+    "password" TEXT NOT NULL DEFAULT E'',
+    "name" TEXT,
+
+    PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Profile" (
+    "id" SERIAL NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "bio" TEXT,
+    "location" TEXT,
+    "website" TEXT,
+    "avatar" TEXT,
+    "userId" INTEGER,
+
+    PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Speek" (
+    "id" SERIAL NOT NULL,
+    "title" TEXT,
+    "excerpt" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "content" TEXT,
+    "authorId" INTEGER,
+
+    PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "LikedSpeek" (
+    "id" SERIAL NOT NULL,
+    "likedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "userId" INTEGER,
+    "speekId" INTEGER NOT NULL,
+
+    PRIMARY KEY ("id")
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User.email_unique" ON "User"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Profile.userId_unique" ON "Profile"("userId");
+
+-- AddForeignKey
+ALTER TABLE "Profile" ADD FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Speek" ADD FOREIGN KEY ("authorId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "LikedSpeek" ADD FOREIGN KEY ("speekId") REFERENCES "Speek"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "LikedSpeek" ADD FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;

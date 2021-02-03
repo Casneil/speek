@@ -114,7 +114,7 @@ export const Mutation = mutationType({
       },
     })
 
-    t.field('likedSpeek', {
+    t.field('likeSpeek', {
       type: 'LikedSpeek',
       args: {
         id: intArg(),
@@ -124,8 +124,8 @@ export const Mutation = mutationType({
         if (!userId) throw new Error('Could not authenticate user.')
         return ctx.prisma.likedSpeek.create({
           data: {
-            speek: { connect: { id: Number(id) } },
             User: { connect: { id: Number(userId) } },
+            speek: { connect: { id: Number(id) } },
           },
         })
       },

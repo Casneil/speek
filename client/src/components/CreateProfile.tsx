@@ -130,7 +130,6 @@ const CreateProfile: React.FC<ModalProps> = (props) => {
     website: "",
     avatar: "",
   };
-  console.log("TES", imageUrl);
 
   return (
     <Modal

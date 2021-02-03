@@ -24,7 +24,8 @@ export interface ISpeekInterface {
   title?: string;
   speek?: any;
   avatar?: string;
-  createdAt?: string;
+  createdAt?: Date;
+  likes: [];
 }
 
 export interface IAuthInterface {

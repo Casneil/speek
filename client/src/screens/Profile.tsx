@@ -28,6 +28,13 @@ export const ME_QUERY = gql`
   query me {
     me {
       id
+      name
+      likedSpeek {
+        id
+        speek {
+          id
+        }
+      }
       Profile {
         id
         bio
@@ -91,7 +98,7 @@ const Profile = () => {
                   </Box>
                   <Box>
                     <Box center>
-                      <Box>
+                      <Box style={{elevation: 40}}>
                         <MyImageComponent
                           source={data.me.Profile.avatar}
                           where={ImageLocationEnum.INTERNET}
@@ -100,7 +107,10 @@ const Profile = () => {
                           marginBottom={PhotoFileEnum.MARGIN_BOTTOM}
                         />
                       </Box>
-                      <Box my="lg" center>
+                      <Text size={14} color={theme.color.blueLightest} bold>
+                        {data.me.name}
+                      </Text>
+                      <Box my="sm" center>
                         <Text>{data.me.Profile.bio}</Text>
                         <Box dir="row" align="center">
                           <Entypo name="location-pin" style={{fontSize: 12}} />
@@ -117,7 +127,7 @@ const Profile = () => {
                   </Box>
                 </Box>
               ) : (
-                <Box my="lg" center>
+                <Box my="sm" center>
                   <Box>
                     <MyImageComponent
                       height={PhotoFileEnum.HEIGHT}

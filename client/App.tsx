@@ -12,10 +12,13 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import {UtilityThemeProvider} from "react-native-design-utility";
 import {setContext} from "apollo-link-context";
 import {theme} from "./src/constants/theme";
+
 // Navigation
 import StackNavigator from "./src/navigation/NavStack";
+
 // Interfaces and Enums
 import {StorageKeyEnum} from "./src/components/enums";
+
 // Context
 import {AuthContextProvider} from "./src/components/context/AuthContext";
 

@@ -91,7 +91,7 @@ export interface NexusGenFieldTypes {
   Mutation: { // field return type
     createProfile: NexusGenRootTypes['Profile'] | null; // Profile
     createSpeek: NexusGenRootTypes['Speek'] | null; // Speek
-    likedSpeek: NexusGenRootTypes['LikedSpeek'] | null; // LikedSpeek
+    likeSpeek: NexusGenRootTypes['LikedSpeek'] | null; // LikedSpeek
     login: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
     signup: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
     updateProfile: NexusGenRootTypes['Profile'] | null; // Profile
@@ -140,7 +140,7 @@ export interface NexusGenFieldTypeNames {
   Mutation: { // field return type name
     createProfile: 'Profile'
     createSpeek: 'Speek'
-    likedSpeek: 'LikedSpeek'
+    likeSpeek: 'LikedSpeek'
     login: 'AuthPayload'
     signup: 'AuthPayload'
     updateProfile: 'Profile'
@@ -189,7 +189,7 @@ export interface NexusGenArgTypes {
       excerpt?: string | null; // String
       title?: string | null; // String
     }
-    likedSpeek: { // args
+    likeSpeek: { // args
       id?: number | null; // Int
     }
     login: { // args
