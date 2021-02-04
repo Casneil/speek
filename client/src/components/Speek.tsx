@@ -20,6 +20,7 @@ import {ImageLocationEnum} from "./enums";
 
 // Queries and Mutations
 import {SPEEKS_QUERY} from "../screens/Home";
+import {ME_QUERY} from "../screens/Profile";
 
 // Mutations
 const LIKE_SPEEK_MUTATION = gql`
@@ -30,17 +31,29 @@ const LIKE_SPEEK_MUTATION = gql`
   }
 `;
 
+const DELETE_LIKED_SPEEK_MUTATION = gql`
+  mutation deleteLike($id: Int!) {
+    deleteLike(id: $id) {
+      id
+    }
+  }
+`;
+
+// Types
 type SpeekTypes = {
-  id?: any;
   speek: Array<ISpeekInterface>;
   meData?: any;
 };
 
 const Speek: React.FC<SpeekTypes> = (props: SpeekTypes) => {
-  const {speek, id, meData} = props;
+  const {speek, meData} = props;
 
   const [likeSpeek] = useMutation(LIKE_SPEEK_MUTATION, {
-    refetchQueries: [{query: SPEEKS_QUERY}],
+    refetchQueries: [{query: SPEEKS_QUERY}, {query: ME_QUERY}],
+  });
+
+  const [deleteLike] = useMutation(DELETE_LIKED_SPEEK_MUTATION, {
+    refetchQueries: [{query: SPEEKS_QUERY}, {query: ME_QUERY}],
   });
 
   const handleCreateLike = async (id: any) => {
@@ -51,7 +64,15 @@ const Speek: React.FC<SpeekTypes> = (props: SpeekTypes) => {
     }
   };
 
-  const findLikedSpeek = meData.me.likedSpeek.map(
+  const handleDeleteLike = async (id: any) => {
+    try {
+      await deleteLike({variables: {id}});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const sortSpeeks = meData.me.likedSpeek.map(
     (speekEl: ISpeekInterface) => speekEl.speek.id,
   );
 
@@ -129,7 +150,7 @@ const Speek: React.FC<SpeekTypes> = (props: SpeekTypes) => {
           </Box>
           {/* "Likes container" */}
           <Box dir="row" align="center" justify="between" my="sm">
-            {findLikedSpeek.includes(id) ? (
+            {sortSpeeks.includes(id) ? (
               <Box>
                 {/* likes count box */}
                 <Box bg={theme.color.white} radius="sm" style={{elevation: 10}}>
@@ -142,7 +163,9 @@ const Speek: React.FC<SpeekTypes> = (props: SpeekTypes) => {
                       {likes.length}
                     </Text>
                   </Box>
-                  <TouchableOpacity>
+                  <TouchableOpacity
+                    //@ts-ignore
+                    onPress={() => handleDeleteLike(likes[0].id)}>
                     <AntDesign
                       name="like1"
                       style={{fontSize: 18, color: theme.color.blueLightest}}
@@ -151,23 +174,30 @@ const Speek: React.FC<SpeekTypes> = (props: SpeekTypes) => {
                 </Box>
               </Box>
             ) : (
-              <Box bg="white" radius="sm" style={{elevation: 10}}>
-                <TouchableOpacity onPress={() => handleCreateLike(id)}>
-                  <AntDesign
-                    name="like2"
-                    style={{fontSize: 18, color: theme.color.blueLightest}}
-                  />
-                </TouchableOpacity>
+              <Box>
+                <Box bg={theme.color.white} radius="sm" style={{elevation: 10}}>
+                  <Box self="end" mb={-10}>
+                    <Text
+                      color={
+                        likes.length > 0
+                          ? theme.color.blueLightest
+                          : theme.color.white
+                      }
+                      size={12}
+                      bold
+                      pl={2}>
+                      {likes.length}
+                    </Text>
+                  </Box>
+                  <TouchableOpacity onPress={() => handleCreateLike(id)}>
+                    <AntDesign
+                      name="like2"
+                      style={{fontSize: 18, color: theme.color.blueLightest}}
+                    />
+                  </TouchableOpacity>
+                </Box>
               </Box>
             )}
-            <Box bg="white" radius="sm" style={{elevation: 10}}>
-              <TouchableOpacity>
-                <AntDesign
-                  name="dislike2"
-                  style={{fontSize: 18, color: theme.color.blueLightest}}
-                />
-              </TouchableOpacity>
-            </Box>
             <Box bg="white" radius="sm" p={2} style={{elevation: 10}}>
               <TouchableOpacity>
                 <Text my={2} size={12} color={theme.color.grey}>
@@ -204,7 +234,11 @@ const Speek: React.FC<SpeekTypes> = (props: SpeekTypes) => {
 
   return (
     <SafeAreaView>
-      <FlatList data={speek} renderItem={renderItem} keyExtractor={id} />
+      <FlatList
+        data={speek}
+        renderItem={renderItem}
+        keyExtractor={(item) => String(item.id)}
+      />
     </SafeAreaView>
   );
 };
