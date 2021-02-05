@@ -30,6 +30,7 @@ input LikedSpeekWhereUniqueInput {
 }
 
 type Mutation {
+  createComment(content: String!, id: Int!): Comment
   createProfile(avatar: String, bio: String, location: String, website: String): Profile
   createSpeek(content: String, excerpt: String, title: String): Speek
   deleteLike(id: Int!): LikedSpeek

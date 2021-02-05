@@ -102,6 +102,7 @@ export interface NexusGenFieldTypes {
     speek: NexusGenRootTypes['Speek']; // Speek!
   }
   Mutation: { // field return type
+    createComment: NexusGenRootTypes['Comment'] | null; // Comment
     createProfile: NexusGenRootTypes['Profile'] | null; // Profile
     createSpeek: NexusGenRootTypes['Speek'] | null; // Speek
     deleteLike: NexusGenRootTypes['LikedSpeek'] | null; // LikedSpeek
@@ -159,6 +160,7 @@ export interface NexusGenFieldTypeNames {
     speek: 'Speek'
   }
   Mutation: { // field return type name
+    createComment: 'Comment'
     createProfile: 'Profile'
     createSpeek: 'Speek'
     deleteLike: 'LikedSpeek'
@@ -202,6 +204,10 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    createComment: { // args
+      content: string; // String!
+      id: number; // Int!
+    }
     createProfile: { // args
       avatar?: string | null; // String
       bio?: string | null; // String
