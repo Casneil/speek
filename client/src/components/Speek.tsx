@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {SafeAreaView, FlatList, TouchableOpacity} from "react-native";
 
 //3rd party
@@ -10,6 +10,7 @@ import {formatDistance, subDays} from "date-fns";
 
 // Components
 import MyImageComponent from "./MyImageComponent";
+import CreateComment from "./CreateComment";
 
 // Styles
 import {theme} from "../constants/theme";
@@ -48,6 +49,7 @@ type SpeekTypes = {
 
 const Speek: React.FC<SpeekTypes> = (props) => {
   const {speek, meData} = props;
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   const [likeSpeek] = useMutation(LIKE_SPEEK_MUTATION, {
     refetchQueries: [{query: SPEEKS_QUERY}, {query: ME_QUERY}],
@@ -73,6 +75,10 @@ const Speek: React.FC<SpeekTypes> = (props) => {
     }
   };
 
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
   const sortSpeeks = meData.me.likedSpeek.map(
     (speekEl: ISpeekInterface) => speekEl.speek.id,
   );
@@ -87,6 +93,7 @@ const Speek: React.FC<SpeekTypes> = (props) => {
     createdAt,
   }: ISpeekInterface) => (
     <Box bg={theme.color.white} mb={6}>
+      {modalOpen && <CreateComment show={modalOpen} closeModal={closeModal} />}
       <Box
         mx={5}
         bg={theme.color.white}
@@ -201,7 +208,7 @@ const Speek: React.FC<SpeekTypes> = (props) => {
             )}
             {/* Comments icon */}
             <Box bg="white" radius="sm" p={2} style={{elevation: 10}}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => setModalOpen(true)}>
                 <FontAwesome5
                   name="comment-dots"
                   style={{fontSize: 18, color: theme.color.blueLightest}}

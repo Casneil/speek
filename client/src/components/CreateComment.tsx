@@ -22,9 +22,9 @@ import {IColorProps, ISpeekInterface} from "./Interfaces";
 import {theme} from "../constants/theme";
 
 //Mutation
-const CREATE_SPEEK_MUTATION = gql`
-  mutation createSpeek($title: String, $excerpt: String, $content: String) {
-    createSpeek(title: $title, excerpt: $excerpt, content: $content) {
+const CREATE_COMMENT_MUTATION = gql`
+  mutation createComment($id: Int!, $content: String!) {
+    createComment(id: $id, content: $content) {
       id
     }
   }
@@ -35,12 +35,10 @@ type ModalProps = {
   closeModal: () => void;
 };
 
-const CreateSpeek: React.FC<ModalProps> = (props) => {
+const CreateComment: React.FC<ModalProps> = (props) => {
   const {show, closeModal} = props;
 
   const [borderColor, setBorderColor] = useState<IColorProps>({
-    title: theme.color.grey,
-    excerpt: theme.color.grey,
     content: theme.color.grey,
   });
 
@@ -57,13 +55,11 @@ const CreateSpeek: React.FC<ModalProps> = (props) => {
 
   // Mutations and Queries
 
-  const [createSpeek] = useMutation(CREATE_SPEEK_MUTATION, {
+  const [createComment] = useMutation(CREATE_COMMENT_MUTATION, {
     refetchQueries: [{query: SPEEKS_QUERY}],
   });
 
   const initialValues: ISpeekInterface = {
-    title: "",
-    excerpt: "",
     content: "",
   };
 
@@ -86,7 +82,7 @@ const CreateSpeek: React.FC<ModalProps> = (props) => {
             validationSchema={validationSchema}
             onSubmit={async (values, {setSubmitting}) => {
               await setSubmitting(true);
-              await createSpeek({
+              await createComment({
                 variables: values,
               });
               //@ts-ignore
@@ -96,58 +92,6 @@ const CreateSpeek: React.FC<ModalProps> = (props) => {
             {({handleChange, handleBlur, handleSubmit, values, errors}) => (
               <>
                 <Box mx={60}>
-                  <Box mb="sm"></Box>
-                  <Box mb="sm">
-                    <Box dir="row" align="center">
-                      <TextInput
-                        onChangeText={handleChange("title")}
-                        placeholder="title"
-                        placeholderTextColor={theme.color.grey}
-                        onBlur={handleBlur("title")}
-                        maxLength={50}
-                        selectionColor={theme.color.blueLightest}
-                        onFocus={() =>
-                          setBorderColor({
-                            ...borderColor,
-                            website: theme.color.blueLightest,
-                          })
-                        }
-                        value={values.title}
-                        style={{
-                          borderBottomWidth: 1,
-                          width: "100%",
-                          borderBottomColor: borderColor.website,
-                          paddingVertical: 0,
-                        }}
-                      />
-                    </Box>
-                  </Box>
-                  <Box mb="sm">
-                    <Box dir="row" align="center">
-                      <TextInput
-                        onChangeText={handleChange("excerpt")}
-                        onBlur={handleBlur("excerpt")}
-                        placeholder="excerpt"
-                        multiline={true}
-                        placeholderTextColor={theme.color.grey}
-                        maxLength={100}
-                        selectionColor={theme.color.blueLightest}
-                        onFocus={() =>
-                          setBorderColor({
-                            ...borderColor,
-                            location: theme.color.blueLightest,
-                          })
-                        }
-                        value={values.excerpt}
-                        style={{
-                          borderBottomWidth: 1,
-                          width: "100%",
-                          borderBottomColor: borderColor.location,
-                          paddingVertical: 0,
-                        }}
-                      />
-                    </Box>
-                  </Box>
                   <Box mb="sm">
                     <Box dir="row" align="center">
                       <TextInput
@@ -193,4 +137,4 @@ const CreateSpeek: React.FC<ModalProps> = (props) => {
   );
 };
 
-export default CreateSpeek;
+export default CreateComment;
