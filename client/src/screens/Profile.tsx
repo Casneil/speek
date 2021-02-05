@@ -51,7 +51,6 @@ const Profile = () => {
   const [editModalOpen, setEditModalOpen] = useState<boolean>(false);
   const {loading, error, data} = useQuery(ME_QUERY);
 
-  // if (loading) return <Text>loading...</Text>;
   if (error) return <Text>{error.message}</Text>;
 
   // Modal

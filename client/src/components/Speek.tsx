@@ -45,7 +45,7 @@ type SpeekTypes = {
   meData?: any;
 };
 
-const Speek: React.FC<SpeekTypes> = (props: SpeekTypes) => {
+const Speek: React.FC<SpeekTypes> = (props) => {
   const {speek, meData} = props;
 
   const [likeSpeek] = useMutation(LIKE_SPEEK_MUTATION, {

@@ -1,4 +1,4 @@
-import { intArg, nullable, queryType, stringArg } from 'nexus'
+import { intArg, queryType } from 'nexus'
 import { getUserId } from '../utils'
 
 export const Query = queryType({
@@ -25,7 +25,11 @@ export const Query = queryType({
     t.list.field('speeks', {
       type: 'Speek',
       resolve: (parent, args, ctx) => {
-        return ctx.prisma.speek.findMany()
+        return ctx.prisma.speek.findMany({
+          orderBy: {
+            createdAt: 'desc',
+          },
+        })
       },
     })
   },

@@ -11,6 +11,9 @@ import CreateSpeek from "../components/CreateSpeek";
 import Speek from "../components/Speek";
 import MyActivityIndicator from "../components/MyActivityIndicator";
 
+// Enums and Interfaces
+import {ISpeekInterface} from "../components/Interfaces";
+
 // Queries and Mutations
 import {ME_QUERY} from "../screens/Profile";
 
@@ -41,7 +44,7 @@ export const SPEEKS_QUERY = gql`
   }
 `;
 
-const Home = () => {
+const Home: React.FC<ISpeekInterface> = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const DEVICE_HEIGHT = Dimensions.get("screen").height;
 
@@ -53,7 +56,6 @@ const Home = () => {
   const {loading, error, data} = useQuery(SPEEKS_QUERY);
   const {loading: meLoading, error: meError, data: meData} = useQuery(ME_QUERY);
   if (error) <Text>{error.message}</Text>;
-
   return (
     <>
       {loading || meLoading ? (
