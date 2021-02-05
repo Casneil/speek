@@ -15,6 +15,7 @@ model User {
   speeks     Speek[]
   Profile    Profile?
   likedSpeek LikedSpeek[]
+  comments   Comment[]
 }
 
 model Profile{
@@ -37,6 +38,7 @@ model Speek{
   authorId  Int?
   likes     LikedSpeek[]
   author    User? @relation(fields: [authorId], references:[id])
+  comments  Comment[]
 }
 
 model LikedSpeek {
@@ -45,4 +47,14 @@ model LikedSpeek {
   likedAt  DateTime @default(now())
   userId   Int? 
   User     User? @relation(fields: [userId], references:[id])
+}
+
+model Comment{
+  id        Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  content   String?
+  Speek     Speek? @relation(fields: [speekId], references:[id])
+  speekId   Int?
+  User      User? @relation(fields: [userId], references:[id])
+  userId    Int?
 }
