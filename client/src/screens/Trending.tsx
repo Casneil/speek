@@ -23,7 +23,7 @@ import {theme} from "../constants/theme";
 import {SPEEKS_QUERY} from "./Home";
 
 const Trending = () => {
-  const [sortedSpeeks, setSortedSpeeks] = useState<ISpeekInterface[]>();
+  const [sortedSpeeks, setSortedSpeeks] = useState<Array<ISpeekInterface>>();
   //States
   const {loading, error, data} = useQuery(SPEEKS_QUERY);
 
@@ -158,6 +158,17 @@ const Trending = () => {
                         p={2}
                         style={{elevation: 10}}
                         mx="sm">
+                        <Box self="end" mb={-4}>
+                          {speek.comments?.length!! > 0 && (
+                            <Text
+                              color={theme.color.blueLightest}
+                              size={12}
+                              bold
+                              pl={2}>
+                              {speek.comments?.length}
+                            </Text>
+                          )}
+                        </Box>
                         <TouchableOpacity>
                           <FontAwesome5
                             name="comment-dots"

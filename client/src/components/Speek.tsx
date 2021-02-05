@@ -50,6 +50,7 @@ type SpeekTypes = {
 const Speek: React.FC<SpeekTypes> = (props) => {
   const {speek, meData} = props;
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [speekId, setSpeekId] = useState<number>();
 
   const [likeSpeek] = useMutation(LIKE_SPEEK_MUTATION, {
     refetchQueries: [{query: SPEEKS_QUERY}, {query: ME_QUERY}],
@@ -91,9 +92,12 @@ const Speek: React.FC<SpeekTypes> = (props) => {
     author,
     likes,
     createdAt,
+    comments,
   }: ISpeekInterface) => (
     <Box bg={theme.color.white} mb={6}>
-      {modalOpen && <CreateComment show={modalOpen} closeModal={closeModal} />}
+      {modalOpen && (
+        <CreateComment show={modalOpen} closeModal={closeModal} id={speekId} />
+      )}
       <Box
         mx={5}
         bg={theme.color.white}
@@ -208,7 +212,18 @@ const Speek: React.FC<SpeekTypes> = (props) => {
             )}
             {/* Comments icon */}
             <Box bg="white" radius="sm" p={2} style={{elevation: 10}}>
-              <TouchableOpacity onPress={() => setModalOpen(true)}>
+              <Box self="end" mb={-4}>
+                {comments?.length!! > 0 && (
+                  <Text color={theme.color.blueLightest} size={12} bold pl={2}>
+                    {comments?.length}
+                  </Text>
+                )}
+              </Box>
+              <TouchableOpacity
+                onPress={() => {
+                  setSpeekId(id);
+                  setModalOpen(true);
+                }}>
                 <FontAwesome5
                   name="comment-dots"
                   style={{fontSize: 18, color: theme.color.blueLightest}}
@@ -242,6 +257,7 @@ const Speek: React.FC<SpeekTypes> = (props) => {
       likes={item.likes}
       title={item.title}
       content={item.content}
+      comments={item.comments}
       createdAt={item.createdAt}
       author={item.author}
       avatar={item.avatar}

@@ -16,7 +16,7 @@ import MyButton from "./MyButton";
 import {SPEEKS_QUERY} from "../screens/Home";
 
 //Enums and Interfaces
-import {IColorProps, ISpeekInterface} from "./Interfaces";
+import {IColorProps} from "./Interfaces";
 
 //Styles
 import {theme} from "../constants/theme";
@@ -33,10 +33,15 @@ const CREATE_COMMENT_MUTATION = gql`
 type ModalProps = {
   show: boolean;
   closeModal: () => void;
+  id: number;
+};
+
+type InitialValuesType = {
+  content: string;
 };
 
 const CreateComment: React.FC<ModalProps> = (props) => {
-  const {show, closeModal} = props;
+  const {show, closeModal, id} = props;
 
   const [borderColor, setBorderColor] = useState<IColorProps>({
     content: theme.color.grey,
@@ -59,7 +64,7 @@ const CreateComment: React.FC<ModalProps> = (props) => {
     refetchQueries: [{query: SPEEKS_QUERY}],
   });
 
-  const initialValues: ISpeekInterface = {
+  const initialValues: InitialValuesType = {
     content: "",
   };
 
@@ -83,7 +88,7 @@ const CreateComment: React.FC<ModalProps> = (props) => {
             onSubmit={async (values, {setSubmitting}) => {
               await setSubmitting(true);
               await createComment({
-                variables: values,
+                variables: {...values, id},
               });
               //@ts-ignore
               setSubmitting(false);
@@ -97,7 +102,7 @@ const CreateComment: React.FC<ModalProps> = (props) => {
                       <TextInput
                         onChangeText={handleChange("content")}
                         onBlur={handleBlur("content")}
-                        placeholder="content"
+                        placeholder="comment"
                         multiline={true}
                         maxLength={256}
                         placeholderTextColor={theme.color.grey}
@@ -126,7 +131,7 @@ const CreateComment: React.FC<ModalProps> = (props) => {
                   </Box>
                 </Box>
                 <Box center my="sm">
-                  <MyButton name={"Speek"} functionHandeler={handleSubmit} />
+                  <MyButton name={"Comment"} functionHandeler={handleSubmit} />
                 </Box>
               </>
             )}

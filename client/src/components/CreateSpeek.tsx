@@ -35,6 +35,12 @@ type ModalProps = {
   closeModal: () => void;
 };
 
+type InitialValuesType = {
+  title: string;
+  excerpt: string;
+  content: string;
+};
+
 const CreateSpeek: React.FC<ModalProps> = (props) => {
   const {show, closeModal} = props;
 
@@ -61,7 +67,7 @@ const CreateSpeek: React.FC<ModalProps> = (props) => {
     refetchQueries: [{query: SPEEKS_QUERY}],
   });
 
-  const initialValues: ISpeekInterface = {
+  const initialValues: InitialValuesType = {
     title: "",
     excerpt: "",
     content: "",
