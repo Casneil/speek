@@ -5,6 +5,7 @@ import {ScrollView, TouchableOpacity} from "react-native";
 import {useQuery} from "@apollo/client";
 import {Box, Text} from "react-native-design-utility";
 import AntDesign from "react-native-vector-icons/AntDesign";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import {formatDistance, subDays} from "date-fns";
 
 //Components
@@ -129,7 +130,7 @@ const Trending = () => {
                   </Box>
                   <Box>
                     {/* likes count box */}
-                    <Box dir="row" align="center" justify="between" my="sm">
+                    <Box dir="row" align="center" my="sm">
                       <Box
                         bg={theme.color.white}
                         radius="sm"
@@ -150,6 +151,22 @@ const Trending = () => {
                             color: theme.color.blueLightest,
                           }}
                         />
+                      </Box>
+                      <Box
+                        bg="white"
+                        radius="sm"
+                        p={2}
+                        style={{elevation: 10}}
+                        mx="sm">
+                        <TouchableOpacity>
+                          <FontAwesome5
+                            name="comment-dots"
+                            style={{
+                              fontSize: 18,
+                              color: theme.color.blueLightest,
+                            }}
+                          />
+                        </TouchableOpacity>
                       </Box>
                     </Box>
                   </Box>

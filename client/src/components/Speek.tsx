@@ -5,6 +5,7 @@ import {SafeAreaView, FlatList, TouchableOpacity} from "react-native";
 import {Box, Text} from "react-native-design-utility";
 import {useMutation, gql} from "@apollo/client";
 import AntDesign from "react-native-vector-icons/AntDesign";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import {formatDistance, subDays} from "date-fns";
 
 // Components
@@ -198,6 +199,15 @@ const Speek: React.FC<SpeekTypes> = (props) => {
                 </Box>
               </Box>
             )}
+            {/* Comments icon */}
+            <Box bg="white" radius="sm" p={2} style={{elevation: 10}}>
+              <TouchableOpacity>
+                <FontAwesome5
+                  name="comment-dots"
+                  style={{fontSize: 18, color: theme.color.blueLightest}}
+                />
+              </TouchableOpacity>
+            </Box>
             <Box bg="white" radius="sm" p={2} style={{elevation: 10}}>
               <TouchableOpacity>
                 <Text my={2} size={12} color={theme.color.grey}>
