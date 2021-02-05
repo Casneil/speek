@@ -19,6 +19,9 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  CommentWhereUniqueInput: { // input type
+    id?: number | null; // Int
+  }
   LikedSpeekWhereUniqueInput: { // input type
     id?: number | null; // Int
   }
@@ -40,6 +43,11 @@ export interface NexusGenObjects {
   AuthPayload: { // root type
     token?: string | null; // String
     user?: NexusGenRootTypes['User'] | null; // User
+  }
+  Comment: { // root type
+    content?: string | null; // String
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    id: number; // Int!
   }
   LikedSpeek: { // root type
     id: number; // Int!
@@ -83,6 +91,11 @@ export interface NexusGenFieldTypes {
     token: string | null; // String
     user: NexusGenRootTypes['User'] | null; // User
   }
+  Comment: { // field return type
+    content: string | null; // String
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    id: number; // Int!
+  }
   LikedSpeek: { // field return type
     id: number; // Int!
     likedAt: NexusGenScalars['DateTime']; // DateTime!
@@ -111,6 +124,7 @@ export interface NexusGenFieldTypes {
   }
   Speek: { // field return type
     author: NexusGenRootTypes['User'] | null; // User
+    comments: NexusGenRootTypes['Comment'][]; // [Comment!]!
     content: string | null; // String
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     excerpt: string | null; // String
@@ -120,6 +134,7 @@ export interface NexusGenFieldTypes {
   }
   User: { // field return type
     Profile: NexusGenRootTypes['Profile'] | null; // Profile
+    comments: NexusGenRootTypes['Comment'][]; // [Comment!]!
     email: string; // String!
     id: number; // Int!
     likedSpeek: NexusGenRootTypes['LikedSpeek'][]; // [LikedSpeek!]!
@@ -132,6 +147,11 @@ export interface NexusGenFieldTypeNames {
   AuthPayload: { // field return type name
     token: 'String'
     user: 'User'
+  }
+  Comment: { // field return type name
+    content: 'String'
+    createdAt: 'DateTime'
+    id: 'Int'
   }
   LikedSpeek: { // field return type name
     id: 'Int'
@@ -161,6 +181,7 @@ export interface NexusGenFieldTypeNames {
   }
   Speek: { // field return type name
     author: 'User'
+    comments: 'Comment'
     content: 'String'
     createdAt: 'DateTime'
     excerpt: 'String'
@@ -170,6 +191,7 @@ export interface NexusGenFieldTypeNames {
   }
   User: { // field return type name
     Profile: 'Profile'
+    comments: 'Comment'
     email: 'String'
     id: 'Int'
     likedSpeek: 'LikedSpeek'
@@ -215,6 +237,12 @@ export interface NexusGenArgTypes {
     }
   }
   Speek: {
+    comments: { // args
+      after?: NexusGenInputs['CommentWhereUniqueInput'] | null; // CommentWhereUniqueInput
+      before?: NexusGenInputs['CommentWhereUniqueInput'] | null; // CommentWhereUniqueInput
+      first?: number | null; // Int
+      last?: number | null; // Int
+    }
     likes: { // args
       after?: NexusGenInputs['LikedSpeekWhereUniqueInput'] | null; // LikedSpeekWhereUniqueInput
       before?: NexusGenInputs['LikedSpeekWhereUniqueInput'] | null; // LikedSpeekWhereUniqueInput
@@ -223,6 +251,12 @@ export interface NexusGenArgTypes {
     }
   }
   User: {
+    comments: { // args
+      after?: NexusGenInputs['CommentWhereUniqueInput'] | null; // CommentWhereUniqueInput
+      before?: NexusGenInputs['CommentWhereUniqueInput'] | null; // CommentWhereUniqueInput
+      first?: number | null; // Int
+      last?: number | null; // Int
+    }
     likedSpeek: { // args
       after?: NexusGenInputs['LikedSpeekWhereUniqueInput'] | null; // LikedSpeekWhereUniqueInput
       before?: NexusGenInputs['LikedSpeekWhereUniqueInput'] | null; // LikedSpeekWhereUniqueInput

@@ -9,5 +9,6 @@ export const User = objectType({
     t.model.speeks({ pagination: false })
     t.model.Profile()
     t.model.likedSpeek()
+    t.model.comments()
   },
 })
