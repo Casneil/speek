@@ -13,6 +13,10 @@ type MyButtonType = {
   textWeight?: string;
 };
 
+/**
+ *
+ * @param props: name: Button name, functionHandeler: callback function
+ */
 const MyButton: React.FC<MyButtonType> = (props) => {
   const {name, functionHandeler} = props;
 

@@ -2,13 +2,12 @@ import React, {useState, useEffect} from "react";
 import {ScrollView, TouchableOpacity} from "react-native";
 
 //3rd party
-import {useQuery, gql} from "@apollo/client";
+import {useQuery} from "@apollo/client";
 import {Box, Text} from "react-native-design-utility";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import {formatDistance, subDays} from "date-fns";
 
 //Components
-import Speek from "../components/Speek";
 import MyActivityIndicator from "../components/MyActivityIndicator";
 import MyImageComponent from "../components/MyImageComponent";
 
@@ -59,7 +58,7 @@ const Trending = () => {
                 mx={5}
                 bg={theme.color.white}
                 style={{
-                  elevation: 5,
+                  elevation: 3,
                   borderBottomRightRadius: 12,
                   borderBottomLeftRadius: 12,
                 }}>
