@@ -17,7 +17,7 @@ type MyImageTypes = {
   marginBottom?: PhotoFileEnum | number;
 };
 /**
- * This component reenders local images as well as images from the internet.
+ * This component renders local images as well as images from the internet.
  * If no source or where: "Photo Location" is passed it will default to the anonymous_user picture.
  *
  * @param props : height: number;  width: number; borderRadius: number;

@@ -96,7 +96,12 @@ const Speek: React.FC<SpeekTypes> = (props) => {
   }: ISpeekInterface) => (
     <Box bg={theme.color.white} mb={6}>
       {modalOpen && (
-        <CreateComment show={modalOpen} closeModal={closeModal} id={speekId} />
+        <CreateComment
+          show={modalOpen}
+          closeModal={closeModal}
+          id={speekId!}
+          data={speek[speekId!]}
+        />
       )}
       <Box
         mx={5}
@@ -134,7 +139,7 @@ const Speek: React.FC<SpeekTypes> = (props) => {
                       // @ts-ignore
                       subDays(new Date(createdAt), 0),
                       new Date(),
-                    )}{" "}
+                    )}
                     ago
                   </Text>
                 </Box>
