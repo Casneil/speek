@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import {SafeAreaView, FlatList, TouchableOpacity} from "react-native";
+import {useNavigation} from "@react-navigation/native";
 
 //3rd party
 import {Box, Text} from "react-native-design-utility";
@@ -51,6 +52,8 @@ const Speek: React.FC<SpeekTypes> = (props) => {
   const {speek, meData} = props;
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [speekId, setSpeekId] = useState<number>();
+
+  const navigation = useNavigation();
 
   const [likeSpeek] = useMutation(LIKE_SPEEK_MUTATION, {
     refetchQueries: [{query: SPEEKS_QUERY}, {query: ME_QUERY}],
@@ -148,7 +151,7 @@ const Speek: React.FC<SpeekTypes> = (props) => {
               <MyImageComponent width={40} height={40} />
             )}
           </Box>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("SpeekView")}>
             <Box>
               <Text mb={4} size="base" lineH="tight" color={theme.color.blue}>
                 {title}
@@ -272,11 +275,13 @@ const Speek: React.FC<SpeekTypes> = (props) => {
 
   return (
     <SafeAreaView>
-      <FlatList
-        data={speek}
-        renderItem={renderItem}
-        keyExtractor={(item) => String(item.id)}
-      />
+      <Box mt={-26} mb={60}>
+        <FlatList
+          data={speek}
+          renderItem={renderItem}
+          keyExtractor={(item) => String(item.id)}
+        />
+      </Box>
     </SafeAreaView>
   );
 };

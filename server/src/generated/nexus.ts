@@ -92,6 +92,7 @@ export interface NexusGenFieldTypes {
     user: NexusGenRootTypes['User'] | null; // User
   }
   Comment: { // field return type
+    User: NexusGenRootTypes['User'] | null; // User
     content: string | null; // String
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: number; // Int!
@@ -150,6 +151,7 @@ export interface NexusGenFieldTypeNames {
     user: 'User'
   }
   Comment: { // field return type name
+    User: 'User'
     content: 'String'
     createdAt: 'DateTime'
     id: 'Int'

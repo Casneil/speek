@@ -66,28 +66,29 @@ const Home = () => {
         </Box>
       ) : (
         <Box bg={theme.color.white}>
-          <Box f={1}>
+          <Box>
             {modalOpen && (
               <CreateSpeek show={modalOpen} closeModal={closeModal} />
             )}
           </Box>
-          <Box style={{bottom: DEVICE_HEIGHT / DEVICE_HEIGHT - 10}}>
-            <Box
-              dir="row"
-              self="end"
-              bg={theme.color.white}
-              mx="lg"
-              w={0}
-              radius="sm"
-              style={{elevation: 20}}>
-              <TouchableOpacity onPress={() => setModalOpen(true)}>
-                <AntDesign
-                  name="form"
-                  style={{fontSize: 30}}
-                  color={theme.color.black}
-                />
-              </TouchableOpacity>
-            </Box>
+          <Box>
+            <TouchableOpacity
+              onPress={() => setModalOpen(true)}
+              style={{
+                top: 20,
+                left: "85%",
+                backgroundColor: theme.color.white,
+                zIndex: 2000,
+                width: 30,
+                height: 30,
+                elevation: 20,
+              }}>
+              <AntDesign
+                name="form"
+                style={{fontSize: 30}}
+                color={theme.color.black}
+              />
+            </TouchableOpacity>
           </Box>
           <Speek speek={data.speeks} meData={meData} />
         </Box>

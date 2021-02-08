@@ -4,7 +4,6 @@ import React from "react";
 import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
 import FontAwesome from "react-native-vector-icons/FontAwesome5";
 import Entypo from "react-native-vector-icons/Entypo";
-import {createDrawerNavigator} from "@react-navigation/drawer";
 
 // Screens
 import Home from "../../screens/Home";
@@ -15,16 +14,6 @@ import Trending from "../../screens/Trending";
 // Styles
 import {theme} from "../../constants/theme";
 
-// Drawer Navigator
-const Drawer = createDrawerNavigator();
-
-const myDrawer = () => {
-  return (
-    <Drawer.Navigator>
-      <Drawer.Screen name="Logout" component={Logout} />
-    </Drawer.Navigator>
-  );
-};
 // Tab Navigator
 const TabNavigator = createMaterialTopTabNavigator();
 export const MainTabs = () => {

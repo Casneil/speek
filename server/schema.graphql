@@ -8,6 +8,7 @@ type AuthPayload {
 }
 
 type Comment {
+  User: User
   content: String
   createdAt: DateTime!
   id: Int!

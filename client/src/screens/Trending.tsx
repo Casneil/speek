@@ -52,7 +52,7 @@ const Trending = () => {
           <MyActivityIndicator size="large" color={theme.color.blueLightest} />
         </Box>
       ) : (
-        <ScrollView style={{marginTop: 4}}>
+        <ScrollView style={{marginTop: 2}}>
           {sortedSpeeks?.map((speek: ISpeekInterface) => (
             <Box bg={theme.color.white} mb={6} key={speek.id}>
               <Box
