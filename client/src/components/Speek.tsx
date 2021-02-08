@@ -151,7 +151,13 @@ const Speek: React.FC<SpeekTypes> = (props) => {
               <MyImageComponent width={40} height={40} />
             )}
           </Box>
-          <TouchableOpacity onPress={() => navigation.navigate("SpeekView")}>
+          <TouchableOpacity
+            onPress={() => {
+              setSpeekId(id);
+              navigation.navigate("SpeekView", {
+                data: speek[speekId!],
+              });
+            }}>
             <Box>
               <Text mb={4} size="base" lineH="tight" color={theme.color.blue}>
                 {title}
