@@ -12,15 +12,14 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import {UtilityThemeProvider} from "react-native-design-utility";
 import {setContext} from "apollo-link-context";
 import {theme} from "./src/constants/theme";
-
-// Navigation
-import StackNavigator from "./src/navigation/NavStack";
+import {NavigationContainer} from "@react-navigation/native";
 
 // Interfaces and Enums
 import {StorageKeyEnum} from "./src/components/enums";
 
 // Context
 import {AuthContextProvider} from "./src/components/context/AuthContext";
+import DrawerNavigator from "./src/navigation/drawer/drawerNav";
 
 const httpLink = new HttpLink({uri: "http://192.168.1.13:4000/graphql"});
 const authLink = setContext(async (req, {headers}) => {
@@ -46,9 +45,10 @@ const App = () => {
       <UtilityThemeProvider theme={theme}>
         <ApolloProvider client={client}>
           <StatusBar barStyle="dark-content" backgroundColor="white" />
-          {/* <SafeAreaView> */}
-          <StackNavigator />
-          {/* </SafeAreaView> */}
+          <NavigationContainer>
+            {/* <StackNavigator /> */}
+            <DrawerNavigator />
+          </NavigationContainer>
         </ApolloProvider>
       </UtilityThemeProvider>
     </AuthContextProvider>

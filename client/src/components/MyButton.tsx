@@ -1,8 +1,10 @@
 import React from "react";
+
 import {TouchableOpacity} from "react-native";
 
 //3rd Party
 import {Box, Text} from "react-native-design-utility";
+import {useNavigation} from "@react-navigation/native";
 
 //Styles
 import {theme} from "../constants/theme";
@@ -11,6 +13,7 @@ type MyButtonType = {
   name: string;
   functionHandeler: () => void;
   textWeight?: string;
+  navigateToScreen?: string;
 };
 
 /**
@@ -18,7 +21,8 @@ type MyButtonType = {
  * @param props: name: Button name, functionHandeler: callback function
  */
 const MyButton: React.FC<MyButtonType> = (props) => {
-  const {name, functionHandeler} = props;
+  const navigation = useNavigation();
+  const {name, functionHandeler, navigateToScreen} = props;
 
   return (
     <Box
@@ -27,7 +31,13 @@ const MyButton: React.FC<MyButtonType> = (props) => {
       center
       radius="lg"
       style={{elevation: 10}}>
-      <TouchableOpacity onPress={functionHandeler}>
+      <TouchableOpacity
+        onPress={() => {
+          !navigateToScreen
+            ? functionHandeler()
+            : navigation.navigate(navigateToScreen);
+          functionHandeler();
+        }}>
         <Text p={8} bold>
           {name}
         </Text>

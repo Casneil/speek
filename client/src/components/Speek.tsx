@@ -142,7 +142,7 @@ const Speek: React.FC<SpeekTypes> = (props) => {
                       // @ts-ignore
                       subDays(new Date(createdAt), 0),
                       new Date(),
-                    )}
+                    )}{" "}
                     ago
                   </Text>
                 </Box>

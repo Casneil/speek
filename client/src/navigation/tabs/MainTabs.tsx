@@ -7,7 +7,6 @@ import Entypo from "react-native-vector-icons/Entypo";
 
 // Screens
 import Home from "../../screens/Home";
-import Logout from "../../screens/Logout";
 import Profile from "../../screens/Profile";
 import Trending from "../../screens/Trending";
 
@@ -16,6 +15,7 @@ import {theme} from "../../constants/theme";
 
 // Tab Navigator
 const TabNavigator = createMaterialTopTabNavigator();
+let size = 10;
 export const MainTabs = () => {
   return (
     <>
@@ -25,27 +25,18 @@ export const MainTabs = () => {
             let iconName;
             let iconProvider;
 
-            if (route.name === "Home") {
+            if (route.name === "Explore") {
               iconProvider = FontAwesome;
               iconName = focused ? "home" : "home";
             }
-            if (route.name === "CreatePost") {
+            if (route.name === "Trending") {
               iconProvider = Entypo;
               iconName = focused ? "new-message" : "new-message";
             }
-            if (route.name === "Categories") {
+            if (route.name === "Profile") {
               iconProvider = FontAwesome;
               iconName = focused ? "tasks" : "tasks";
             }
-            if (route.name === "Users") {
-              iconProvider = FontAwesome;
-              iconName = focused ? "users" : "users";
-            }
-            if (route.name === "LogOut") {
-              iconProvider = FontAwesome;
-              iconName = focused ? "user-times" : "user-times";
-            }
-
             // You can return any component that you like here!
             return iconProvider === Entypo ? (
               // @ts-ignore
@@ -60,11 +51,11 @@ export const MainTabs = () => {
           activeTintColor: theme.color.blue,
           inactiveTintColor: "gray",
           tabStyle: {marginBottom: 4},
+          // showIcon: true,
         }}>
         <TabNavigator.Screen name="Explore" component={Home} />
         <TabNavigator.Screen name="Trending" component={Trending} />
         <TabNavigator.Screen name="Profile" component={Profile} />
-        <TabNavigator.Screen name="LogOut" component={Logout} />
       </TabNavigator.Navigator>
     </>
   );

@@ -1,7 +1,10 @@
 import React from "react";
+import {TouchableOpacity} from "react-native";
+
 // 3rd Party
-import {NavigationContainer} from "@react-navigation/native";
 import {createStackNavigator} from "@react-navigation/stack";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import {useNavigation} from "@react-navigation/native";
 
 // Context
 import {useAuthContext} from "../components/context/AuthContext";
@@ -13,30 +16,47 @@ import {LoginRegisterTabs} from "./tabs/LoginRegister";
 // Stack Navigator
 const Stack = createStackNavigator();
 const StackNavigator = () => {
+  const navigation = useNavigation();
   const {authenticated} = useAuthContext();
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        {authenticated ? (
-          <>
-            <Stack.Screen
-              name="Home"
-              component={MainTabs}
-              options={{headerShown: false}}
-            />
-          </>
-        ) : (
-          <>
-            <Stack.Screen
-              name="Login"
-              component={LoginRegisterTabs}
-              options={{headerShown: false}}
-            />
-          </>
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Stack.Navigator>
+      {authenticated ? (
+        <>
+          <Stack.Screen
+            name="Home"
+            component={MainTabs}
+            options={{
+              headerShown: true,
+              headerTitle: () => (
+                // @ts-ignore
+                <TouchableOpacity onPress={() => navigation.openDrawer()}>
+                  <AntDesign name="menuunfold" style={{fontSize: 20}} />
+                </TouchableOpacity>
+              ),
+              headerStyle: {height: 50},
+            }}
+          />
+        </>
+      ) : (
+        <>
+          <Stack.Screen
+            name="Login"
+            component={LoginRegisterTabs}
+            options={{
+              headerShown: true,
+              headerTitle: () => (
+                // @ts-ignore
+                <TouchableOpacity onPress={() => navigation.openDrawer()}>
+                  <AntDesign name="menuunfold" style={{fontSize: 20}} />
+                </TouchableOpacity>
+              ),
+              headerStyle: {height: 50},
+            }}
+          />
+        </>
+      )}
+    </Stack.Navigator>
   );
 };
 
