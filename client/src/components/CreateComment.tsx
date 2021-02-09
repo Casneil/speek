@@ -36,8 +36,8 @@ const CREATE_COMMENT_MUTATION = gql`
 type ModalProps = {
   show: boolean;
   closeModal: () => void;
-  id: number;
-  data: ISpeekInterface;
+  id: any;
+  data: Array<ISpeekInterface>;
 };
 
 type InitialValuesType = {
@@ -46,6 +46,8 @@ type InitialValuesType = {
 
 const CreateComment: React.FC<ModalProps> = (props) => {
   const {show, closeModal, id, data} = props;
+
+  const findSpeek = data.find((item: ISpeekInterface) => item.id === id);
 
   const [borderColor, setBorderColor] = useState<IColorProps>({
     content: theme.color.grey,
@@ -86,7 +88,7 @@ const CreateComment: React.FC<ModalProps> = (props) => {
               width={40}
               height={40}
               where={ImageLocationEnum.INTERNET}
-              source={data.author.Profile.avatar}
+              source={findSpeek?.author.Profile.avatar}
               type={"jpeg"}
             />
           </Box>
@@ -95,7 +97,7 @@ const CreateComment: React.FC<ModalProps> = (props) => {
               <TouchableOpacity>
                 <Box>
                   <Text size={14} color={theme.color.blueLightest} bold>
-                    {data.author.name}
+                    {findSpeek?.author.name}
                   </Text>
                 </Box>
               </TouchableOpacity>
@@ -103,15 +105,15 @@ const CreateComment: React.FC<ModalProps> = (props) => {
             <Text size={11.5} color={theme.color.grey}>
               {formatDistance(
                 // @ts-ignore
-                subDays(new Date(data.createdAt), 0),
+                subDays(new Date(findSpeek?.createdAt), 0),
                 new Date(),
-              )}
+              )}{" "}
               ago
             </Text>
           </Box>
           <Box>
             <Text mb={4} size="base" lineH="tight" color={theme.color.blue}>
-              {data.title}
+              {findSpeek?.title}
             </Text>
           </Box>
         </Box>

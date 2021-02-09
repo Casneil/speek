@@ -34,7 +34,7 @@ const MyButton: React.FC<MyButtonType> = (props) => {
       <TouchableOpacity
         onPress={() => {
           !navigateToScreen
-            ? functionHandeler()
+            ? functionHandeler
             : navigation.navigate(navigateToScreen);
           functionHandeler();
         }}>

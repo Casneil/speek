@@ -102,8 +102,8 @@ const Speek: React.FC<SpeekTypes> = (props) => {
         <CreateComment
           show={modalOpen}
           closeModal={closeModal}
-          id={speekId!}
-          data={speek[speekId!]}
+          id={speekId}
+          data={speek}
         />
       )}
       <Box
@@ -152,12 +152,11 @@ const Speek: React.FC<SpeekTypes> = (props) => {
             )}
           </Box>
           <TouchableOpacity
-            onPress={() => {
-              setSpeekId(id);
+            onPress={() =>
               navigation.navigate("SpeekView", {
-                data: speek[speekId!],
-              });
-            }}>
+                data: {speek, id},
+              })
+            }>
             <Box>
               <Text mb={4} size="base" lineH="tight" color={theme.color.blue}>
                 {title}

@@ -47,7 +47,6 @@ export const SPEEKS_QUERY = gql`
 
 const Home = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const DEVICE_HEIGHT = Dimensions.get("screen").height;
 
   // Modal
   const closeModal = () => {
